@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+  overflow-x: hidden;
+}
+
+code {
+  background-color: #eee;
+  color: #e7040f;
+  font-size: 90%;
+  border-radius: 4px;
+  padding: 0 0.25rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.page-title-text {
+  font-size: calc(2.5rem + 1vw);
+  font-weight: 700;
+}
+
+.bordering {
+  border: 2px solid green;
+}

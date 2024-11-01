@@ -1,0 +1,10 @@
+.toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 2rem;
+  z-index: 10000;
+  width: max-content;
+  max-width: 80%;
+  transition: all 0.4s ease-in;
+}

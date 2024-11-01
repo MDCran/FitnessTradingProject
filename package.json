@@ -1,27 +1,54 @@
 {
-  "homepage": "https://github.com/belferink1996/MERN-template#readme",
-  "name": "mern-application",
-  "version": "0.1.0",
-  "description": "",
-  "private": true,
-  "main": "",
-  "license": "ISC",
-  "keywords": [],
-  "author": "Ben Elferink <ben.elferink@icloud.com> (https://www.linkedin.com/in/ben-elferink-37ba251b9)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/belferink1996/MERN-template.git"
-  },
-  "bugs": {
-    "url": "https://github.com/belferink1996/MERN-template/issues",
-    "email": "ben.elferink@icloud.com"
-  },
+  "name": "vercel-mern-skeleton",
+  "description": "A skeleton for a React/Express/MongoDB web app that is deployable to Vercel!",
+  "main": "api/index.ts",
   "scripts": {
-    "install": "concurrently \"cd ./server && npm i\" \"cd ./client && npm i\"",
-    "start": "concurrently \"cd ./server && npm start\" \"cd ./client && npm start\"",
-    "delete-modules": "rm -r ./node_modules && cd ./server && rm -r ./node_modules && cd ../client && rm -r ./node_modules"
+    "start": "ts-node api/index.ts",
+    "dev": "(ts-node-dev api/index.ts) & (cd client && npm start)",
+    "build": "cd client && npm run build",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "author": "Adam Janicki",
+  "dependencies": {
+    "connect-mongo": "^4.6.0",
+    "core-js": "^3.26.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.27.0",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.7.1",
+    "morgan": "^1.10.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
   },
   "devDependencies": {
-    "concurrently": "^6.3.0"
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.14",
+    "@types/express-session": "^1.17.5",
+    "@types/morgan": "^1.9.7",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "ts-node-dev": "^2.0.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 2021,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ]
   }
 }
