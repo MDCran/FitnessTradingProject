@@ -5,6 +5,7 @@ import Nav from "src/components/Nav";
 import About from "src/pages/About";
 import ApiTest from "src/pages/ApiTest";
 import Home from "src/pages/Home";
+import Rank from "src/pages/Home";
 import NotFound from "src/pages/NotFound";
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/rank/" element={<Rank />} />
         <Route path="/about/" element={<About />} />
         <Route path="/api-test/" element={<ApiTest />} />
         {/* Make sure this is the last route */}
