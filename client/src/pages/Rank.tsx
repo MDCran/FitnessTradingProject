@@ -1,6 +1,6 @@
 import PageWrapper from "src/components/PageWrapper";
 import { Table } from 'geist/components';
-import type { JSX } from 'react';
+
 
 const Rank = () => (
   <PageWrapper title="Rank">
@@ -9,11 +9,6 @@ const Rank = () => (
       For testing
     </p>
 
-  </PageWrapper>
-);
-
-export function Component(): JSX.Element {
-  return (
     <Table>
       <Table.Header>
         <Table.Row>
@@ -40,7 +35,8 @@ export function Component(): JSX.Element {
         </Table.Row>
       </Table.Body>
     </Table>
-  );
-}
+
+  </PageWrapper>
+);
 
 export default Rank;
