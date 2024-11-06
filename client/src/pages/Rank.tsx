@@ -7,10 +7,6 @@ const Rank = () => (
       LEADERBOARD
       For testing
     </p>
-
-    <p>
-      Test
-    </p>
   </PageWrapper>
 );
 
