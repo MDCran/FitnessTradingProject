@@ -8,9 +8,12 @@ const Rank = () => (
       it to Vercel for free. In your editor, search for <code>skeleton</code> to
       find all places where you should make your own changes. -- FOR LEADER
 
-      PLEASE
+      PLEASE2
 
-      <tr>
+      
+    </p>
+    
+    <tr>
         <th scope="col" class="pos" style="background: rgb(4, 83, 88);">#</th>
         <th scope="col" class="avatar" style="background: rgb(4, 83, 88);"></th>
         <th scope="col" class="id" style="background: rgb(63, 58, 54);">Steam ID</th>
@@ -24,7 +27,6 @@ const Rank = () => (
         <th scope="col" class="stat playtime" data-type="PT" style="background: rgb(7, 63, 54);">Playtime (H)</th>
         <th scope="col" class="stat age" data-type="A" style="background: rgb(63, 58, 54);">Years</th>
       </tr>
-    </p>
   </PageWrapper>
 );
 
