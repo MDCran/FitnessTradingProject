@@ -7,6 +7,8 @@ const Rank = () => (
       React frontend, an express backend, and a MongoDB database. You can deploy
       it to Vercel for free. In your editor, search for <code>skeleton</code> to
       find all places where you should make your own changes. -- FOR LEADER
+
+      test2
     </p>
   </PageWrapper>
 );
