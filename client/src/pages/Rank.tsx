@@ -11,4 +11,13 @@ const Rank = () => (
   </PageWrapper>
 );
 
+<html>
+<head>
+  <title>Test</title>
+</head>
+<body>
+  <h1>output</h1>
+</body>
+</html>
+
 export default Rank;
