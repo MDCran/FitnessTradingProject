@@ -8,18 +8,9 @@ const Rank = () => (
       it to Vercel for free. In your editor, search for <code>skeleton</code> to
       find all places where you should make your own changes. -- FOR LEADER
 
-      test2
+      PLEASE
     </p>
   </PageWrapper>
 );
-
-<html>
-<head>
-  <title>Test</title>
-</head>
-<body>
-  <h1>output</h1>
-</body>
-</html>
 
 export default Rank;
