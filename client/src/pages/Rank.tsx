@@ -1,5 +1,5 @@
 import PageWrapper from "src/components/PageWrapper";
-import { Table } from 'geist/components';
+
 
 const Rank = () => (
   <PageWrapper title="Rank">

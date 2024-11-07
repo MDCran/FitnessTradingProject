@@ -1,5 +1,7 @@
 import { useTitle } from "src/hooks";
 import type { Children } from "src/types";
+import { Table } from 'geist/components';
+import type { JSX } from 'react';
 
 type Props = {
   children: Children;
