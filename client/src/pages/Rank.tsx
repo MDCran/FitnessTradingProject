@@ -9,7 +9,7 @@ const Rank = () => (
     </p>
 
 
-    <div>
+    <div className="app-container">
       <table>
         <thead>
           <tr>
@@ -19,11 +19,13 @@ const Rank = () => (
           </tr>
         </thead>
         <tbody>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
         </tbody>
-        </table>
+      </table>
     </div>
 
 
