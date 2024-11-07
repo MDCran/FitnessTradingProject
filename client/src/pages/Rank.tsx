@@ -1,5 +1,36 @@
 import PageWrapper from "src/components/PageWrapper";
+import './App.css';
 
+// Example of a data array that
+// you might receive from an API
+const data = [
+  { name: "Anom", age: 19, gender: "Male" },
+  { name: "Megha", age: 19, gender: "Female" },
+  { name: "Subham", age: 25, gender: "Male" },
+]
+
+function App() {
+  return (
+      <div className="App">
+          <table>
+              <tr>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+              </tr>
+              {data.map((val, key) => {
+                  return (
+                      <tr key={key}>
+                          <td>{val.name}</td>
+                          <td>{val.age}</td>
+                          <td>{val.gender}</td>
+                      </tr>
+                  )
+              })}
+          </table>
+      </div>
+  );
+}
 
 const Rank = () => (
   <PageWrapper title="Rank">
@@ -7,33 +38,11 @@ const Rank = () => (
       LEADERBOARD
       For testing table
     </p> */}
-    <div className="App">
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
-        </tr>
-        <tr>
-            <td>Anom</td>
-            <td>19</td>
-            <td>Male</td>
-        </tr>
-        <tr>
-            <td>Megha</td>
-            <td>19</td>
-            <td>Female</td>
-        </tr>
-        <tr>
-            <td>Subham</td>
-            <td>25</td>
-            <td>Male</td>
-        </tr>
-    </table>
-    </div>
+
+    App()
 
     <p>
-      rip
+      rip 2
     </p>
 
   </PageWrapper>
