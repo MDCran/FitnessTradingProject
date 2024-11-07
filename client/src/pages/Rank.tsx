@@ -9,9 +9,15 @@ const data = [
   { name: "Subham", age: 25, gender: "Male" },
 ]
 
-function App() {
-  return (
-      <div className="App">
+
+const Rank = () => (
+  <PageWrapper title="Rank">
+    {/* <p className="tc f4 fw4 w-70">
+      LEADERBOARD
+      For testing table
+    </p> */}
+
+    <div className="App">
           <table>
               <tr>
                   <th>Name</th>
@@ -29,17 +35,6 @@ function App() {
               })}
           </table>
       </div>
-  );
-}
-
-const Rank = () => (
-  <PageWrapper title="Rank">
-    {/* <p className="tc f4 fw4 w-70">
-      LEADERBOARD
-      For testing table
-    </p> */}
-
-    App()
 
     <p>
       rip 2
