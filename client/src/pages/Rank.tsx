@@ -15,14 +15,14 @@ const Rank = () => (
           <tr>
             <th>Rank</th>
             <th>Username</th>
-            <th colSpan={2}>Score</th>
+            <th>Score</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
+            <td colSpan={2}>1</td>
+            <td colSpan={2}>2</td>
+            <td colSpan={2}>3</td>
           </tr>
         </tbody>
       </table>
