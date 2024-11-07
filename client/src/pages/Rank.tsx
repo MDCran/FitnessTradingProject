@@ -20,26 +20,24 @@ const Rank = () => (
     </p>
 
 
-    return (
-        <div className="App">
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Gender</th>
+    <div className="App">
+      <table>
+          <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+          </tr>
+          {data.map((val, key) => {
+              return (
+                <tr key={key}>
+                  <td>{val.name}</td>
+                  <td>{val.age}</td>
+                  <td>{val.gender}</td>
                 </tr>
-                {data.map((val, key) => {
-                    return (
-                        <tr key={key}>
-                            <td>{val.name}</td>
-                            <td>{val.age}</td>
-                            <td>{val.gender}</td>
-                        </tr>
-                    )
-                })}
-            </table>
-        </div>
-    );
+              )
+          })}
+        </table>
+    </div>
 
 
   </PageWrapper>
