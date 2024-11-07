@@ -20,7 +20,7 @@ const Rank = () => (
     </p>
 
 
-    <div className="App">
+    <div>
       <table>
           <tr>
               <th>Name</th>
