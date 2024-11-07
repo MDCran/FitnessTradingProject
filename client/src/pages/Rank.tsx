@@ -10,14 +10,22 @@ const data = [
 ]
 
 
-const Rank = () => (
-  <PageWrapper title="Rank">
-    {/* <p className="tc f4 fw4 w-70">
-      LEADERBOARD
-      For testing table
-    </p> */}
+// const Rank = () => (
+//   <PageWrapper title="Rank">
+//     {/* <p className="tc f4 fw4 w-70">
+//       LEADERBOARD
+//       For testing table
+//     </p> */}
+//     <p>
+//       rip 2
+//     </p>
 
-    <div className="App">
+//   </PageWrapper>
+// );
+
+function Rank() {
+  return (
+      <div className="App">
           <table>
               <tr>
                   <th>Name</th>
@@ -35,12 +43,8 @@ const Rank = () => (
               })}
           </table>
       </div>
+  );
+}
 
-    <p>
-      rip 2
-    </p>
-
-  </PageWrapper>
-);
 
 export default Rank;
