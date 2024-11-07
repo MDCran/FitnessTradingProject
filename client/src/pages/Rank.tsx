@@ -11,16 +11,18 @@ const Rank = () => (
 
     <div>
       <table>
+        <thead>
           <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Score</th>
           </tr>
-            <tr>
+        </thead>
+        <tbody>
               <td>1</td>
               <td>2</td>
               <td>3</td>
-            </tr>
+        </tbody>
         </table>
     </div>
 
