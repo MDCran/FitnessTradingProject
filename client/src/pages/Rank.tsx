@@ -18,11 +18,21 @@ const Rank = () => (
             <th>Score</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody color="grey">
           <tr>
             <td color="gray">1</td>
             <td color="gray">2</td>
             <td color="gray">3</td>
+          </tr>
+          <tr>
+            <td color="gray">2</td>
+            <td color="gray">3</td>
+            <td color="gray">4</td>
+          </tr>
+          <tr>
+            <td color="gray">3</td>
+            <td color="gray">4</td>
+            <td color="gray">5</td>
           </tr>
         </tbody>
       </table>
