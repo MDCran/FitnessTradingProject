@@ -20,9 +20,9 @@ const Rank = () => (
         </thead>
         <tbody>
           <tr>
-            <td colSpan={2}>1</td>
-            <td colSpan={2}>2</td>
-            <td colSpan={2}>3</td>
+            <td color="gray">1</td>
+            <td color="gray">2</td>
+            <td color="gray">3</td>
           </tr>
         </tbody>
       </table>
