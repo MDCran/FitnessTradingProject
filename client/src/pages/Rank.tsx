@@ -24,7 +24,11 @@ const Rank = () => (
         <td>Francisco Chang</td>
         <td>Mexico</td>
       </tr>
-  </table>
+    </table>
+
+    <p>
+      New test
+    </p>
 
   </PageWrapper>
 );
