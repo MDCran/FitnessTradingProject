@@ -15,7 +15,7 @@ const Rank = () => (
           <tr>
             <th>Rank</th>
             <th>Username</th>
-            <th>Score</th>
+            <th colSpan={2}>Score</th>
           </tr>
         </thead>
         <tbody>
