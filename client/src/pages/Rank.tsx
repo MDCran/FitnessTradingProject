@@ -1,5 +1,5 @@
 import PageWrapper from "src/components/PageWrapper";
-
+import { Table } from 'geist/components';
 
 const Rank = () => (
   <PageWrapper title="Rank">
@@ -27,7 +27,7 @@ const Rank = () => (
       </tr>
     </table> */}
 
-    <html>
+    {/* <html>
       <head>
         <title>Simple HTML Table Example</title>
       </head>
@@ -75,10 +75,36 @@ const Rank = () => (
 
     td {
       border-bottom: 2px solid green;
-    }
+    } */}
+
+
+    <Table>
+      <Table.Colgroup>
+        <Table.Col className="w-[44%]" />
+        <Table.Col className="w-[22%]" />
+        <Table.Col className="w-[22%]" />
+        <Table.Col className="w-[11%]" />
+      </Table.Colgroup>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Product</Table.Head>
+          <Table.Head>Usage</Table.Head>
+          <Table.Head>Price</Table.Head>
+          <Table.Head>Charge</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body interactive striped>
+          <Table.Row>
+            <Table.Cell>1</Table.Cell>
+            <Table.Cell>2</Table.Cell>
+            <Table.Cell>3</Table.Cell>
+            <Table.Cell>4</Table.Cell>
+          </Table.Row>
+      </Table.Body>
+    </Table>
 
     <p>
-      New test
+      New 2 test
     </p>
 
   </PageWrapper>
