@@ -5,7 +5,6 @@ interface UserData {
   firstName: string;
   lastName: string;
   username: string;
-  // Add other fields as needed
 }
 
 const UserProfile: React.FC = () => {
@@ -14,11 +13,10 @@ const UserProfile: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Fetch user data by username from the backend
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/user/${username}`
+          `${process.env.REACT_APP_API_URL || 'https://fitness-trading-project.vercel.app'}/api/user/${username}`
         );
         const data = await response.json();
         if (response.ok) {

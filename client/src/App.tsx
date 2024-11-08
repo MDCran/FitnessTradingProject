@@ -8,7 +8,7 @@ import ApiTest from "src/pages/ApiTest";
 import Home from "src/pages/Home";
 import NotFound from "src/pages/NotFound";
 import Login from "./pages/Login";
-import UserProfile from "./pages/UserProfile";  // Import the UserProfile component
+import UserProfile from "./pages/UserProfile";  // Import UserProfile
 
 const App = () => {
   return (
@@ -23,7 +23,6 @@ const App = () => {
         {/* User Account Page Route */}
         <Route path="/user/@:username" element={<UserProfile />} />
 
-        {/* Michael Cran Work In Progress: */}
         <Route path="/login/" element={<Login />} />
 
         {/* 404 Page Not Found - Keep this as the last route */}
