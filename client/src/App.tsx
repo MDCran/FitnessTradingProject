@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/api-test/" element={<ApiTest />} />
 
         {/* User Account Page Route */}
-        <Route path="/user/@:username" element={<UserProfile />} />
+        <Route path="/user/:username" element={<UserProfile />} />
 
         <Route path="/login/" element={<Login />} />
 

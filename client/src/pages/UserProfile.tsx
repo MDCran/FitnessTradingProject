@@ -8,17 +8,17 @@ interface UserData {
 }
 
 const UserProfile: React.FC = () => {
-  const { username } = useParams<{ username: string }>();  // Extract username from URL
+  const { username } = useParams<{ username: string }>();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_URL || 'https://fitness-trading-project.vercel.app'}/api/user/${username}`
-        );
+        const apiUrl = process.env.REACT_APP_API_URL || 'https://fitness-trading-project.vercel.app';
+        const response = await fetch(`${apiUrl}/api/user/${username}`);
         const data = await response.json();
+        
         if (response.ok) {
           setUserData(data);
         } else {
@@ -42,7 +42,6 @@ const UserProfile: React.FC = () => {
         <div>
           <h1>{userData.firstName} {userData.lastName}</h1>
           <p>Username: @{userData.username}</p>
-          {/* Display other user info here */}
         </div>
       ) : (
         <p>User not found</p>
