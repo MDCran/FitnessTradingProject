@@ -18,7 +18,8 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = `http://localhost:5000/${formType === "login" ? "login" : "register"}`;
+      // Update the URL to include "/api"
+      const url = `http://localhost:5000/api/${formType === "login" ? "login" : "register"}`;
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -36,7 +37,14 @@ const Login = () => {
         return;
       }
 
-      alert(formType === "login" ? "Login successful!" : "Account created successfully!");
+      if (formType === "login") {
+        // Handle token if provided in login response
+        const token = data.token;
+        localStorage.setItem("authToken", token);  // Store token if needed for later use
+        alert("Login successful!");
+      } else {
+        alert("Account created successfully!");
+      }
     } catch (error) {
       alert("An error occurred. Please try again.");
     }
