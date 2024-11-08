@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Alert from "src/components/Alert";
 import Footer from "src/components/Footer";
 import Nav from "src/components/Nav";
+import Rank from "src/pages/Rank";
 import About from "src/pages/About";
 import ApiTest from "src/pages/ApiTest";
 import Home from "src/pages/Home";
@@ -14,6 +15,7 @@ const App = () => {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/rank/" element={<Rank />} />
         <Route path="/about/" element={<About />} />
         
         <Route path="/api-test/" element={<ApiTest />} />
