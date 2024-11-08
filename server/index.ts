@@ -2,7 +2,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cors from "cors";  // Import CORS
+import cors from "cors";
 import router from "./router";
 
 dotenv.config();
@@ -10,19 +10,19 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Configure CORS to allow requests from your frontend origin
+// CORS middleware should come before routes
 app.use(cors({
-  origin: "http://localhost:3000",  // Replace with your frontend's origin
-  methods: ["GET", "POST"],         // Specify allowed methods
-  credentials: true                 // Include credentials if needed
+  origin: "*",  // Allow frontend's origin
+  methods: ["GET", "POST"],         // Allow specific HTTP methods
+  credentials: true                 // Allow cookies or authorization headers if needed
 }));
 
 // Connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URI!)
+mongoose.connect(process.env.MONGO_URI!)
   .then(() => console.log("Connected to MongoDB"))
-  .catch((error) => console.error("MongoDB connection error:", error));
+  .catch(error => console.error("MongoDB connection error:", error));
 
+// Use API routes
 app.use("/api", router);
 
 const PORT = process.env.PORT || 5000;
