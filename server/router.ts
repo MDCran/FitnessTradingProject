@@ -3,11 +3,11 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "./models/User";
 import { BAD_REQUEST, CREATED, OK } from "./util";
-import { isInfoSupplied } from "./middleware";
+import { isInfoSupplied } from "./middleware";  // Import validation middleware
 
 const router = express.Router();
 
-// Register and login routes
+// Register endpoint
 router.post(
   "/register",
   isInfoSupplied("body", "firstName", "lastName", "username", "password", "confirmPassword"),
@@ -29,6 +29,7 @@ router.post(
   }
 );
 
+// Login endpoint
 router.post(
   "/login",
   isInfoSupplied("body", "username", "password"),

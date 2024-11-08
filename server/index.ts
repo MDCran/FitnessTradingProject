@@ -1,20 +1,19 @@
-// server/index.ts
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import router from "./router";
+import router from "./router";  // Import your API routes
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-// CORS middleware should come before routes
+// Set up CORS to allow localhost and Vercel frontend
 app.use(cors({
-  origin: "*",  // Allow frontend's origin
-  methods: ["GET", "POST"],         // Allow specific HTTP methods
-  credentials: true                 // Allow cookies or authorization headers if needed
+  origin: ["http://localhost:3000", "https://fitness-trading-project.vercel.app"],
+  methods: ["GET", "POST"],
+  credentials: true
 }));
 
 // Connect to MongoDB
