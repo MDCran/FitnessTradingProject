@@ -33,10 +33,14 @@ const mongoClient = mongoose
 const app = express();
 
 app.use(express.json());
-app.use(cors({ 
-  origin: ["http://localhost:3000", "https://fitness-trading-project.vercel.app"],
-  credentials: true 
+app.use(cors({
+  origin: ["https://fitness-trading-project.vercel.app"],  // Vercel frontend origin
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
 }));
+
+
 app.use(logger("dev"));
 app.use(ExpressMongoSanitize());
 app.set("port", process.env.PORT ?? 8000);

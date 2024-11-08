@@ -18,8 +18,13 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
+      // Use Vercel's deployed URL or fallback to local in development
+      const apiUrl = process.env.NODE_ENV === "production" 
+        ? "https://fitness-trading-project.vercel.app" 
+        : "http://localhost:8000";
+
       const url = `${apiUrl}/api/${formType === "login" ? "login" : "register"}`;
+      
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -45,6 +50,7 @@ const Login = () => {
         alert("Account created successfully!");
       }
     } catch (error) {
+      console.error("Error during submission:", error);
       alert("An error occurred. Please try again.");
     }
   };
