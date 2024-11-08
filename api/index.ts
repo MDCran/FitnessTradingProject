@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import http from "http";
 import mongoose from "mongoose";
@@ -13,13 +13,12 @@ import generalRouter from "../server/router";
 
 dotenv.config();
 
-// some constants
+// MongoDB connection setup
 const MONGO_URL = process.env.MONGO_SRV;
 if (!MONGO_URL) {
   throw new Error("MONGO_SRV is not defined in .env file!");
 }
 
-// MongoDB connection using Mongoose
 const mongoClient = mongoose
   .connect(MONGO_URL)
   .then((mongo) => {
@@ -27,22 +26,25 @@ const mongoClient = mongoose
     return mongo.connection.getClient();
   })
   .catch((error) => {
-    console.log(`Error connecting to MongoDB database: ${error}`);
+    console.error(`Error connecting to MongoDB database: ${error}`);
     throw new Error(error.message);
   });
 
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ 
+  origin: ["http://localhost:3000", "https://fitness-trading-project.vercel.app"],
+  credentials: true 
+}));
 app.use(logger("dev"));
 app.use(ExpressMongoSanitize());
 app.set("port", process.env.PORT ?? 8000);
 
-// sessions
+// Session setup with MongoDB store
 app.use(
   session({
-    secret: process.env.SESSION_SECRET ?? "secret",
+    secret: process.env.SESSION_SECRET ?? "default_secret",
     resave: true,
     saveUninitialized: false,
     store: MongoStore.create({
@@ -54,28 +56,27 @@ app.use(
   })
 );
 
+// API routes
 const API_PREFIX = "/api";
-// Add your routers here:
 app.use(API_PREFIX, generalRouter);
 
-const buildDir = path.resolve(__dirname, "..", "client", "build");
-const indexDir = path.join(buildDir, "index.html");
-
-// Build directory
+// Serve static files from React app
+const buildDir = path.join(__dirname, "..", "client", "build");
 app.use(express.static(buildDir));
 
-// Serve index.html for all other routes
+// Catch-all route for serving React's index.html
 app.get("*", (req: Request, res: Response) => {
-  res.status(OK).sendFile(indexDir);
+  res.sendFile(path.join(buildDir, "index.html"));
 });
 
-app.use((err: Error, req: Request, res: Response) => {
+// Error handling middleware
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(SERVER_ERROR).send({ error: "Server error" });
 });
 
+// Start the server
 const server = http.createServer(app);
-
 server.listen(app.get("port"), () => {
   console.log(`Server running on port: ${app.get("port")}`);
 });

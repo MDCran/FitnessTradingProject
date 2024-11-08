@@ -18,8 +18,8 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Use the Vercel backend URL
-      const url = `https://fitness-trading-project.vercel.app/api/${formType === "login" ? "login" : "register"}`;
+      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
+      const url = `${apiUrl}/api/${formType === "login" ? "login" : "register"}`;
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -39,7 +39,7 @@ const Login = () => {
 
       if (formType === "login") {
         const token = data.token;
-        localStorage.setItem("authToken", token);  // Store token if needed for future use
+        localStorage.setItem("authToken", token);
         alert("Login successful!");
       } else {
         alert("Account created successfully!");

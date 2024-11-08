@@ -37,20 +37,34 @@ router.post(
     const { username, password } = req.body;
 
     try {
+      // Find the user by username
       const user = await User.findOne({ username });
-      if (!user) return res.status(BAD_REQUEST).json({ error: "User not found" });
+      if (!user) {
+        console.log("User not found");
+        return res.status(BAD_REQUEST).json({ error: "User not found" });
+      }
 
+      // Compare the provided password with the hashed password in the database
       const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) return res.status(BAD_REQUEST).json({ error: "Invalid password" });
+      console.log("Password valid:", isPasswordValid);
+      if (!isPasswordValid) {
+        return res.status(BAD_REQUEST).json({ error: "Invalid password" });
+      }
 
-      const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET!, {
-        expiresIn: "1h",
-      });
+      // Generate a JWT token if login is successful
+      const token = jwt.sign(
+        { id: user._id, username: user.username },
+        process.env.JWT_SECRET!,
+        { expiresIn: "1h" }
+      );
+      console.log("Token generated:", token);
       res.status(OK).json({ message: "Login successful", token });
     } catch (error) {
+      console.log("Error during login:", error);
       res.status(BAD_REQUEST).json({ error: "Error logging in", details: error });
     }
   }
 );
+
 
 export default router;
