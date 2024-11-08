@@ -34,11 +34,12 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: ["https://fitness-trading-project.vercel.app"],  // Vercel frontend origin
+  origin: ["https://fitness-trading-project.vercel.app"],  // Replace with your frontend domain
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
 }));
+
 
 
 app.use(logger("dev"));

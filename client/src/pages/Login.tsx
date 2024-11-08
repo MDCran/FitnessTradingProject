@@ -21,8 +21,9 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
-      const url = `${apiUrl}/api/${formType === "login" ? "login" : "register"}`;
+        const apiUrl = process.env.REACT_APP_API_URL || 'https://fitness-trading-project.vercel.app';
+        const url = `${apiUrl}/api/${formType === "login" ? "login" : "register"}`;
+        
       const response = await fetch(url, {
         method: "POST",
         headers: {
