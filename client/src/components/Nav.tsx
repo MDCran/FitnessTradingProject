@@ -34,8 +34,7 @@ const Nav = () => {
       >
         <Navlink to="/">Home</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
-        <Navlink to="/about/">About</Navlink>
-        <Navlink to="/api-test/">API Test</Navlink>
+        <Navlink to="/login/">Login / Create Account</Navlink>
       </ul>
     </nav>
   );

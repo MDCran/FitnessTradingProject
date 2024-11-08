@@ -13,6 +13,7 @@
   },
   "author": "Adam Janicki",
   "dependencies": {
+    "@adamjanicki/ui": "^1.4.9",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^4.6.0",
     "core-js": "^3.26.0",

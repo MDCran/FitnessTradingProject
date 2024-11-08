@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";  // Import useNavigate for redirection
 import PageWrapper from "src/components/PageWrapper";
 
 const Login = () => {
@@ -11,6 +12,8 @@ const Login = () => {
     confirmPassword: ""
   });
 
+  const navigate = useNavigate();  // Initialize useNavigate for redirection
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -18,13 +21,8 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Use Vercel's deployed URL or fallback to local in development
-      const apiUrl = process.env.NODE_ENV === "production" 
-        ? "https://fitness-trading-project.vercel.app" 
-        : "http://localhost:8000";
-
+      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
       const url = `${apiUrl}/api/${formType === "login" ? "login" : "register"}`;
-      
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -42,15 +40,14 @@ const Login = () => {
         return;
       }
 
-      if (formType === "login") {
-        const token = data.token;
-        localStorage.setItem("authToken", token);
-        alert("Login successful!");
-      } else {
-        alert("Account created successfully!");
-      }
+      // Login or registration successful - store token and redirect
+      const token = data.token;
+      localStorage.setItem("authToken", token);  // Store the token if needed for future use
+      alert(formType === "login" ? "Login successful!" : "Account created successfully!");
+
+      // Redirect to the profile page
+      navigate(`/user/@${formData.username}`);
     } catch (error) {
-      console.error("Error during submission:", error);
       alert("An error occurred. Please try again.");
     }
   };
