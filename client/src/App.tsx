@@ -8,6 +8,7 @@ import ApiTest from "src/pages/ApiTest";
 import Home from "src/pages/Home";
 import NotFound from "src/pages/NotFound";
 import Login from "./pages/Login";
+import UserProfile from "./pages/UserProfile";  // Import the UserProfile component
 
 const App = () => {
   return (
@@ -17,16 +18,16 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/rank/" element={<Rank />} />
         <Route path="/about/" element={<About />} />
-        
         <Route path="/api-test/" element={<ApiTest />} />
-        {/* Make sure this is the last route */}
-        <Route path="*" element={<NotFound />} />
 
+        {/* User Account Page Route */}
+        <Route path="/user/@:username" element={<UserProfile />} />
 
         {/* Michael Cran Work In Progress: */}
         <Route path="/login/" element={<Login />} />
-        {/* ------------------------------ */}
 
+        {/* 404 Page Not Found - Keep this as the last route */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Alert />
       <Footer />

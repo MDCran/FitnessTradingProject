@@ -8,7 +8,7 @@ import cors from "cors";
 import logger from "morgan";
 import MongoStore from "connect-mongo";
 import ExpressMongoSanitize from "express-mongo-sanitize";
-import { OK, SERVER_ERROR } from "../server/util";
+import { SERVER_ERROR } from "../server/util";
 import generalRouter from "../server/router";
 
 dotenv.config();
