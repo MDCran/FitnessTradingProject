@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { calculateCountdown } from "src/utils/calculateCountdown";
+
+// Rest of the component code remains the same...
+
 
 type Challenge = {
   id: string;
