@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";  // Import useNavigate for redirection
+import { useNavigate } from "react-router-dom";
 import PageWrapper from "src/components/PageWrapper";
 
 const Login = () => {
@@ -12,7 +12,7 @@ const Login = () => {
     confirmPassword: ""
   });
 
-  const navigate = useNavigate();  // Initialize useNavigate for redirection
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,17 +21,19 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-        const apiUrl = process.env.REACT_APP_API_URL || 'https://fitness-trading-project.vercel.app';
-        const url = `${apiUrl}/api/${formType === "login" ? "login" : "register"}`;
-        
+      // Determine API URL based on environment
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const url = `${apiUrl}/api/${formType === "login" ? "login" : "register"}`;
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(formType === "login" 
-          ? { username: formData.username, password: formData.password } 
-          : formData
+        body: JSON.stringify(
+          formType === "login"
+            ? { username: formData.username, password: formData.password }
+            : formData
         )
       });
 
@@ -41,14 +43,15 @@ const Login = () => {
         return;
       }
 
-      // Login or registration successful - store token and redirect
+      // Store token and redirect to profile page
       const token = data.token;
-      localStorage.setItem("authToken", token);  // Store the token if needed for future use
+      localStorage.setItem("authToken", token);
       alert(formType === "login" ? "Login successful!" : "Account created successfully!");
 
-      // Redirect to the profile page
-      navigate(`/user/@${formData.username}`);
+      // Redirect to profile page without '@' in the URL
+      navigate(`/user/${formData.username}`);
     } catch (error) {
+      console.error("Error:", error);
       alert("An error occurred. Please try again.");
     }
   };

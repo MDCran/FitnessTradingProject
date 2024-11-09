@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TripleFade as Hamburger } from "@adamjanicki/ui";
+import { useNavigate } from "react-router-dom";
 import "src/components/nav.css";
 import { UnstyledLink } from "src/components/Link";
 
@@ -10,7 +11,22 @@ type NavlinkProps = {
 
 const Nav = () => {
   const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);  // Track login state
+  const navigate = useNavigate();
+
   const closeMenu = () => setOpen(false);
+
+  // Check if token exists in localStorage on mount
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    setIsLoggedIn(!!token);  // Set login state based on token presence
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    setIsLoggedIn(false);
+    navigate("/login");  // Redirect to login page after logout
+  };
 
   const Navlink = (props: NavlinkProps) => (
     <li className="navlink-li">
@@ -34,7 +50,15 @@ const Nav = () => {
       >
         <Navlink to="/">Home</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
-        <Navlink to="/login/">Login / Create Account</Navlink>
+        {isLoggedIn ? (
+          <li className="navlink-li">
+            <button className="navlink" onClick={handleLogout}>
+              Logout
+            </button>
+          </li>
+        ) : (
+          <Navlink to="/login/">Login / Create Account</Navlink>
+        )}
       </ul>
     </nav>
   );
