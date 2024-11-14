@@ -49,3 +49,20 @@ export const isInfoValidId =
     }
     next();
   };
+
+
+const jwt = require("jsonwebtoken");
+function verifyToken(req: Request, res: Response, next: NextFunction){
+  const token = req.header("Authorization");
+  if (!token) return res.status(401).json("Access Denied");
+  try{
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.userID = decoded.userID;
+    next();
+  }
+  catch(err){
+    res.status(400).json("Invalid Token");
+  }
+};
+
+module.exports = verifyToken;
