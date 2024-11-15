@@ -10,7 +10,7 @@ import MongoStore from "connect-mongo";
 import ExpressMongoSanitize from "express-mongo-sanitize";
 import { SERVER_ERROR } from "../server/util";
 import userRoutes from "../server/routes/userRoutes";
-
+import challengeRoutes from "../server/routes/challengeRoutes";
 dotenv.config();
 
 // MongoDB connection setup
@@ -67,6 +67,7 @@ app.use(
 // API routes
 const API_PREFIX = "/api";
 app.use(API_PREFIX, userRoutes);
+app.use(API_PREFIX, challengeRoutes);
 // Serve static files from React app
 const buildDir = path.join(__dirname, "..", "client", "build");
 app.use(express.static(buildDir));
