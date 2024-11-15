@@ -9,7 +9,7 @@ import logger from "morgan";
 import MongoStore from "connect-mongo";
 import ExpressMongoSanitize from "express-mongo-sanitize";
 import { SERVER_ERROR } from "../server/util";
-import generalRouter from "../server/router";
+import userRoutes from "../server/routes/userRoutes";
 
 dotenv.config();
 
@@ -66,8 +66,7 @@ app.use(
 
 // API routes
 const API_PREFIX = "/api";
-app.use(API_PREFIX, generalRouter);
-
+app.use(API_PREFIX, userRoutes);
 // Serve static files from React app
 const buildDir = path.join(__dirname, "..", "client", "build");
 app.use(express.static(buildDir));
