@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-interface ChallengeBadge {
-  name: string;
-  type: "daily" | "weekly";
-  dateCompleted: string;
-  goalAchieved: string;
+interface Challenge {
+  title: string;
+  description: string;
 }
 
 interface UserData {
   firstName: string;
   lastName: string;
   username: string;
-  completedChallenges: ChallengeBadge[];
+  completedChallenges: Challenge[];
+  createdChallenges: Challenge[];
 }
 
 const UserProfile: React.FC = () => {
@@ -23,7 +22,7 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const apiUrl = process.env.REACT_APP_API_URL;
+        const apiUrl = process.env.REACT_APP_API_URL || "https://fitknights.xyz";
         const response = await fetch(`${apiUrl}/api/user/${username}`);
         const data = await response.json();
         
@@ -53,13 +52,11 @@ const UserProfile: React.FC = () => {
 
           <h2>Completed Challenges</h2>
           <div className="completed-challenges">
-            {userData.completedChallenges.length > 0 ? (
-              userData.completedChallenges.map((badge, index) => (
+            {userData.completedChallenges?.length > 0 ? (
+              userData.completedChallenges.map((Challenge, index) => (
                 <div key={index} className="challenge-badge">
-                  <p>Challenge: {badge.name}</p>
-                  <p>Type: {badge.type === "daily" ? "Daily Challenge" : "Weekly Challenge"}</p>
-                  <p>Goal Achieved: {badge.goalAchieved}</p>
-                  <p>Date Completed: {new Date(badge.dateCompleted).toLocaleDateString()}</p>
+                  <p>Challenge Title: {Challenge.title}</p>
+                  <p>Description: {Challenge.description}</p>
                 </div>
               ))
             ) : (

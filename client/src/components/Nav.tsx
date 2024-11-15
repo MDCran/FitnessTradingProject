@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "src/components/nav.css";
 import { UnstyledLink } from "src/components/Link";
 
+
 type NavlinkProps = {
   to: string;
   children: React.ReactNode;
@@ -50,6 +51,7 @@ const Nav = () => {
       >
         <Navlink to="/">Home</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
+        {isLoggedIn && <Navlink to={`/user/${localStorage.getItem("username")}`}>Profile</Navlink>}
         {isLoggedIn ? (
           <li className="navlink-li">
             <button className="navlink" onClick={handleLogout}>
