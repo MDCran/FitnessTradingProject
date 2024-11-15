@@ -4,6 +4,7 @@ import { isInfoSupplied } from "../middleware";  // Import validation middleware
 import Challenge from "../models/Challenge";
 import { auth } from "../authMiddleware";
 import User from "../models/User";
+import mongoose from "mongoose";
 const router = express.Router();
 interface CustomRequest extends express.Request {
   userID?: string;
@@ -59,20 +60,35 @@ router.post(
     }
   }
 );
-/*
-// Get user profile endpoint
-router.get("/user/:username", async (req, res) => {
-  const { username } = req.params;
 
+// Get user profile endpoint
+router.post("/updateChallenge",
+  auth,
+  isInfoSupplied("body", "challengeID", "title", "description"),
+  async (req: CustomRequest, res) => {
+  const { challengeID,title,description } = req.body;
   try {
-    const user = await User.findOne({ username }, "firstName lastName username completedChallenges createdChallenges");
+    const objChallengeID = new mongoose.Types.ObjectId(challengeID);
+    const challenge = await Challenge.findById(objChallengeID);
+    if (!challenge) {
+      return res.status(NOT_FOUND).json({ message: "Challenge not found" });
+    }
+    const user = await User.findById(req.userID);
     if (!user) {
       return res.status(NOT_FOUND).json({ message: "User not found" });
     }
-    res.status(OK).json(user);
+    console.log("challenge creator id", challenge.createdBy);
+    console.log("current user id", user._id);
+    if(challenge.createdBy.toString() !== user._id.toString()){
+      return res.status(NOT_FOUND).json({ message: "You are not the creator of this challenge!" });
+    }
+    challenge.title = title;
+    challenge.description = description;
+    await challenge.save();
+    res.status(OK).json({ message: "Challenge updated successfully!" });
   } catch (error) {
-    res.status(SERVER_ERROR).json({ message: "Error fetching user data", details: error.message });
+    res.status(SERVER_ERROR).json({ message: "Error updating challenge", details: error.message });
   }
-});*/
+});
 
 export default router;
