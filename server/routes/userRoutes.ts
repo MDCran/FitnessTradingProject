@@ -68,12 +68,14 @@ router.get("/user/:username", async (req, res) => {
   const { username } = req.params;
 
   try {
-    const user = await User.findOne({ username }, "firstName lastName username completedChallenges createdChallenges")
+    const user = await 
+    User.findOne({ username }, "firstName lastName username completedChallenges createdChallenges")
+    .populate("completedChallenges", "title, description")
+    .populate("createdChallenges", "title, description");
     if (!user) {
       return res.status(NOT_FOUND).json({ message: "User not found" });
     }
-    user.populate("completedChallenges", "title description")
-    user.populate("createdChallenges", "title description");
+    
     res.status(OK).json(user);
   } catch (error) {
     res.status(SERVER_ERROR).json({ message: "Error fetching user data", details: error.message });

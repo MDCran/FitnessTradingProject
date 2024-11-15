@@ -16,7 +16,7 @@ const UserSchema: Schema = new Schema({
   lastName: { type: String, required: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  createdChallenges: { type: [mongoose.Schema.Types.ObjectId], default: [] },
+  createdChallenges: { type: [mongoose.Schema.Types.ObjectId], ref:"Challenge", default: [] },
   completedChallenges: { type: [String], default: [] },
   totalCompleted: { type: Number, default: 0 },
 });

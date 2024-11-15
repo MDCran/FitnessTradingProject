@@ -1,5 +1,5 @@
 import express from "express";
-import {  CREATED, SERVER_ERROR } from "../util";
+import {  NOT_FOUND, CREATED, SERVER_ERROR, OK } from "../util";
 import { isInfoSupplied } from "../middleware";  // Import validation middleware
 import Challenge from "../models/Challenge";
 import { auth } from "../authMiddleware";
@@ -32,39 +32,34 @@ router.post(
 );
 
 // Login endpoint
-/*router.post(
-  "/login",
-  isInfoSupplied("body", "username", "password"),
-  async (req, res) => {
-    const { username, password } = req.body;
-
+router.post(
+  "/completeChallenge",
+  auth,
+  isInfoSupplied("body", "challengeID"),
+  async (req: CustomRequest, res) => {
+    const { challengeID } = req.body;
     try {
       // Find the user by username
-      const user = await User.findOne({ username });
+      const challenge = await Challenge.findOne({ challengeID });
+      if (!challenge) {
+        console.log("Challenge not found");
+        return res.status(NOT_FOUND).json({ error: "Challenge not found" });
+      }
+
+      const user = await User.findById(req.userID);
       if (!user) {
-        console.log("User not found");
         return res.status(NOT_FOUND).json({ error: "User not found" });
       }
-
-      // Compare the provided password with the hashed password in the database
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return res.status(BAD_REQUEST).json({ error: "Invalid password" });
-      }
-
-      // Generate a JWT token if login is successful
-      const token = jwt.sign(
-        { id: user._id, username: user.username },
-        process.env.JWT_SECRET!,
-        { expiresIn: "1h" }
-      );
-      res.status(OK).json({ message: "Login successful", token });
+      user.completedChallenges.push(challengeID);
+      user.totalCompleted++;
+      await user.save();
+      res.status(OK).json({ message: "Challenge completed successfully!" });
     } catch (error) {
-      res.status(SERVER_ERROR).json({ error: "Error logging in", details: error.message });
+      res.status(SERVER_ERROR).json({ error: "Couldn't complete challenge!", details: error.message });
     }
   }
 );
-
+/*
 // Get user profile endpoint
 router.get("/user/:username", async (req, res) => {
   const { username } = req.params;
