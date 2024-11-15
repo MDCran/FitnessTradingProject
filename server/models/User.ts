@@ -6,7 +6,7 @@ export interface IUser extends Document {
   lastName: string;
   username: string;
   password: string;
-  createdChallenges: string[];
+  createdChallenges: mongoose.Types.ObjectId[];
   completedChallenges: string[];
   totalCompleted: number;
 }
@@ -16,7 +16,7 @@ const UserSchema: Schema = new Schema({
   lastName: { type: String, required: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  createdChallenges: { type: [String], default: [] },
+  createdChallenges: { type: [mongoose.Schema.Types.ObjectId], default: [] },
   completedChallenges: { type: [String], default: [] },
   totalCompleted: { type: Number, default: 0 },
 });

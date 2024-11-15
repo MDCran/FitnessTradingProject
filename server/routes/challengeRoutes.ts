@@ -1,28 +1,30 @@
 import express from "express";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import User from "../models/User";
-import { BAD_REQUEST, CREATED, OK, NOT_FOUND, SERVER_ERROR } from "../util";
+import {  CREATED, SERVER_ERROR } from "../util";
 import { isInfoSupplied } from "../middleware";  // Import validation middleware
-
+import Challenge from "../models/Challenge";
+import { auth } from "../authMiddleware";
+import User from "../models/User";
 const router = express.Router();
-
+interface CustomRequest extends express.Request {
+  userID?: string;
+}
 // Register endpoint
 router.post(
-  "/register",
-  isInfoSupplied("body", "firstName", "lastName", "username", "password", "confirmPassword"),
-  async (req, res) => {
-    const { firstName, lastName, username, password, confirmPassword } = req.body;
-
-    if (password !== confirmPassword) {
-      return res.status(BAD_REQUEST).json({ error: "Passwords do not match" });
-    }
+  "/createChallenge",
+  auth,
+  isInfoSupplied("body", "title", "description"),
+  async (req: CustomRequest, res) => {
+    const { title, description } = req.body;
 
     try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const user = new User({ firstName, lastName, username, password: hashedPassword });
-      await user.save();
-      res.status(CREATED).json({ message: "Account created successfully" });
+      const challenge = new Challenge({ title, description, createdBy: req.userID });
+      await challenge.save();
+      await User.findByIdAndUpdate(
+        req.userID,
+        { $push: { createdChallenges: challenge._id } },
+        { new: true }
+      );
+      res.status(CREATED).json({ message: "Challenge created successfully" });
     } catch (error) {
       res.status(SERVER_ERROR).json({ error: "Error creating user", details: error.message });
     }
@@ -30,7 +32,7 @@ router.post(
 );
 
 // Login endpoint
-router.post(
+/*router.post(
   "/login",
   isInfoSupplied("body", "username", "password"),
   async (req, res) => {
@@ -68,16 +70,14 @@ router.get("/user/:username", async (req, res) => {
   const { username } = req.params;
 
   try {
-    const user = await User.findOne({ username }, "firstName lastName username completedChallenges createdChallenges")
+    const user = await User.findOne({ username }, "firstName lastName username completedChallenges createdChallenges");
     if (!user) {
       return res.status(NOT_FOUND).json({ message: "User not found" });
     }
-    user.populate("completedChallenges", "title description")
-    user.populate("createdChallenges", "title description");
     res.status(OK).json(user);
   } catch (error) {
     res.status(SERVER_ERROR).json({ message: "Error fetching user data", details: error.message });
   }
-});
+});*/
 
 export default router;
