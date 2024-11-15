@@ -1,9 +1,9 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "./models/User";
-import { BAD_REQUEST, CREATED, OK, NOT_FOUND, SERVER_ERROR } from "./util";
-import { isInfoSupplied } from "./middleware";  // Import validation middleware
+import User from "../models/User";
+import { BAD_REQUEST, CREATED, OK, NOT_FOUND, SERVER_ERROR } from "../util";
+import { isInfoSupplied } from "../middleware";  // Import validation middleware
 
 const router = express.Router();
 
@@ -68,7 +68,7 @@ router.get("/user/:username", async (req, res) => {
   const { username } = req.params;
 
   try {
-    const user = await User.findOne({ username }, "firstName lastName username");
+    const user = await User.findOne({ username }, "firstName lastName username completedChallenges createdChallenges");
     if (!user) {
       return res.status(NOT_FOUND).json({ message: "User not found" });
     }

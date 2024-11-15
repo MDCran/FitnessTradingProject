@@ -23,7 +23,7 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const apiUrl = process.env.REACT_APP_API_URL || 'https://fitness-trading-project.vercel.app';
+        const apiUrl = process.env.REACT_APP_API_URL;
         const response = await fetch(`${apiUrl}/api/user/${username}`);
         const data = await response.json();
         
