@@ -50,6 +50,7 @@ const Nav = () => {
         style={{ display: open ? "flex" : undefined }}
       >
         <Navlink to="/">Home</Navlink>
+        <Navlink to="/">About</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
         {isLoggedIn && <Navlink to={`/user/${localStorage.getItem("username")}`}>Profile</Navlink>}
         {isLoggedIn ? (

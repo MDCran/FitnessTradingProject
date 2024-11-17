@@ -10,7 +10,7 @@ const Rank = () => (
       <table border={1}>
         <thead>
           <tr>
-            <th color="red">Rank</th>
+            <th>Rank</th>
             <th>Username</th>
             <th>Score</th>
           </tr>
