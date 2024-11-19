@@ -63,7 +63,7 @@ router.post(
 
 // Get user profile endpoint
 router.post("/updateChallenge",
-  auth,
+  auth, //this is how you auth the route
   isInfoSupplied("body", "challengeID", "title", "description"),
   async (req: CustomRequest, res) => {
   const { challengeID,title,description } = req.body;
@@ -90,5 +90,21 @@ router.post("/updateChallenge",
     res.status(SERVER_ERROR).json({ message: "Error updating challenge", details: error.message });
   }
 });
+
+
+/*Work here 
+DeleteChallenge:
+auth the route (look at the other routes for how to do this)
+body: challengeID
+1. Check if challenge exists
+2. If it does delete challenge from database
+
+
+SearchChallenge:
+auth the route 
+body: title
+1. Find all challenges that have the title in the body
+2. Return the challenges found in the response as an array 
+*/
 
 export default router;
