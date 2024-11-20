@@ -22,7 +22,7 @@ const Login = () => {
     e.preventDefault();
     try {
       // Determine API URL based on environment
-      const apiUrl = process.env.REACT_APP_API_URL || "https://fitknights.xyz";
+      const apiUrl = process.env.REACT_APP_API_URL;
       console.log("API URL:", apiUrl);
       const url = `${apiUrl}/api/${formType === "login" ? "login" : "register"}`;
       console.log("URL:", url);

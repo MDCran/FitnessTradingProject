@@ -23,8 +23,20 @@ const Nav = () => {
     setIsLoggedIn(!!token);  // Set login state based on token presence
   }, []);
 
+  useEffect(() => {
+    const handleStorage = () => {
+      const token = localStorage.getItem("authToken");
+      setIsLoggedIn(!!token);  
+    };
+
+    window.addEventListener("storage", handleStorage);  
+    return () => window.removeEventListener("storage", handleStorage);  
+  }, []);
+  
+  
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("username");
     setIsLoggedIn(false);
     navigate("/login");  // Redirect to login page after logout
   };
