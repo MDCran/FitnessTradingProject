@@ -109,7 +109,6 @@ function Rank() {
       find all places where you should make your own changes. -- TEST
       </p> */}
 
-      <div className="Rank">
         <div className="container">
           <table {...getTableProps()}>
             <thead>
@@ -139,7 +138,6 @@ function Rank() {
             </tbody>
           </table>
         </div>
-      </div>
 
     </PageWrapper>
   );
