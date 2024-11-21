@@ -2,7 +2,7 @@ import "./App.css";
 // import fakeData from "./MOCK_DATA.json";
 import * as React from "react";
 import { useTable, Column } from "react-table";
-// import PageWrapper from "src/components/PageWrapper";
+import PageWrapper from "src/components/PageWrapper";
 
 type RowData = {
   id: number;
@@ -100,6 +100,7 @@ function Rank() {
     useTable<RowData>({ columns, data });
 
   return (
+    <PageWrapper title="Rank">
       <div className="Rank">
         <div className="container">
           <table {...getTableProps()}>
@@ -131,6 +132,7 @@ function Rank() {
           </table>
         </div>
       </div>
+      </PageWrapper>
   );
 }
 
