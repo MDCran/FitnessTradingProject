@@ -25,7 +25,9 @@ const UserProfile: React.FC = () => {
       setLoading(true);
       setError(null); // Reset error state
       try {
-        const apiUrl = process.env.REACT_APP_API_URL || "https://fitknights.xyz";
+
+        const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+
         const response = await fetch(`${apiUrl}/api/user/${username}`);
 
         if (response.ok) {
