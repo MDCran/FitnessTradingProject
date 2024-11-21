@@ -1,7 +1,7 @@
 import "./App.css";
 // import fakeData from "./MOCK_DATA.json";
-import * as React from "react";
-import { useTable, Column } from "react-table";
+// import * as React from "react";
+// import { useTable, Column } from "react-table";
 import PageWrapper from "src/components/PageWrapper";
 
 // type RowData = {
