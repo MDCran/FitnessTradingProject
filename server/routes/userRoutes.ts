@@ -21,19 +21,20 @@ router.post(
     try {
       const existingUser = await User.findOne({ username });
       if (existingUser) {
-        return res.status(BAD_REQUEST).json({ error: "Username already taken" });
+        return res.status(BAD_REQUEST).json({ error: "Username is already taken. Please try another one." });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = new User({ firstName, lastName, username, password: hashedPassword });
       await user.save();
+
       res.status(CREATED).json({ message: "Account created successfully" });
     } catch (error) {
+      console.error("Error during registration:", error);
       res.status(SERVER_ERROR).json({ error: "Error creating user", details: error.message });
     }
   }
 );
-
 
 // Login endpoint
 router.post(
@@ -45,12 +46,12 @@ router.post(
     try {
       const user = await User.findOne({ username });
       if (!user) {
-        return res.status(NOT_FOUND).json({ error: "User not found" });
+        return res.status(NOT_FOUND).json({ error: "No account found with this username." });
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        return res.status(BAD_REQUEST).json({ error: "Invalid password" });
+        return res.status(BAD_REQUEST).json({ error: "Incorrect password. Please try again." });
       }
 
       const token = jwt.sign(
@@ -61,11 +62,11 @@ router.post(
 
       res.status(OK).json({ message: "Login successful", token });
     } catch (error) {
+      console.error("Error during login:", error);
       res.status(SERVER_ERROR).json({ error: "Error logging in", details: error.message });
     }
   }
 );
-
 
 
 
