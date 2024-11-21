@@ -1,29 +1,23 @@
-
-
-// import React, { useMemo } from 'react';
-
-// import { COLUMNS } from
-
-
-// import React, { useState, useEffect } from "react";
-
-
-import PageWrapper from "src/components/PageWrapper";
-
+import "./App.css";
+// import fakeData from "./MOCK_DATA.json";
 import * as React from "react";
 import { useTable } from "react-table";
+import { JSX } from "react/jsx-runtime";
+import PageWrapper from "src/components/PageWrapper";
 
+function Rank() {
+  // const data = React.useMemo(() => fakeData, []);
+  const data = 
+    [
+      {"id":1,"first_name":"Millicent","last_name":"Whatham","email":"mwhatham0@comsenz.com","gender":"Female","university":"Samarkand State University"},
+      {"id":2,"first_name":"Siward","last_name":"Amberger","email":"samberger1@behance.net","gender":"Male","university":"Institute of Industrial Electronics Engineering"},
+      {"id":3,"first_name":"Sheree","last_name":"Madeley","email":"smadeley2@google.com","gender":"Female","university":"Kateb Institute of Higher Education"},
+      {"id":4,"first_name":"Egor","last_name":"Downing","email":"edowning3@nymag.com","gender":"Male","university":"Universidad de Concepción del Uruguay"},
+      {"id":5,"first_name":"Donn","last_name":"Wilce","email":"dwilce4@answers.com","gender":"Male","university":"State University of New York at Binghamton"},
+      {"id":6,"first_name":"Kenon","last_name":"Jersch","email":"kjersch5@youtu.be","gender":"Male","university":"Université de Nantes"},
+    ]
 
-
-// const data = React.useMemo(() => fakeData, []);
-const data =  [
-  {"id":1,"first_name":"Millicent","last_name":"Whatham","email":"mwhatham0@comsenz.com","gender":"Female","university":"Samarkand State University"},
-  {"id":2,"first_name":"Siward","last_name":"Amberger","email":"samberger1@behance.net","gender":"Male","university":"Institute of Industrial Electronics Engineering"},
-  {"id":3,"first_name":"Sheree","last_name":"Madeley","email":"smadeley2@google.com","gender":"Female","university":"Kateb Institute of Higher Education"},
-  {"id":4,"first_name":"Egor","last_name":"Downing","email":"edowning3@nymag.com","gender":"Male","university":"Universidad de Concepción del Uruguay"}
-]
-
-const columns = React.useMemo(
+  const columns = React.useMemo(
     () => [
       {
         Header: "ID",
@@ -51,22 +45,20 @@ const columns = React.useMemo(
       },
     ],
     []
-);
+  );
 
-const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data });
 
-
-const Rank = () => (
-  <PageWrapper title="Rank">
-    <p className="tc f4 fw4 w-70">
-    return (
+  return (
+    <PageWrapper title = "Rank">
     <div className="App">
       <div className="container">
         <table {...getTableProps()}>
           <thead>
-            {headerGroups.map((headerGroup) => (
+            {headerGroups.map((headerGroup: { getHeaderGroupProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableRowElement> & React.HTMLAttributes<HTMLTableRowElement>; headers: { getHeaderProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableHeaderCellElement> & React.ThHTMLAttributes<HTMLTableHeaderCellElement>; render: (arg0: string) => string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }[]; }) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
+                {headerGroup.headers.map((column: { getHeaderProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableHeaderCellElement> & React.ThHTMLAttributes<HTMLTableHeaderCellElement>; render: (arg0: string) => string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }) => (
                   <th {...column.getHeaderProps()}>
                     {column.render("Header")}
                   </th>
@@ -75,11 +67,11 @@ const Rank = () => (
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {rows.map((row: { getRowProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableRowElement> & React.HTMLAttributes<HTMLTableRowElement>; cells: { getCellProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableDataCellElement> & React.TdHTMLAttributes<HTMLTableDataCellElement>; render: (arg0: string) => string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }[]; }) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
+                  {row.cells.map((cell: { getCellProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableDataCellElement> & React.TdHTMLAttributes<HTMLTableDataCellElement>; render: (arg0: string) => string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }) => (
                     <td {...cell.getCellProps()}> {cell.render("Cell")} </td>
                   ))}
                 </tr>
@@ -89,13 +81,8 @@ const Rank = () => (
         </table>
       </div>
     </div>
+    </PageWrapper>
   );
-    </p>
-  </PageWrapper>
-);
-
+}
 
 export default Rank;
-
-
-
