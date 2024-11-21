@@ -69,7 +69,8 @@ const Rank: React.FC = () => {
                 <th>RANK</th>
                 <th>USER</th>
                 <th>AURA POINTS</th>
-                <th>STATS</th>
+                <th>PR</th>
+                <th>MILE</th>
               </tr>
             </thead>
             <tbody>
