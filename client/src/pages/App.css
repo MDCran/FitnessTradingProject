@@ -10,7 +10,7 @@ body {
   font-weight: 100;
 }
 .container {
-  border-color: 5px black;
+  border: 5px black;
   position: absolute;
   top: 50%;
   left: 50%;
