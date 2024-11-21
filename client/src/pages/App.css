@@ -6,7 +6,7 @@ body {
   margin: 0;
   background: -webkit-linear-gradient(45deg, #49a09d, #5f2c82);
   background: linear-gradient(45deg, #49a09d, #5f2c82);
-  font-family: sans-serif;
+  font-family: inherit;
   font-weight: 100;
 }
 .container {
@@ -119,22 +119,34 @@ h1, h2 {
   cursor: pointer;
 } */
 
-.highlight {
+.highlight1 {
+  font-family: inherit;
   border-bottom: 2px solid #000000;
-  background-color: rgb(15, 2, 36); 
+  background-color: rgb(17, 16, 17); 
+  text-align: center;
+  width: 10px;
 }
 
-td:nth-child(3) {
+.highlight2 {
+  font-family: inherit;
+}
+
+.highlight3 {
+  font-family: inherit;
+  text-align: right;
   width: 10px;
 }
-td:nth-child(4) {
+
+.highlight4 {
+  font-family: inherit;
+  text-align: right;
   width: 95px;
 }
-td:nth-child(5) {
+
+.highlight5 {
+  font-family: inherit;
+  text-align: right;
   width: 150px;
-}
-td:nth-child(1) {
-  width: 10px;
 }
 
 .styled-table td

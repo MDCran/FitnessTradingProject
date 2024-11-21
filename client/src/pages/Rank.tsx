@@ -76,11 +76,11 @@ const Rank: React.FC = () => {
             <tbody>
               {data.map((row) => (
                 <tr key={row.rank}>
-                  <td className="highlight">{row.rank}</td>
-                  <td>{row.username}</td>
-                  <td>{row.auraPoints}</td>
-                  <td>{row.pr}</td>
-                  <td>{row.mile}</td>
+                  <td className="highlight1">{row.rank}</td>
+                  <td className="highlight2">{row.username}</td>
+                  <td className="highlight3">{row.auraPoints}</td>
+                  <td className="highlight4">{row.pr}</td>
+                  <td className="highlight5">{row.mile}</td>
                 </tr>
               ))}
             </tbody>
