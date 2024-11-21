@@ -1,16 +1,18 @@
 import express from "express";
-import {  NOT_FOUND, CREATED, SERVER_ERROR, OK } from "../util";
-import { isInfoSupplied } from "../middleware";  // Import validation middleware
+import { NOT_FOUND, CREATED, SERVER_ERROR, OK, BAD_REQUEST } from "../util";
+import { isInfoSupplied } from "../middleware"; // Import validation middleware
 import Challenge from "../models/Challenge";
 import { auth } from "../authMiddleware";
 import User from "../models/User";
 import mongoose from "mongoose";
+
 const router = express.Router();
+
 interface CustomRequest extends express.Request {
   userID?: string;
 }
 
-
+// Create a new challenge
 router.post(
   "/createChallenge",
   auth,
@@ -28,11 +30,12 @@ router.post(
       );
       res.status(CREATED).json({ message: "Challenge created successfully" });
     } catch (error) {
-      res.status(SERVER_ERROR).json({ error: "Error creating user", details: error.message });
+      res.status(SERVER_ERROR).json({ error: "Error creating challenge", details: error.message });
     }
   }
 );
 
+// Mark a challenge as completed
 router.post(
   "/completeChallenge",
   auth,
@@ -47,13 +50,9 @@ router.post(
       }
 
       // Check if the challenge is expired
-      const isExpired =
-        new Date().getTime() - new Date(challenge.createdAt).getTime() >
-        7 * 24 * 60 * 60 * 1000; // 1 week in milliseconds
-
-      if (isExpired) {
+      if (challenge.expiresAt <= new Date()) {
         return res
-          .status(400)
+          .status(BAD_REQUEST)
           .json({ error: "Challenge has expired and cannot be completed." });
       }
 
@@ -65,7 +64,7 @@ router.post(
       // Ensure the challenge is in the user's active challenges
       if (!user.activeChallenges.includes(challengeID)) {
         return res
-          .status(400)
+          .status(BAD_REQUEST)
           .json({ error: "Challenge is not in your active challenges." });
       }
 
@@ -91,46 +90,37 @@ router.post(
   }
 );
 
-
-
-
-router.post("/updateChallenge",
-  auth, //this is how you auth the route
+// Update a challenge
+router.post(
+  "/updateChallenge",
+  auth,
   isInfoSupplied("body", "challengeID", "title", "description"),
   async (req: CustomRequest, res) => {
-  const { challengeID,title,description } = req.body;
-  try {
-    const objChallengeID = new mongoose.Types.ObjectId(challengeID);
-    const challenge = await Challenge.findById(objChallengeID);
-    if (!challenge) {
-      return res.status(NOT_FOUND).json({ message: "Challenge not found" });
+    const { challengeID, title, description } = req.body;
+    try {
+      const objChallengeID = new mongoose.Types.ObjectId(challengeID);
+      const challenge = await Challenge.findById(objChallengeID);
+      if (!challenge) {
+        return res.status(NOT_FOUND).json({ message: "Challenge not found" });
+      }
+      const user = await User.findById(req.userID);
+      if (!user) {
+        return res.status(NOT_FOUND).json({ message: "User not found" });
+      }
+      if (challenge.createdBy.toString() !== user._id.toString()) {
+        return res.status(NOT_FOUND).json({ message: "You are not the creator of this challenge!" });
+      }
+      challenge.title = title;
+      challenge.description = description;
+      await challenge.save();
+      res.status(OK).json({ message: "Challenge updated successfully!" });
+    } catch (error) {
+      res.status(SERVER_ERROR).json({ message: "Error updating challenge", details: error.message });
     }
-    const user = await User.findById(req.userID);
-    if (!user) {
-      return res.status(NOT_FOUND).json({ message: "User not found" });
-    }
-    console.log("challenge creator id", challenge.createdBy);
-    console.log("current user id", user._id);
-    if(challenge.createdBy.toString() !== user._id.toString()){
-      return res.status(NOT_FOUND).json({ message: "You are not the creator of this challenge!" });
-    }
-    challenge.title = title;
-    challenge.description = description;
-    await challenge.save();
-    res.status(OK).json({ message: "Challenge updated successfully!" });
-  } catch (error) {
-    res.status(SERVER_ERROR).json({ message: "Error updating challenge", details: error.message });
   }
-});
+);
 
-
-/*Work here 
-DeleteChallenge:
-auth the route (look at the other routes for how to do this)
-body: challengeID
-1. Check if challenge exists
-2. If it does delete challenge from database
-*/
+// Delete a challenge
 router.delete(
   "/deleteChallenge",
   auth,
@@ -169,15 +159,7 @@ router.delete(
   }
 );
 
-
-/*
-SearchChallenge:
-auth the route 
-body: title
-1. Find all challenges that have the title in the body
-2. Return the challenges found in the response as an array 
-*/
-
+// Search challenges
 router.post(
   "/searchChallenge",
   auth,
@@ -203,5 +185,55 @@ router.post(
   }
 );
 
+// Get active challenges
+router.get("/activeChallenges", async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const challenges = await Challenge.find({ expiresAt: { $gt: currentDate } });
+
+    res.status(OK).json(challenges);
+  } catch (error) {
+    res.status(SERVER_ERROR).json({ error: "Error fetching active challenges", details: error.message });
+  }
+});
+
+// Join a challenge
+router.post(
+  "/joinChallenge",
+  auth,
+  isInfoSupplied("body", "challengeID"),
+  async (req: CustomRequest, res) => {
+    const { challengeID } = req.body;
+
+    try {
+      const challenge = await Challenge.findById(challengeID);
+
+      if (!challenge) {
+        return res.status(NOT_FOUND).json({ error: "Challenge not found" });
+      }
+
+      const user = await User.findById(req.userID);
+      if (!user) {
+        return res.status(NOT_FOUND).json({ error: "User not found" });
+      }
+
+      if (user.activeChallenges.includes(challengeID)) {
+        return res.status(BAD_REQUEST).json({ error: "Challenge already active." });
+      }
+
+      // Ensure the challenge is not expired
+      if (challenge.expiresAt <= new Date()) {
+        return res.status(BAD_REQUEST).json({ error: "Challenge has expired and cannot be joined." });
+      }
+
+      user.activeChallenges.push(challengeID);
+      await user.save();
+
+      res.status(OK).json({ message: "Challenge joined successfully." });
+    } catch (error) {
+      res.status(SERVER_ERROR).json({ error: "Error joining challenge", details: error.message });
+    }
+  }
+);
 
 export default router;

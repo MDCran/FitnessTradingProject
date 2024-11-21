@@ -2,6 +2,7 @@ import { NextFunction, Response, Request } from "express";
 import { Types } from "mongoose";
 import { BAD_REQUEST } from "./util";
 import User from "./models/User";
+import Challenge from "./models/Challenge"; // Import Challenge model
 
 type RequestInfo = "body" | "params" | "query";
 
@@ -51,31 +52,33 @@ export const isInfoValidId =
     next();
   };
 
-
   export const expireChallengesMiddleware = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
     try {
+      const currentDate = new Date();
+  
       // Find all users with active challenges
       const users = await User.find({ activeChallenges: { $exists: true, $ne: [] } }).populate(
         "activeChallenges"
       );
   
       for (const user of users) {
-        // Filter out expired challenges
+        // Filter out expired challenges from activeChallenges
         user.activeChallenges = user.activeChallenges.filter((challenge: any) => {
-          const isExpired =
-            new Date().getTime() - new Date(challenge.createdAt).getTime() >
-            7 * 24 * 60 * 60 * 1000; // 1 week in milliseconds
-          return !isExpired;
+          const expiresAt = new Date(challenge.expiresAt); // Use the expiresAt field
+          return expiresAt > currentDate; // Keep only non-expired challenges
         });
   
-        await user.save();
+        await user.save(); // Save the updated user document
       }
   
-      next();
+      // Remove expired challenges from the database (optional)
+      await Challenge.deleteMany({ expiresAt: { $lte: currentDate } });
+  
+      next(); // Proceed to the next middleware or route handler
     } catch (error) {
       console.error("Error expiring challenges:", error);
       next(error); // Pass the error to the error-handling middleware
