@@ -10,8 +10,8 @@ interface Challenge {
   _id: string;
   title: string;
   description: string;
+  challengeType: "daily" | "weekly";
   expiresAt: string;
-  challengeType: string;
 }
 
 const Home: React.FC = () => {
@@ -26,9 +26,11 @@ const Home: React.FC = () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
 
+        // Fetch all challenges
         const challengesResponse = await fetch(`${apiUrl}/api/activeChallenges`);
         const challengesData = await challengesResponse.json();
 
+        // Fetch user data
         const username = localStorage.getItem("username");
         const userResponse = await fetch(`${apiUrl}/api/user/${username}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
@@ -36,8 +38,8 @@ const Home: React.FC = () => {
         const userData = await userResponse.json();
 
         setChallenges(challengesData);
-        setActiveChallenges(userData.activeChallenges.map((c: any) => c._id));
-        setCompletedChallenges(userData.completedChallenges.map((c: any) => c.challengeID));
+        setActiveChallenges(userData.activeChallenges.map((challenge: any) => challenge._id));
+        setCompletedChallenges(userData.completedChallenges.map((challenge: any) => challenge._id));
       } catch (error) {
         console.error("Error fetching challenges:", error);
       } finally {
@@ -49,41 +51,63 @@ const Home: React.FC = () => {
   }, []);
 
   const joinChallenge = async (challengeID: string) => {
-    const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-    const response = await fetch(`${apiUrl}/api/joinChallenge`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-      body: JSON.stringify({ challengeID }),
-    });
+    if (activeChallenges.includes(challengeID) || completedChallenges.includes(challengeID)) {
+      alert("Challenge is already active or completed.");
+      return;
+    }
 
-    if (response.ok) {
-      setActiveChallenges((prev) => [...prev, challengeID]);
-      alert("Challenge joined successfully!");
-    } else {
-      alert("Error joining challenge.");
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const response = await fetch(`${apiUrl}/api/joinChallenge`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+        body: JSON.stringify({ challengeID }),
+      });
+
+      if (response.ok) {
+        setActiveChallenges((prev) => [...prev, challengeID]);
+        alert("Challenge joined successfully!");
+      } else {
+        const data = await response.json();
+        alert(data.message || "Error joining challenge.");
+      }
+    } catch (error) {
+      console.error("Error joining challenge:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
   const completeChallenge = async (challengeID: string) => {
-    const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-    const response = await fetch(`${apiUrl}/api/completeChallenge`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-      body: JSON.stringify({ challengeID }),
-    });
+    if (!activeChallenges.includes(challengeID)) {
+      alert("Challenge is not active.");
+      return;
+    }
 
-    if (response.ok) {
-      setActiveChallenges((prev) => prev.filter((id) => id !== challengeID));
-      setCompletedChallenges((prev) => [...prev, challengeID]);
-      alert("Challenge completed successfully!");
-    } else {
-      alert("Error completing challenge.");
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const response = await fetch(`${apiUrl}/api/completeChallenge`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+        body: JSON.stringify({ challengeID }),
+      });
+
+      if (response.ok) {
+        setActiveChallenges((prev) => prev.filter((id) => id !== challengeID));
+        setCompletedChallenges((prev) => [...prev, challengeID]);
+        alert("Challenge completed successfully!");
+      } else {
+        const data = await response.json();
+        alert(data.message || "Error completing challenge.");
+      }
+    } catch (error) {
+      console.error("Error completing challenge:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
@@ -109,8 +133,10 @@ const Home: React.FC = () => {
               <Typography variant="h5">{challenge.title}</Typography>
               <Typography variant="body2">{challenge.description}</Typography>
               <Typography variant="caption">
-                {challenge.challengeType.toUpperCase()} | Expires:{" "}
-                {new Date(challenge.expiresAt).toLocaleDateString()}
+                Type: {challenge.challengeType === "daily" ? "Daily" : "Weekly"}
+              </Typography>
+              <Typography variant="caption">
+                Expires: {new Date(challenge.expiresAt).toLocaleDateString()}
               </Typography>
             </CardContent>
             <CardActions>{renderButton(challenge._id)}</CardActions>

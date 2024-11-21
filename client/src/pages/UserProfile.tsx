@@ -1,137 +1,128 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import PageWrapper from "src/components/PageWrapper";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Divider from "@mui/material/Divider";
 
 interface Challenge {
-  _id: string;
   title: string;
   description: string;
-  expiresAt: string;
+  challengeType: "daily" | "weekly";
+  completedAt: string;
 }
 
-const Home: React.FC = () => {
-  const [challenges, setChallenges] = useState<Challenge[]>([]);
-  const [activeChallenges, setActiveChallenges] = useState<string[]>([]);
-  const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
+interface UserData {
+  firstName: string;
+  lastName: string;
+  username: string;
+  auraPoints: number;
+  activeChallenges: Challenge[];
+  completedChallenges: Challenge[];
+}
+
+const UserProfile: React.FC = () => {
+  const { username } = useParams<{ username: string }>();
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchChallenges = async () => {
+    const fetchUserData = async () => {
       setLoading(true);
+      setError(null);
       try {
-        const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-
-        // Fetch all challenges
-        const challengesResponse = await fetch(`${apiUrl}/api/activeChallenges`);
-        const challengesData = await challengesResponse.json();
-
-        // Fetch user data
-        const username = localStorage.getItem("username");
-        const userResponse = await fetch(`${apiUrl}/api/user/${username}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
+        const apiUrl =
+          process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+        const response = await fetch(`${apiUrl}/api/user/${username}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
         });
-        const userData = await userResponse.json();
 
-        setChallenges(challengesData);
-        setActiveChallenges(userData.activeChallenges.map((challenge: any) => challenge._id));
-        setCompletedChallenges(userData.completedChallenges.map((challenge: any) => challenge._id));
+        if (!response.ok) {
+          const errorData = await response.json();
+          setError(errorData.message || "Failed to fetch user data.");
+          return;
+        }
+
+        const data = await response.json();
+        setUserData(data);
       } catch (error) {
-        console.error("Error fetching challenges:", error);
+        console.error("Error fetching user data:", error);
+        setError("An error occurred. Please try again later.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchChallenges();
-  }, []);
+    fetchUserData();
+  }, [username]);
 
-  const joinChallenge = async (challengeID: string) => {
-    try {
-      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-      const response = await fetch(`${apiUrl}/api/joinChallenge`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-        body: JSON.stringify({ challengeID }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        setActiveChallenges((prev) => [...prev, challengeID]);
-        alert("Challenge joined successfully!");
-      } else {
-        alert(data.message || "Error joining challenge.");
-      }
-    } catch (error) {
-      console.error("Error joining challenge:", error);
-      alert("An error occurred. Please try again.");
-    }
-  };
-
-  const completeChallenge = async (challengeID: string) => {
-    try {
-      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-      const response = await fetch(`${apiUrl}/api/completeChallenge`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-        body: JSON.stringify({ challengeID }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        setActiveChallenges((prev) => prev.filter((id) => id !== challengeID));
-        setCompletedChallenges((prev) => [...prev, challengeID]);
-        alert("Challenge completed successfully!");
-      } else {
-        alert(data.message || "Error completing challenge.");
-      }
-    } catch (error) {
-      console.error("Error completing challenge:", error);
-      alert("An error occurred. Please try again.");
-    }
-  };
-
-  // Helper function to render the appropriate button
-  const renderButton = (challengeID: string) => {
-    if (completedChallenges.includes(challengeID)) {
-      return <Button disabled>Completed</Button>; // Show as Completed
-    }
-    if (activeChallenges.includes(challengeID)) {
-      return <Button onClick={() => completeChallenge(challengeID)}>Mark as Complete</Button>; // Mark as Complete
-    }
-    return <Button onClick={() => joinChallenge(challengeID)}>Join</Button>; // Allow Join
-  };
-
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading user profile...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <PageWrapper title="Home">
-      <h1>Challenges</h1>
-      <div className="challenge-list">
-        {challenges.map((challenge) => (
-          <Card key={challenge._id} sx={{ minWidth: 275 }}>
-            <CardContent>
-              <Typography variant="h5">{challenge.title}</Typography>
-              <Typography variant="body2">{challenge.description}</Typography>
-              <Typography variant="caption">
-                Expires: {new Date(challenge.expiresAt).toLocaleDateString()}
-              </Typography>
-            </CardContent>
-            <CardActions>{renderButton(challenge._id)}</CardActions>
-          </Card>
-        ))}
-      </div>
+    <PageWrapper title="User Profile">
+      {userData ? (
+        <div className="user-profile">
+          <Typography variant="h4" gutterBottom>
+            {userData.firstName} {userData.lastName}
+          </Typography>
+          <Typography variant="body1">Username: @{userData.username}</Typography>
+          <Typography variant="body1">Aura Points: {userData.auraPoints}</Typography>
+
+          <Divider sx={{ margin: "20px 0" }} />
+
+          <Typography variant="h5">Active Challenges</Typography>
+          <div className="active-challenges">
+            {userData.activeChallenges?.length > 0 ? (
+              userData.activeChallenges.map((challenge, index) => (
+                <Card key={index} sx={{ margin: "10px 0" }}>
+                  <CardContent>
+                    <Typography variant="h6">{challenge.title}</Typography>
+                    <Typography variant="body2">{challenge.description}</Typography>
+                    <Typography variant="caption">
+                      Type: {challenge.challengeType === "daily" ? "Daily" : "Weekly"}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <Typography variant="body2">No active challenges yet.</Typography>
+            )}
+          </div>
+
+          <Divider sx={{ margin: "20px 0" }} />
+
+          <Typography variant="h5">Completed Challenges</Typography>
+          <div className="completed-challenges">
+            {userData.completedChallenges?.length > 0 ? (
+              userData.completedChallenges.map((challenge, index) => (
+                <Card key={index} sx={{ margin: "10px 0" }}>
+                  <CardContent>
+                    <Typography variant="h6">{challenge.title}</Typography>
+                    <Typography variant="body2">{challenge.description}</Typography>
+                    <Typography variant="caption">
+                      Type: {challenge.challengeType === "daily" ? "Daily" : "Weekly"}
+                    </Typography>
+                    <Typography variant="caption">
+                      Completed At: {new Date(challenge.completedAt).toLocaleString()}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <Typography variant="body2">No challenges completed yet.</Typography>
+            )}
+          </div>
+        </div>
+      ) : (
+        <Typography variant="body1">User not found</Typography>
+      )}
     </PageWrapper>
   );
 };
 
-export default Home;
+export default UserProfile;
