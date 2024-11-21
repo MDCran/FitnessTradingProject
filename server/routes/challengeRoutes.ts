@@ -204,17 +204,22 @@ router.post("/joinChallenge", auth, isInfoSupplied("body", "challengeID"), async
     const challenge = await Challenge.findById(challengeID);
 
     if (!challenge) {
-      return res.status(NOT_FOUND).json({ error: "Challenge not found" });
+      return res.status(NOT_FOUND).json({ error: "Challenge not found." });
     }
 
     const user = await User.findById(req.userID);
     if (!user) {
-      return res.status(NOT_FOUND).json({ error: "User not found" });
+      return res.status(NOT_FOUND).json({ error: "User not found." });
     }
 
     // Check if the challenge is already completed
     if (user.completedChallenges.includes(challengeID)) {
-      return res.status(BAD_REQUEST).json({ error: "Challenge is already completed." });
+      return res.status(OK).json({ message: "Challenge already completed.", status: "completed" });
+    }
+
+    // Check if already joined
+    if (user.activeChallenges.includes(challengeID)) {
+      return res.status(OK).json({ message: "Challenge already active.", status: "active" });
     }
 
     // Ensure the challenge is not expired
@@ -222,19 +227,15 @@ router.post("/joinChallenge", auth, isInfoSupplied("body", "challengeID"), async
       return res.status(BAD_REQUEST).json({ error: "Challenge has expired and cannot be joined." });
     }
 
-    // Check if already joined
-    if (user.activeChallenges.includes(challengeID)) {
-      return res.status(BAD_REQUEST).json({ error: "Challenge already active." });
-    }
-
     user.activeChallenges.push(challengeID);
     await user.save();
 
-    res.status(OK).json({ message: "Challenge joined successfully." });
+    res.status(OK).json({ message: "Challenge joined successfully.", status: "joined" });
   } catch (error) {
-    res.status(SERVER_ERROR).json({ error: "Error joining challenge", details: error.message });
+    res.status(SERVER_ERROR).json({ error: "Error joining challenge.", details: error.message });
   }
 });
+
 
 
 export default router;

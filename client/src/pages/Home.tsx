@@ -1,12 +1,11 @@
+import React, { useEffect, useState } from "react";
 import PageWrapper from "src/components/PageWrapper";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useState, useEffect } from "react";
 
-// Define types for challenges
 interface Challenge {
   _id: string;
   title: string;
@@ -14,37 +13,38 @@ interface Challenge {
   expiresAt: string;
 }
 
-const Home = () => {
-  const [challenges, setChallenges] = useState<Challenge[]>([]); // Typed as an array of Challenge
-  const [activeChallenges, setActiveChallenges] = useState<string[]>([]); // Typed as an array of strings (IDs)
-  const [loading, setLoading] = useState(true);
+const Home: React.FC = () => {
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [activeChallenges, setActiveChallenges] = useState<string[]>([]);
+  const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchChallenges = async () => {
+      setLoading(true);
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-    
-        // Fetch active challenges
+
+        // Fetch all challenges
         const challengesResponse = await fetch(`${apiUrl}/api/activeChallenges`);
         const challengesData = await challengesResponse.json();
-    
-        // Fetch user data to get active challenges
+
+        // Fetch user data
         const username = localStorage.getItem("username");
         const userResponse = await fetch(`${apiUrl}/api/user/${username}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
         });
         const userData = await userResponse.json();
-    
-        // Ensure activeChallenges is an array
+
         setChallenges(challengesData);
-        setActiveChallenges(userData.activeChallenges ? userData.activeChallenges.map((challenge: any) => challenge._id) : []);
+        setActiveChallenges(userData.activeChallenges.map((challenge: any) => challenge._id));
+        setCompletedChallenges(userData.completedChallenges.map((challenge: any) => challenge._id));
       } catch (error) {
         console.error("Error fetching challenges:", error);
       } finally {
         setLoading(false);
       }
     };
-    
 
     fetchChallenges();
   }, []);
@@ -61,42 +61,28 @@ const Home = () => {
         body: JSON.stringify({ challengeID }),
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        alert(data.message || "Failed to join challenge.");
-        return;
+      const data = await response.json();
+      if (response.ok) {
+        setActiveChallenges((prev) => [...prev, challengeID]);
+        alert("Challenge joined successfully!");
+      } else {
+        alert(data.message || "Error joining challenge.");
       }
-
-      setActiveChallenges((prev) => [...prev, challengeID]);
-      alert("Challenge joined successfully!");
     } catch (error) {
       console.error("Error joining challenge:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
-  const completeChallenge = async (challengeID: string) => {
-    try {
-      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-      const response = await fetch(`${apiUrl}/api/completeChallenge`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-        body: JSON.stringify({ challengeID }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        alert(data.message || "Failed to complete challenge.");
-        return;
-      }
-
-      setActiveChallenges((prev) => prev.filter((id) => id !== challengeID));
-      alert("Challenge completed successfully!");
-    } catch (error) {
-      console.error("Error completing challenge:", error);
+  // Helper function to render the appropriate button
+  const renderButton = (challengeID: string) => {
+    if (activeChallenges.includes(challengeID)) {
+      return <Button disabled>Active</Button>; // Show as Active
     }
+    if (completedChallenges.includes(challengeID)) {
+      return <Button disabled>Completed</Button>; // Show as Completed
+    }
+    return <Button onClick={() => joinChallenge(challengeID)}>Join</Button>; // Allow Join
   };
 
   if (loading) return <p>Loading...</p>;
@@ -114,14 +100,7 @@ const Home = () => {
                 Expires: {new Date(challenge.expiresAt).toLocaleDateString()}
               </Typography>
             </CardContent>
-            <CardActions>
-              {activeChallenges && activeChallenges.includes(challenge._id) ? (
-                <Button onClick={() => completeChallenge(challenge._id)}>Complete</Button>
-              ) : (
-                <Button onClick={() => joinChallenge(challenge._id)}>Join</Button>
-              )}
-
-            </CardActions>
+            <CardActions>{renderButton(challenge._id)}</CardActions>
           </Card>
         ))}
       </div>
