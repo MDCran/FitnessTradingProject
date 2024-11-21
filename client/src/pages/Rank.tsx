@@ -1,107 +1,107 @@
 import "./App.css";
 // import fakeData from "./MOCK_DATA.json";
-import * as React from "react";
-import { useTable, Column } from "react-table";
+// import * as React from "react";
+// import { useTable, Column } from "react-table";
 import PageWrapper from "src/components/PageWrapper";
 
-type RowData = {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  gender: string;
-  university: string;
-};
+// type RowData = {
+//   id: number;
+//   first_name: string;
+//   last_name: string;
+//   email: string;
+//   gender: string;
+//   university: string;
+// };
 
 function Rank() {
-  const data: RowData[] = [
-    {
-      id: 1,
-      first_name: "Millicent",
-      last_name: "Whatham",
-      email: "mwhatham0@comsenz.com",
-      gender: "Female",
-      university: "Samarkand State University",
-    },
-    {
-      id: 2,
-      first_name: "Siward",
-      last_name: "Amberger",
-      email: "samberger1@behance.net",
-      gender: "Male",
-      university:
-        "Institute of Industrial Electronics Engineering",
-    },
-    {
-      id: 3,
-      first_name: "Sheree",
-      last_name: "Madeley",
-      email: "smadeley2@google.com",
-      gender: "Female",
-      university: "Kateb Institute of Higher Education",
-    },
-    {
-      id: 4,
-      first_name: "Egor",
-      last_name: "Downing",
-      email: "edowning3@nymag.com",
-      gender: "Male",
-      university: "Universidad de Concepción del Uruguay",
-    },
-    {
-      id: 5,
-      first_name: "Donn",
-      last_name: "Wilce",
-      email: "dwilce4@answers.com",
-      gender: "Male",
-      university: "State University of New York at Binghamton",
-    },
-    {
-      id: 6,
-      first_name: "Kenon",
-      last_name: "Jersch",
-      email: "kjersch5@youtu.be",
-      gender: "Male",
-      university: "Université de Nantes",
-    },
-  ];
+//   const data: RowData[] = [
+//     {
+//       id: 1,
+//       first_name: "Millicent",
+//       last_name: "Whatham",
+//       email: "mwhatham0@comsenz.com",
+//       gender: "Female",
+//       university: "Samarkand State University",
+//     },
+//     {
+//       id: 2,
+//       first_name: "Siward",
+//       last_name: "Amberger",
+//       email: "samberger1@behance.net",
+//       gender: "Male",
+//       university:
+//         "Institute of Industrial Electronics Engineering",
+//     },
+//     {
+//       id: 3,
+//       first_name: "Sheree",
+//       last_name: "Madeley",
+//       email: "smadeley2@google.com",
+//       gender: "Female",
+//       university: "Kateb Institute of Higher Education",
+//     },
+//     {
+//       id: 4,
+//       first_name: "Egor",
+//       last_name: "Downing",
+//       email: "edowning3@nymag.com",
+//       gender: "Male",
+//       university: "Universidad de Concepción del Uruguay",
+//     },
+//     {
+//       id: 5,
+//       first_name: "Donn",
+//       last_name: "Wilce",
+//       email: "dwilce4@answers.com",
+//       gender: "Male",
+//       university: "State University of New York at Binghamton",
+//     },
+//     {
+//       id: 6,
+//       first_name: "Kenon",
+//       last_name: "Jersch",
+//       email: "kjersch5@youtu.be",
+//       gender: "Male",
+//       university: "Université de Nantes",
+//     },
+//   ];
 
-  const columns: Column<RowData>[] = React.useMemo(
-    () => [
-      {
-        Header: "ID",
-        accessor: "id",
-      },
-      {
-        Header: "First Name",
-        accessor: "first_name",
-      },
-      {
-        Header: "Last Name",
-        accessor: "last_name",
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-      },
-      {
-        Header: "Gender",
-        accessor: "gender",
-      },
-      {
-        Header: "University",
-        accessor: "university",
-      },
-    ],
-    []
-  );
+//   const columns: Column<RowData>[] = React.useMemo(
+//     () => [
+//       {
+//         Header: "ID",
+//         accessor: "id",
+//       },
+//       {
+//         Header: "First Name",
+//         accessor: "first_name",
+//       },
+//       {
+//         Header: "Last Name",
+//         accessor: "last_name",
+//       },
+//       {
+//         Header: "Email",
+//         accessor: "email",
+//       },
+//       {
+//         Header: "Gender",
+//         accessor: "gender",
+//       },
+//       {
+//         Header: "University",
+//         accessor: "university",
+//       },
+//     ],
+//     []
+//   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<RowData>({ columns, data });
+//   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+//     useTable<RowData>({ columns, data });
 
   return (
     <PageWrapper title="Rank">
-      <div className="Rank">
+      {/* <div className="Rank">
         <div className="container">
           <table {...getTableProps()}>
             <thead>
@@ -131,8 +131,50 @@ function Rank() {
             </tbody>
           </table>
         </div>
-      </div>
-      </PageWrapper>
+      </div> */}
+
+      <table>
+        <caption>
+          Front-end web developer course 2021
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Person</th>
+            <th scope="col">Most interest in</th>
+            <th scope="col">Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Chris</th>
+            <td>HTML tables</td>
+            <td>22</td>
+          </tr>
+          <tr>
+            <th scope="row">Dennis</th>
+            <td>Web accessibility</td>
+            <td>45</td>
+          </tr>
+          <tr>
+            <th scope="row">Sarah</th>
+            <td>JavaScript frameworks</td>
+            <td>29</td>
+          </tr>
+          <tr>
+            <th scope="row">Karen</th>
+            <td>Web performance</td>
+            <td>36</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th scope="row" >Average age</th>
+            <td>33</td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </PageWrapper>
   );
 }
 
