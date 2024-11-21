@@ -11,6 +11,8 @@ import ExpressMongoSanitize from "express-mongo-sanitize";
 import { SERVER_ERROR } from "../server/util";
 import userRoutes from "../server/routes/userRoutes";
 import challengeRoutes from "../server/routes/challengeRoutes";
+import { expireChallengesMiddleware } from "../server/middleware"; // Import the middleware
+
 dotenv.config();
 
 // MongoDB connection setup
@@ -36,14 +38,14 @@ const mongoClient = mongoose
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: [API_URL],  // Replace with your frontend domain
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
-}));
-
-
+app.use(
+  cors({
+    origin: [API_URL], // Replace with your frontend domain
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  })
+);
 
 app.use(logger("dev"));
 app.use(ExpressMongoSanitize());
@@ -64,10 +66,14 @@ app.use(
   })
 );
 
+// Expire challenges middleware
+app.use(expireChallengesMiddleware); // Add this line
+
 // API routes
 const API_PREFIX = "/api";
 app.use(API_PREFIX, userRoutes);
 app.use(API_PREFIX, challengeRoutes);
+
 // Serve static files from React app
 const buildDir = path.join(__dirname, "..", "client", "build");
 app.use(express.static(buildDir));
