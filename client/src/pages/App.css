@@ -127,12 +127,15 @@ h1, h2 {
 }
 
 td:nth-child(3) {
+  text-align: center;
   width: 10px;
 }
 td:nth-child(4) {
+  text-align: center;
   width: 95px;
 }
 td:nth-child(5) {
+  text-align: center;
   width: 150px;
 }
 td:nth-child(1) {
