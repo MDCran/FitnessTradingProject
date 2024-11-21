@@ -28,13 +28,14 @@ const UserProfile: React.FC = () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
         const response = await fetch(`${apiUrl}/api/user/${username}`);
-        if (response.ok) {
-          const data = await response.json();
-          setUserData(data);
-        } else {
+        if (!response.ok) {
           const errorData = await response.json();
           setError(errorData.message || "Failed to fetch user data.");
+          return;
         }
+
+        const data = await response.json();
+        setUserData(data);
       } catch (error) {
         console.error("Error fetching user data:", error);
         setError("An error occurred. Please try again later.");
@@ -57,11 +58,11 @@ const UserProfile: React.FC = () => {
             {userData.firstName} {userData.lastName}
           </h1>
           <p>Username: @{userData.username}</p>
-          <p>Aura Points: {userData.auraPoints}</p> {/* Display Aura Points */}
+          <p>Aura Points: {userData.auraPoints || 0}</p> {/* Display Aura Points */}
 
           <h2>Active Challenges</h2>
           <div className="active-challenges">
-            {userData.activeChallenges.length > 0 ? (
+            {userData.activeChallenges?.length > 0 ? (
               userData.activeChallenges.map((challenge, index) => (
                 <div key={index} className="challenge-badge">
                   <h3>{challenge.title}</h3>
@@ -75,7 +76,7 @@ const UserProfile: React.FC = () => {
 
           <h2>Completed Challenges</h2>
           <div className="completed-challenges">
-            {userData.completedChallenges.length > 0 ? (
+            {userData.completedChallenges?.length > 0 ? (
               userData.completedChallenges.map((challenge, index) => (
                 <div key={index} className="challenge-badge">
                   <h3>{challenge.title}</h3>
