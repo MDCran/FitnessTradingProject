@@ -19,7 +19,7 @@ body {
   transform: translate(-50%, -50%);
 }
 table {
-  width: 900px;
+  width: 800px;
   height: 800px;
   border-collapse: collapse;
   overflow: hidden;
@@ -79,7 +79,7 @@ h1, h2 {
 
 
 .styled-table {
-  width: 200%;
+  width: 90%;
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 18px;
