@@ -50,7 +50,7 @@ function Rank() {
 
 
   return (
-    // <PageWrapper title = "Rank">
+    <PageWrapper title = "Rank">
     <div className="Rank">
       <div className="container">
         <table {...getTableProps()}>
@@ -80,7 +80,7 @@ function Rank() {
         </table>
       </div>
     </div>
-    // </PageWrapper>
+    </PageWrapper>
   );
 }
 
