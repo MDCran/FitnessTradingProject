@@ -109,7 +109,7 @@ function Rank() {
       find all places where you should make your own changes. -- TEST
       </p> */}
 
-      <div className="tc f4 fw4 w-70">
+      <div className="Rank">
         <div className="container">
           <table {...getTableProps()}>
             <thead>
