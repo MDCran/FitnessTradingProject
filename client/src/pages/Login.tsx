@@ -29,9 +29,11 @@ const Login: React.FC = () => {
     }
 
     try {
-      const apiUrl = process.env.REACT_APP_API_URL;
+    
+
       const endpoint = formType === "login" ? "login" : "register";
-      const url = `${apiUrl}/api/${endpoint}`;
+      const url = `${process.env.REACT_APP_API_URL}/api/${endpoint}`;
+      
 
       const response = await fetch(url, {
         method: "POST",
