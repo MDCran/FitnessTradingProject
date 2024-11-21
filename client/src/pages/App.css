@@ -29,14 +29,14 @@ table {
 th,
 td {
   padding: 15px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #322f35;
   color: #fff;
 }
 th {
   text-align: left;
 }
 thead th {
-  background-color: hsl(260, 52%, 15%);
+  background-color: #141317;
 }
 /* tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.3);
@@ -81,6 +81,7 @@ h1, h2 {
 
 .styled-table {
   width: 100%;
+  height: 100%;
   /* max-width: 600px; */
   border-collapse: collapse;
   border: 2px black;
@@ -120,5 +121,23 @@ h1, h2 {
 
 .highlight {
   border-bottom: 2px solid #000000;
-  background-color: rgb(14, 27, 32); 
+  background-color: rgb(15, 2, 36); 
+}
+
+td:nth-child(3) {
+  width: 10px;
+}
+td:nth-child(4) {
+  width: 95px;
+}
+td:nth-child(5) {
+  width: 150px;
+}
+td:nth-child(1) {
+  width: 10px;
+}
+
+.styled-table td
+{
+  height: 110px;
 }

@@ -62,7 +62,7 @@ const Rank: React.FC = () => {
   return (
     <PageWrapper title="Rank">
       <div className="Rank">
-        <div className="container" style={{width: "1000px"}}>
+        <div className="container" style={{width: "1100px"}}>
           <table className="styled-table">
             <thead>
               <tr>
