@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "src/components/PageWrapper";
 
-const Login = () => {
+const Rank = () => {
   const [formType, setFormType] = useState("login");
   const [formData, setFormData] = useState({
     firstName: "",
@@ -59,7 +59,7 @@ const Login = () => {
   };
 
   return (
-    <PageWrapper title="Login">
+    <PageWrapper title="Rank">
       <h2>{formType === "login" ? "Login" : "Create Account"}</h2>
       <form onSubmit={handleSubmit}>
         {formType === "register" && (
@@ -119,4 +119,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Rank;
