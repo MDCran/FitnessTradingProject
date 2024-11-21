@@ -29,19 +29,10 @@ const Login: React.FC = () => {
     }
 
     try {
-      
-    
-
       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
       const endpoint = formType === "login" ? "login" : "register";
       const url = `${apiUrl}/api/${endpoint}`;
       console.log("Constructed URL:", url); // Debugging: log the constructed URL
-
-
-      console.log("REACT_APP_API_URL:", process.env.REACT_APP_API_URL);
-
-      
-      
 
       const response = await fetch(url, {
         method: "POST",
@@ -68,15 +59,20 @@ const Login: React.FC = () => {
         return;
       }
 
-      if (formType === "login") {
-        const { token } = data;
+      const { token } = data;
+
+      if (formType === "login" || formType === "register") {
+        // Save the token and username in localStorage
         localStorage.setItem("authToken", token);
         localStorage.setItem("username", formData.username);
-        alert("Login successful!");
+
+        alert(formType === "login" ? "Login successful!" : "Account created and logged in successfully!");
+
+        // Navigate to the user's profile page
         navigate(`/user/${formData.username}`);
-      } else {
-        alert("Account created successfully!");
-        setFormType("login"); // Switch to login form after successful registration
+
+        // Reload the page to update the navbar
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error:", error);

@@ -6,18 +6,28 @@ export interface IChallenge extends Document {
   createdBy: mongoose.Types.ObjectId;
   reward: number;
   createdAt: Date;
-  expiresAt: Date; // Add this property
+  expiresAt: Date;
+  challengeType: "daily" | "weekly";
 }
 
 const ChallengeSchema: Schema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  reward: { type: Number, default: 10 }, // Default reward in aura points
-  createdAt: { type: Date, default: Date.now }, // Track creation date
+  reward: { type: Number, default: 10 },
+  createdAt: { type: Date, default: Date.now },
   expiresAt: {
     type: Date,
-    default: () => new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Expires 1 week from creation
+    default: function () {
+      return this.challengeType === "daily"
+        ? new Date(Date.now() + 24 * 60 * 60 * 1000) // 1 day for daily
+        : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1 week for weekly
+    },
+  },
+  challengeType: {
+    type: String,
+    enum: ["daily", "weekly"],
+    default: "weekly",
   },
 });
 

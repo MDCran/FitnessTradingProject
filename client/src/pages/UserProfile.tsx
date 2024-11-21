@@ -1,98 +1,137 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import PageWrapper from "src/components/PageWrapper";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 interface Challenge {
+  _id: string;
   title: string;
   description: string;
+  expiresAt: string;
 }
 
-interface UserData {
-  firstName: string;
-  lastName: string;
-  username: string;
-  auraPoints: number; // User's aura points
-  activeChallenges: Challenge[]; // Challenges the user is currently working on
-  completedChallenges: Challenge[]; // Challenges the user has completed
-}
-
-const UserProfile: React.FC = () => {
-  const { username } = useParams<{ username: string }>();
-  const [userData, setUserData] = useState<UserData | null>(null);
+const Home: React.FC = () => {
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [activeChallenges, setActiveChallenges] = useState<string[]>([]);
+  const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchChallenges = async () => {
       setLoading(true);
-      setError(null);
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-        const response = await fetch(`${apiUrl}/api/user/${username}`);
-        if (!response.ok) {
-          const errorData = await response.json();
-          setError(errorData.message || "Failed to fetch user data.");
-          return;
-        }
 
-        const data = await response.json();
-        setUserData(data);
+        // Fetch all challenges
+        const challengesResponse = await fetch(`${apiUrl}/api/activeChallenges`);
+        const challengesData = await challengesResponse.json();
+
+        // Fetch user data
+        const username = localStorage.getItem("username");
+        const userResponse = await fetch(`${apiUrl}/api/user/${username}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
+        });
+        const userData = await userResponse.json();
+
+        setChallenges(challengesData);
+        setActiveChallenges(userData.activeChallenges.map((challenge: any) => challenge._id));
+        setCompletedChallenges(userData.completedChallenges.map((challenge: any) => challenge._id));
       } catch (error) {
-        console.error("Error fetching user data:", error);
-        setError("An error occurred. Please try again later.");
+        console.error("Error fetching challenges:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserData();
-  }, [username]);
+    fetchChallenges();
+  }, []);
 
-  if (loading) return <p>Loading user profile...</p>;
-  if (error) return <p>Error: {error}</p>;
+  const joinChallenge = async (challengeID: string) => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const response = await fetch(`${apiUrl}/api/joinChallenge`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+        body: JSON.stringify({ challengeID }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setActiveChallenges((prev) => [...prev, challengeID]);
+        alert("Challenge joined successfully!");
+      } else {
+        alert(data.message || "Error joining challenge.");
+      }
+    } catch (error) {
+      console.error("Error joining challenge:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
+  const completeChallenge = async (challengeID: string) => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const response = await fetch(`${apiUrl}/api/completeChallenge`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+        body: JSON.stringify({ challengeID }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setActiveChallenges((prev) => prev.filter((id) => id !== challengeID));
+        setCompletedChallenges((prev) => [...prev, challengeID]);
+        alert("Challenge completed successfully!");
+      } else {
+        alert(data.message || "Error completing challenge.");
+      }
+    } catch (error) {
+      console.error("Error completing challenge:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
+  // Helper function to render the appropriate button
+  const renderButton = (challengeID: string) => {
+    if (completedChallenges.includes(challengeID)) {
+      return <Button disabled>Completed</Button>; // Show as Completed
+    }
+    if (activeChallenges.includes(challengeID)) {
+      return <Button onClick={() => completeChallenge(challengeID)}>Mark as Complete</Button>; // Mark as Complete
+    }
+    return <Button onClick={() => joinChallenge(challengeID)}>Join</Button>; // Allow Join
+  };
+
+  if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="user-profile">
-      {userData ? (
-        <div>
-          <h1>
-            {userData.firstName} {userData.lastName}
-          </h1>
-          <p>Username: @{userData.username}</p>
-          <p>Aura Points: {userData.auraPoints || 0}</p> {/* Display Aura Points */}
-
-          <h2>Active Challenges</h2>
-          <div className="active-challenges">
-            {userData.activeChallenges?.length > 0 ? (
-              userData.activeChallenges.map((challenge, index) => (
-                <div key={index} className="challenge-badge">
-                  <h3>{challenge.title}</h3>
-                  <p>{challenge.description}</p>
-                </div>
-              ))
-            ) : (
-              <p>No active challenges yet.</p>
-            )}
-          </div>
-
-          <h2>Completed Challenges</h2>
-          <div className="completed-challenges">
-            {userData.completedChallenges?.length > 0 ? (
-              userData.completedChallenges.map((challenge, index) => (
-                <div key={index} className="challenge-badge">
-                  <h3>{challenge.title}</h3>
-                  <p>{challenge.description}</p>
-                </div>
-              ))
-            ) : (
-              <p>No challenges completed yet.</p>
-            )}
-          </div>
-        </div>
-      ) : (
-        <p>User not found</p>
-      )}
-    </div>
+    <PageWrapper title="Home">
+      <h1>Challenges</h1>
+      <div className="challenge-list">
+        {challenges.map((challenge) => (
+          <Card key={challenge._id} sx={{ minWidth: 275 }}>
+            <CardContent>
+              <Typography variant="h5">{challenge.title}</Typography>
+              <Typography variant="body2">{challenge.description}</Typography>
+              <Typography variant="caption">
+                Expires: {new Date(challenge.expiresAt).toLocaleDateString()}
+              </Typography>
+            </CardContent>
+            <CardActions>{renderButton(challenge._id)}</CardActions>
+          </Card>
+        ))}
+      </div>
+    </PageWrapper>
   );
 };
 
-export default UserProfile;
+export default Home;
