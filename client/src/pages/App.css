@@ -13,7 +13,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  max-height: 600px;
+  max-height: 700px;
   overflow-y: scroll;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -35,7 +35,7 @@ th {
   text-align: left;
 }
 thead th {
-  background-color: #55608f;
+  background-color: hsl(260, 52%, 15%);
 }
 /* tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.3);
@@ -78,20 +78,6 @@ h1, h2 {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .styled-table {
   width: 100%;
   border-collapse: collapse;
@@ -117,11 +103,11 @@ h1, h2 {
 }
 
 .styled-table tbody tr:nth-of-type(even) {
-  background-color: #562626;
+  background-color: hsl(260, 52%, 15%);
 }
 
 .styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid #ffffff;
 }
 
 /* .styled-table tbody tr:hover {
