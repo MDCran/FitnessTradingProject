@@ -1,6 +1,6 @@
 html,
 body {
-  height: 50%;
+  height: 100%;
 }
 body {
   margin: 0;
@@ -107,7 +107,7 @@ h1, h2 {
 }
 
 .styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid #ffffff;
 }
 
 /* .styled-table tbody tr:hover {
