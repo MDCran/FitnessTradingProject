@@ -66,7 +66,7 @@ const Rank: React.FC = () => {
           <table className="styled-table">
             <thead>
               <tr>
-                <th>RANK</th>
+                <th className="highlight">RANK</th>
                 <th>USER</th>
                 <th>AURA POINTS</th>
                 <th>PR</th>
@@ -76,7 +76,7 @@ const Rank: React.FC = () => {
             <tbody>
               {data.map((row) => (
                 <tr key={row.rank}>
-                  <td>{row.rank}</td>
+                  <td className="highlight">{row.rank}</td>
                   <td>{row.username}</td>
                   <td>{row.auraPoints}</td>
                   <td>{row.pr}</td>
