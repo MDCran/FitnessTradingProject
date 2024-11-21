@@ -19,6 +19,11 @@ router.post(
     }
 
     try {
+      const existingUser = await User.findOne({ username });
+      if (existingUser) {
+        return res.status(BAD_REQUEST).json({ error: "Username already taken" });
+      }
+
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = new User({ firstName, lastName, username, password: hashedPassword });
       await user.save();
@@ -29,6 +34,7 @@ router.post(
   }
 );
 
+
 // Login endpoint
 router.post(
   "/login",
@@ -37,31 +43,33 @@ router.post(
     const { username, password } = req.body;
 
     try {
-      // Find the user by username
       const user = await User.findOne({ username });
       if (!user) {
-        console.log("User not found");
         return res.status(NOT_FOUND).json({ error: "User not found" });
       }
 
-      // Compare the provided password with the hashed password in the database
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         return res.status(BAD_REQUEST).json({ error: "Invalid password" });
       }
 
-      // Generate a JWT token if login is successful
       const token = jwt.sign(
         { id: user._id, username: user.username },
         process.env.JWT_SECRET!,
         { expiresIn: "1h" }
       );
+
       res.status(OK).json({ message: "Login successful", token });
     } catch (error) {
       res.status(SERVER_ERROR).json({ error: "Error logging in", details: error.message });
     }
   }
 );
+
+
+
+
+
 
 // Get user profile endpoint
 router.get("/user/:username", async (req, res) => {
