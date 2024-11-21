@@ -1,11 +1,7 @@
 import "./App.css";
 // import fakeData from "./MOCK_DATA.json";
 import * as React from "react";
-<<<<<<< HEAD
 import { useTable, Column } from "react-table";
-=======
-import { useTable } from "react-table";
->>>>>>> cfeeb4fb5a2385eb5468f40a95ff715d44941983
 import PageWrapper from "src/components/PageWrapper";
 
 type RowData = {
@@ -104,7 +100,6 @@ function Rank() {
     useTable<RowData>({ columns, data });
 
   return (
-<<<<<<< HEAD
     <PageWrapper title="Rank">
       <div className="Rank">
         <div className="container">
@@ -116,30 +111,6 @@ function Rank() {
                     <th {...column.getHeaderProps()}>
                       {column.render("Header")}
                     </th>
-=======
-    <PageWrapper title = "Rank">
-    <div className="Rank">
-      <div className="container">
-        <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}> {cell.render("Cell")} </td>
->>>>>>> cfeeb4fb5a2385eb5468f40a95ff715d44941983
                   ))}
                 </tr>
               ))}
