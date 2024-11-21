@@ -122,20 +122,20 @@ h1, h2 {
 .highlight {
   font-family: inherit;
   border-bottom: 2px solid #000000;
-  background-color: rgb(15, 2, 36); 
+  background-color: rgb(7, 7, 7); 
   text-align: center;
 }
 
 td:nth-child(3) {
-  text-align: center;
+  text-align: right;
   width: 10px;
 }
 td:nth-child(4) {
-  text-align: center;
+  text-align: right;
   width: 95px;
 }
 td:nth-child(5) {
-  text-align: center;
+  text-align: right;
   width: 150px;
 }
 td:nth-child(1) {
