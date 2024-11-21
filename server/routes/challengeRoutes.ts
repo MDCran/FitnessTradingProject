@@ -49,30 +49,28 @@ router.post(
         return res.status(NOT_FOUND).json({ error: "Challenge not found" });
       }
 
-      // Check if the challenge is expired
-      if (challenge.expiresAt <= new Date()) {
-        return res
-          .status(BAD_REQUEST)
-          .json({ error: "Challenge has expired and cannot be completed." });
-      }
-
       const user = await User.findById(req.userID);
       if (!user) {
         return res.status(NOT_FOUND).json({ error: "User not found" });
       }
 
-      // Ensure the challenge is in the user's active challenges
+      // Ensure the challenge is in activeChallenges
       if (!user.activeChallenges.includes(challengeID)) {
-        return res
-          .status(BAD_REQUEST)
-          .json({ error: "Challenge is not in your active challenges." });
+        return res.status(BAD_REQUEST).json({ error: "Challenge is not active." });
       }
 
-      // Update user's completed challenges and reward points
-      user.completedChallenges.push(challengeID);
+      // Check if the challenge has already been completed
+      if (user.completedChallenges.includes(challengeID)) {
+        return res.status(BAD_REQUEST).json({ error: "Challenge is already completed." });
+      }
+
+      // Move the challenge from active to completed
       user.activeChallenges = user.activeChallenges.filter(
         (id) => id.toString() !== challengeID
       );
+      user.completedChallenges.push(challengeID);
+
+      // Update aura points and total completed
       user.auraPoints += challenge.reward;
       user.totalCompleted += 1;
 
@@ -89,6 +87,7 @@ router.post(
     }
   }
 );
+
 
 // Update a challenge
 router.post(
@@ -198,42 +197,44 @@ router.get("/activeChallenges", async (req, res) => {
 });
 
 // Join a challenge
-router.post(
-  "/joinChallenge",
-  auth,
-  isInfoSupplied("body", "challengeID"),
-  async (req: CustomRequest, res) => {
-    const { challengeID } = req.body;
+router.post("/joinChallenge", auth, isInfoSupplied("body", "challengeID"), async (req: CustomRequest, res) => {
+  const { challengeID } = req.body;
 
-    try {
-      const challenge = await Challenge.findById(challengeID);
+  try {
+    const challenge = await Challenge.findById(challengeID);
 
-      if (!challenge) {
-        return res.status(NOT_FOUND).json({ error: "Challenge not found" });
-      }
-
-      const user = await User.findById(req.userID);
-      if (!user) {
-        return res.status(NOT_FOUND).json({ error: "User not found" });
-      }
-
-      if (user.activeChallenges.includes(challengeID)) {
-        return res.status(BAD_REQUEST).json({ error: "Challenge already active." });
-      }
-
-      // Ensure the challenge is not expired
-      if (challenge.expiresAt <= new Date()) {
-        return res.status(BAD_REQUEST).json({ error: "Challenge has expired and cannot be joined." });
-      }
-
-      user.activeChallenges.push(challengeID);
-      await user.save();
-
-      res.status(OK).json({ message: "Challenge joined successfully." });
-    } catch (error) {
-      res.status(SERVER_ERROR).json({ error: "Error joining challenge", details: error.message });
+    if (!challenge) {
+      return res.status(NOT_FOUND).json({ error: "Challenge not found" });
     }
+
+    const user = await User.findById(req.userID);
+    if (!user) {
+      return res.status(NOT_FOUND).json({ error: "User not found" });
+    }
+
+    // Check if the challenge is already completed
+    if (user.completedChallenges.includes(challengeID)) {
+      return res.status(BAD_REQUEST).json({ error: "Challenge is already completed." });
+    }
+
+    // Ensure the challenge is not expired
+    if (challenge.expiresAt <= new Date()) {
+      return res.status(BAD_REQUEST).json({ error: "Challenge has expired and cannot be joined." });
+    }
+
+    // Check if already joined
+    if (user.activeChallenges.includes(challengeID)) {
+      return res.status(BAD_REQUEST).json({ error: "Challenge already active." });
+    }
+
+    user.activeChallenges.push(challengeID);
+    await user.save();
+
+    res.status(OK).json({ message: "Challenge joined successfully." });
+  } catch (error) {
+    res.status(SERVER_ERROR).json({ error: "Error joining challenge", details: error.message });
   }
-);
+});
+
 
 export default router;

@@ -10,8 +10,9 @@ interface UserData {
   firstName: string;
   lastName: string;
   username: string;
-  completedChallenges: Challenge[];
-  createdChallenges: Challenge[];
+  auraPoints: number; // User's aura points
+  activeChallenges: Challenge[]; // Challenges the user is currently working on
+  completedChallenges: Challenge[]; // Challenges the user has completed
 }
 
 const UserProfile: React.FC = () => {
@@ -23,13 +24,10 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
-      setError(null); // Reset error state
+      setError(null);
       try {
-
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-
         const response = await fetch(`${apiUrl}/api/user/${username}`);
-
         if (response.ok) {
           const data = await response.json();
           setUserData(data);
@@ -59,6 +57,21 @@ const UserProfile: React.FC = () => {
             {userData.firstName} {userData.lastName}
           </h1>
           <p>Username: @{userData.username}</p>
+          <p>Aura Points: {userData.auraPoints}</p> {/* Display Aura Points */}
+
+          <h2>Active Challenges</h2>
+          <div className="active-challenges">
+            {userData.activeChallenges.length > 0 ? (
+              userData.activeChallenges.map((challenge, index) => (
+                <div key={index} className="challenge-badge">
+                  <h3>{challenge.title}</h3>
+                  <p>{challenge.description}</p>
+                </div>
+              ))
+            ) : (
+              <p>No active challenges yet.</p>
+            )}
+          </div>
 
           <h2>Completed Challenges</h2>
           <div className="completed-challenges">
@@ -71,20 +84,6 @@ const UserProfile: React.FC = () => {
               ))
             ) : (
               <p>No challenges completed yet.</p>
-            )}
-          </div>
-
-          <h2>Created Challenges</h2>
-          <div className="created-challenges">
-            {userData.createdChallenges.length > 0 ? (
-              userData.createdChallenges.map((challenge, index) => (
-                <div key={index} className="challenge-badge">
-                  <h3>{challenge.title}</h3>
-                  <p>{challenge.description}</p>
-                </div>
-              ))
-            ) : (
-              <p>No challenges created yet.</p>
             )}
           </div>
         </div>

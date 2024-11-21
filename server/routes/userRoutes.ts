@@ -80,9 +80,9 @@ router.get("/user/:username", async (req, res) => {
   try {
     const user = await User.findOne(
       { username },
-      "firstName lastName username activeChallenges createdChallenges completedChallenges"
+      "firstName lastName username auraPoints activeChallenges completedChallenges createdChallenges"
     )
-      .populate("activeChallenges", "title description expiresAt") // Populate active challenges
+      .populate("activeChallenges", "title description")
       .populate("completedChallenges", "title description")
       .populate("createdChallenges", "title description");
 
@@ -99,6 +99,7 @@ router.get("/user/:username", async (req, res) => {
     });
   }
 });
+
 
 
 export default router;
