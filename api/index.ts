@@ -12,6 +12,7 @@ import { SERVER_ERROR } from "../server/util";
 import userRoutes from "../server/routes/userRoutes";
 import challengeRoutes from "../server/routes/challengeRoutes";
 import { expireChallengesMiddleware } from "../server/middleware"; // Import the middleware
+import Challenge from "../server/models/Challenge";
 
 dotenv.config();
 
@@ -24,10 +25,40 @@ const API_URL = process.env.REACT_APP_API_URL;
 if (!API_URL) {
   throw new Error("REACT_APP_API_URL is not defined in .env file!");
 }
+
+// Function to create a test challenge
+const createTestChallenge = async () => {
+  try {
+    // Check if a test challenge already exists
+    const existingChallenge = await Challenge.findOne({ title: "Test Challenge" });
+
+    if (!existingChallenge) {
+      console.log("No test challenge found. Creating one...");
+
+      // Create a new test challenge
+      const testChallenge = new Challenge({
+        title: "Test Challenge",
+        description: "This is a test challenge for development purposes.",
+        createdBy: new mongoose.Types.ObjectId(), // Use a valid user ID if available
+        reward: 50, // Test reward points
+      });
+
+      await testChallenge.save();
+      console.log("Test challenge created successfully:", testChallenge);
+    } else {
+      console.log("Test challenge already exists.");
+    }
+  } catch (error) {
+    console.error("Error creating test challenge:", error);
+  }
+}
+
+// Connect to MongoDB and initialize the application
 const mongoClient = mongoose
   .connect(MONGO_URL)
-  .then((mongo) => {
+  .then(async (mongo) => {
     console.log("Connected to MongoDB database.");
+    await createTestChallenge(); // Call the function to create a test challenge
     return mongo.connection.getClient();
   })
   .catch((error) => {
