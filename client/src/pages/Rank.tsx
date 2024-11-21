@@ -102,14 +102,14 @@ function Rank() {
   return (
     <PageWrapper title="Rank">
 
-      <p className="tc f4 fw4 w-70">
+      {/* <p className="tc f4 fw4 w-70">
       This is a skeleton that can you can use to build a web app. It uses a
       React frontend, an express backend, and a MongoDB database. You can deploy
       it to Vercel for free. In your editor, search for <code>skeleton</code> to
       find all places where you should make your own changes. -- TEST
-      </p>
+      </p> */}
 
-      <div className="Rank">
+      <div className="tc f4 fw4 w-70">
         <div className="container">
           <table {...getTableProps()}>
             <thead>
