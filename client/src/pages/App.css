@@ -53,3 +53,24 @@ tbody td:hover:before {
   background-color: rgba(255, 255, 255, 0.2);
   z-index: -1;
 }
+
+.user-profile {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #333;
+}
+
+.challenge-badge {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+}
+
+.completed-challenges, .created-challenges {
+  margin-top: 20px;
+}

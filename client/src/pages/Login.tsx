@@ -29,10 +29,18 @@ const Login: React.FC = () => {
     }
 
     try {
+      
     
 
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
       const endpoint = formType === "login" ? "login" : "register";
-      const url = `${process.env.REACT_APP_API_URL}/api/${endpoint}`;
+      const url = `${apiUrl}/api/${endpoint}`;
+      console.log("Constructed URL:", url); // Debugging: log the constructed URL
+
+
+      console.log("REACT_APP_API_URL:", process.env.REACT_APP_API_URL);
+
+      
       
 
       const response = await fetch(url, {

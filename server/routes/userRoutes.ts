@@ -72,22 +72,31 @@ router.post(
 
 
 
-// Get user profile endpoint
+
+// User PROFILE
 router.get("/user/:username", async (req, res) => {
   const { username } = req.params;
 
   try {
-    const user = await 
-    User.findOne({ username }, "firstName lastName username completedChallenges createdChallenges")
-    .populate("completedChallenges", "title description")
-    .populate("createdChallenges", "title description");
+
+    const user = await User.findOne(
+      { username },
+      "firstName lastName username completedChallenges createdChallenges"
+    )
+      .populate("completedChallenges", "title description")
+      .populate("createdChallenges", "title description");
+
     if (!user) {
-      return res.status(NOT_FOUND).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
-    
-    res.status(OK).json(user);
+
+    res.status(200).json(user);
   } catch (error) {
-    res.status(SERVER_ERROR).json({ message: "Error fetching user data", details: error.message });
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({
+      message: "An error occurred while fetching user data",
+      details: error.message,
+    });
   }
 });
 
