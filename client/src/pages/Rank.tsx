@@ -2,6 +2,7 @@ import "./App.css";
 // import fakeData from "./MOCK_DATA.json";
 import * as React from "react";
 import { useTable } from "react-table";
+import { JSX } from "react/jsx-runtime";
 import PageWrapper from "src/components/PageWrapper";
 
 function Rank() {
@@ -55,9 +56,9 @@ function Rank() {
       <div className="container">
         <table {...getTableProps()}>
           <thead>
-            {headerGroups.map((headerGroup) => (
+            {headerGroups.map((headerGroup: { getHeaderGroupProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableRowElement> & React.HTMLAttributes<HTMLTableRowElement>; headers: any[]; }) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
+                {headerGroup.headers.map((column: { getHeaderProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableHeaderCellElement> & React.ThHTMLAttributes<HTMLTableHeaderCellElement>; render: (arg0: string) => string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }) => (
                   <th {...column.getHeaderProps()}>
                     {column.render("Header")}
                   </th>
@@ -66,11 +67,11 @@ function Rank() {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {rows.map((row: { getRowProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableRowElement> & React.HTMLAttributes<HTMLTableRowElement>; cells: any[]; }) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
+                  {row.cells.map((cell: { getCellProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableDataCellElement> & React.TdHTMLAttributes<HTMLTableDataCellElement>; render: (arg0: string) => string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }) => (
                     <td {...cell.getCellProps()}> {cell.render("Cell")} </td>
                   ))}
                 </tr>
