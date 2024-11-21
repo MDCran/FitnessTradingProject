@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "src/components/PageWrapper";
 
-const Login = () => {
-  const [formType, setFormType] = useState("login");
+const Login: React.FC = () => {
+  const [formType, setFormType] = useState<"login" | "register">("login");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     username: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
+  const [error, setError] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -20,41 +21,56 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(""); // Clear any previous errors
+
+    if (formType === "register" && formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     try {
-      // Determine API URL based on environment
       const apiUrl = process.env.REACT_APP_API_URL;
-      console.log("API URL:", apiUrl);
-      const url = `${apiUrl}/api/${formType === "login" ? "login" : "register"}`;
-      console.log("URL:", url);
+      const endpoint = formType === "login" ? "login" : "register";
+      const url = `${apiUrl}/api/${endpoint}`;
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(
           formType === "login"
             ? { username: formData.username, password: formData.password }
-            : formData
-        )
+            : {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                username: formData.username,
+                password: formData.password,
+                confirmPassword: formData.confirmPassword,
+              }
+        ),
       });
 
       const data = await response.json();
+
       if (!response.ok) {
-        alert(data.message || "An error occurred");
+        setError(data.error || "An error occurred. Please try again.");
         return;
       }
 
-      // Store token and redirect to profile page
-      const token = data.token;
-      localStorage.setItem("authToken", token);
-      localStorage.setItem("username", formData.username);
-      alert(formType === "login" ? "Login successful!" : "Account created successfully!");
-
-      // Redirect to profile page without '@' in the URL
-      navigate(`/user/${formData.username}`);
+      if (formType === "login") {
+        const { token } = data;
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("username", formData.username);
+        alert("Login successful!");
+        navigate(`/user/${formData.username}`);
+      } else {
+        alert("Account created successfully!");
+        setFormType("login"); // Switch to login form after successful registration
+      }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred. Please try again.");
+      setError("An error occurred. Please try again.");
     }
   };
 
@@ -112,6 +128,7 @@ const Login = () => {
           {formType === "login" ? "Login" : "Create Account"}
         </button>
       </form>
+      {error && <p className="error">{error}</p>}
       <button onClick={() => setFormType(formType === "login" ? "register" : "login")}>
         {formType === "login" ? "Create Account" : "Login"}
       </button>
