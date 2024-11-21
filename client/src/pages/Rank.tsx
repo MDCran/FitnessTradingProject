@@ -1,6 +1,6 @@
 
-import React, { useMemo } from "react";
-import { useTable } from "react-table";
+// import React, { useMemo } from "react";
+// import { useTable } from "react-table";
 
 import PageWrapper from "src/components/PageWrapper";
 
