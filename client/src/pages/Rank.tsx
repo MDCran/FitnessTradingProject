@@ -67,6 +67,8 @@ const Rank = () => (
   <PageWrapper title="Rank">
     <p className="tc f4 fw4 w-70">
       Testing for leaderboard
+
+      NEW TEST
     </p>
 
   </PageWrapper>
