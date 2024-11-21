@@ -18,21 +18,26 @@ const UserProfile: React.FC = () => {
   const { username } = useParams<{ username: string }>();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
+      setLoading(true);
+      setError(null); // Reset error state
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitknights.xyz";
         const response = await fetch(`${apiUrl}/api/user/${username}`);
-        const data = await response.json();
-        
+
         if (response.ok) {
+          const data = await response.json();
           setUserData(data);
         } else {
-          console.error("Error fetching user data:", data.message);
+          const errorData = await response.json();
+          setError(errorData.message || "Failed to fetch user data.");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+        setError("An error occurred. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -41,26 +46,43 @@ const UserProfile: React.FC = () => {
     fetchUserData();
   }, [username]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading user profile...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
+    <div className="user-profile">
       {userData ? (
         <div>
-          <h1>{userData.firstName} {userData.lastName}</h1>
+          <h1>
+            {userData.firstName} {userData.lastName}
+          </h1>
           <p>Username: @{userData.username}</p>
 
           <h2>Completed Challenges</h2>
           <div className="completed-challenges">
-            {userData.completedChallenges?.length > 0 ? (
-              userData.completedChallenges.map((Challenge, index) => (
+            {userData.completedChallenges.length > 0 ? (
+              userData.completedChallenges.map((challenge, index) => (
                 <div key={index} className="challenge-badge">
-                  <p>Challenge Title: {Challenge.title}</p>
-                  <p>Description: {Challenge.description}</p>
+                  <h3>{challenge.title}</h3>
+                  <p>{challenge.description}</p>
                 </div>
               ))
             ) : (
               <p>No challenges completed yet.</p>
+            )}
+          </div>
+
+          <h2>Created Challenges</h2>
+          <div className="created-challenges">
+            {userData.createdChallenges.length > 0 ? (
+              userData.createdChallenges.map((challenge, index) => (
+                <div key={index} className="challenge-badge">
+                  <h3>{challenge.title}</h3>
+                  <p>{challenge.description}</p>
+                </div>
+              ))
+            ) : (
+              <p>No challenges created yet.</p>
             )}
           </div>
         </div>
