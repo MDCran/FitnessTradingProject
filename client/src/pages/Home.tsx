@@ -23,26 +23,28 @@ const Home = () => {
     const fetchChallenges = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-
+    
         // Fetch active challenges
         const challengesResponse = await fetch(`${apiUrl}/api/activeChallenges`);
-        const challengesData: Challenge[] = await challengesResponse.json(); // Use the Challenge type
-
+        const challengesData = await challengesResponse.json();
+    
         // Fetch user data to get active challenges
         const username = localStorage.getItem("username");
         const userResponse = await fetch(`${apiUrl}/api/user/${username}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
         });
         const userData = await userResponse.json();
-
+    
+        // Ensure activeChallenges is an array
         setChallenges(challengesData);
-        setActiveChallenges(userData.activeChallenges.map((challenge: any) => challenge._id));
+        setActiveChallenges(userData.activeChallenges ? userData.activeChallenges.map((challenge: any) => challenge._id) : []);
       } catch (error) {
         console.error("Error fetching challenges:", error);
       } finally {
         setLoading(false);
       }
     };
+    
 
     fetchChallenges();
   }, []);
@@ -113,11 +115,12 @@ const Home = () => {
               </Typography>
             </CardContent>
             <CardActions>
-              {activeChallenges.includes(challenge._id) ? (
+              {activeChallenges && activeChallenges.includes(challenge._id) ? (
                 <Button onClick={() => completeChallenge(challenge._id)}>Complete</Button>
               ) : (
                 <Button onClick={() => joinChallenge(challenge._id)}>Join</Button>
               )}
+
             </CardActions>
           </Card>
         ))}

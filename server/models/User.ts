@@ -18,10 +18,10 @@ const UserSchema: Schema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   createdChallenges: [{ type: Schema.Types.ObjectId, ref: "Challenge" }],
-  activeChallenges: [{ type: Schema.Types.ObjectId, ref: "Challenge" }], // Challenges user is attempting
-  completedChallenges: [{ type: Schema.Types.ObjectId, ref: "Challenge" }], // Challenges user completed
-  auraPoints: { type: Number, default: 0 }, // Currency system
-  totalCompleted: { type: Number, default: 0 }, // Total challenges completed
+  activeChallenges: [{ type: Schema.Types.ObjectId, ref: "Challenge" }], // This field should exist
+  completedChallenges: [{ type: Schema.Types.ObjectId, ref: "Challenge" }],
+  auraPoints: { type: Number, default: 0 },
+  totalCompleted: { type: Number, default: 0 },
 });
 
 export default mongoose.model<IUser>("User", UserSchema);
