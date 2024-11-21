@@ -46,12 +46,12 @@ function Rank() {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
+
 
   return (
     <PageWrapper title = "Rank">
-    <div className="App">
+    <div className="Rank">
       <div className="container">
         <table {...getTableProps()}>
           <thead>
