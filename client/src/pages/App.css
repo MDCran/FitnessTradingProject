@@ -11,8 +11,8 @@ body {
 }
 .container {
   position: absolute;
-  top: 100%;
-  left: 100%;
+  top: 50%;
+  left: 50%;
   max-height: 600px;
   overflow-y: scroll;
   -webkit-transform: translate(-50%, -50%);
@@ -37,9 +37,9 @@ th {
 thead th {
   background-color: #55608f;
 }
-tbody tr:hover {
+/* tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.3);
-}
+} */
 tbody td {
   position: relative;
 }

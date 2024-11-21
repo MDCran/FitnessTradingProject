@@ -3,7 +3,7 @@ import PageWrapper from "src/components/PageWrapper";
 import "./App.css";
 
 type RowData = {
-  id: number;
+  rank: number;
   first_name: string;
   last_name: string;
   email: string;
@@ -14,7 +14,7 @@ type RowData = {
 const Rank: React.FC = () => {
   const data: RowData[] = [
     {
-      id: 1,
+      rank: 1,
       first_name: "Millicent",
       last_name: "Whatham",
       email: "mwhatham0@comsenz.com",
@@ -22,7 +22,7 @@ const Rank: React.FC = () => {
       university: "Samarkand State University",
     },
     {
-      id: 2,
+      rank: 2,
       first_name: "Siward",
       last_name: "Amberger",
       email: "samberger1@behance.net",
@@ -30,37 +30,37 @@ const Rank: React.FC = () => {
       university: "Institute of Industrial Electronics Engineering",
     },
     {
-      id: 3,
+      rank: 3,
       first_name: "Sheree",
       last_name: "Madeley",
       email: "smadeley2@google.com",
       gender: "Female",
       university: "Kateb Institute of Higher Education",
     },
-    {
-      id: 4,
-      first_name: "Egor",
-      last_name: "Downing",
-      email: "edowning3@nymag.com",
-      gender: "Male",
-      university: "Universidad de Concepción del Uruguay",
-    },
-    {
-      id: 5,
-      first_name: "Donn",
-      last_name: "Wilce",
-      email: "dwilce4@answers.com",
-      gender: "Male",
-      university: "State University of New York at Binghamton",
-    },
-    {
-      id: 6,
-      first_name: "Kenon",
-      last_name: "Jersch",
-      email: "kjersch5@youtu.be",
-      gender: "Male",
-      university: "Université de Nantes",
-    },
+    // {
+    //   id: 4,
+    //   first_name: "Egor",
+    //   last_name: "Downing",
+    //   email: "edowning3@nymag.com",
+    //   gender: "Male",
+    //   university: "Universidad de Concepción del Uruguay",
+    // },
+    // {
+    //   id: 5,
+    //   first_name: "Donn",
+    //   last_name: "Wilce",
+    //   email: "dwilce4@answers.com",
+    //   gender: "Male",
+    //   university: "State University of New York at Binghamton",
+    // },
+    // {
+    //   id: 6,
+    //   first_name: "Kenon",
+    //   last_name: "Jersch",
+    //   email: "kjersch5@youtu.be",
+    //   gender: "Male",
+    //   university: "Université de Nantes",
+    // },
   ];
 
   return (
@@ -80,8 +80,8 @@ const Rank: React.FC = () => {
             </thead>
             <tbody>
               {data.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.id}</td>
+                <tr key={row.rank}>
+                  <td>{row.rank}</td>
                   <td>{row.first_name}</td>
                   <td>{row.last_name}</td>
                   <td>{row.email}</td>
