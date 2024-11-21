@@ -43,7 +43,7 @@ tbody tr:hover {
 tbody td {
   position: relative;
 }
-tbody td:hover:before {
+/* tbody td:hover:before {
   content: "";
   position: absolute;
   left: 0;
@@ -52,7 +52,7 @@ tbody td:hover:before {
   bottom: -9999px;
   background-color: rgba(255, 255, 255, 0.2);
   z-index: -1;
-}
+} */
 
 .user-profile {
   font-family: Arial, sans-serif;
@@ -117,14 +117,14 @@ h1, h2 {
 }
 
 .styled-table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
+  background-color: #562626;
 }
 
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
 
-.styled-table tbody tr:hover {
+/* .styled-table tbody tr:hover {
   background-color: #f1f1f1;
   cursor: pointer;
-}
+} */
