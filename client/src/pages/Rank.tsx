@@ -1,169 +1,30 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 import PageWrapper from "src/components/PageWrapper";
 import "./App.css";
 
 type RowData = {
-  rank: number;
   username: string;
   auraPoints: number;
-  pr: string;
-  mile: string;
 };
 
 const Rank: React.FC = () => {
-  const data: RowData[] = [
-    {
-      rank: 1,
-      username: "Millicent",
-      auraPoints: 40,
-      pr: "315 kg",
-      mile: "120.01 sec",
-    },
-    {
-      rank: 2,
-      username: "Siward",
-      auraPoints: 30,
-      pr: "215 kg",
-      mile: "220.01 sec",
-    },
-    {
-      rank: 3,
-      username: "Sheree",
-      auraPoints: 20,
-      pr: "115 kg",
-      mile: "320.01 sec",
-    },
-    {
-      rank: 1,
-      username: "Millicent",
-      auraPoints: 40,
-      pr: "315 kg",
-      mile: "120.01 sec",
-    },
-    {
-      rank: 2,
-      username: "Siward",
-      auraPoints: 30,
-      pr: "215 kg",
-      mile: "220.01 sec",
-    },
-    {
-      rank: 3,
-      username: "Sheree",
-      auraPoints: 20,
-      pr: "115 kg",
-      mile: "320.01 sec",
-    },
-    {
-      rank: 1,
-      username: "Millicent",
-      auraPoints: 40,
-      pr: "315 kg",
-      mile: "120.01 sec",
-    },
-    {
-      rank: 2,
-      username: "Siward",
-      auraPoints: 30,
-      pr: "215 kg",
-      mile: "220.01 sec",
-    },
-    {
-      rank: 3,
-      username: "Sheree",
-      auraPoints: 20,
-      pr: "115 kg",
-      mile: "320.01 sec",
-    },
-    {
-      rank: 1,
-      username: "Millicent",
-      auraPoints: 40,
-      pr: "315 kg",
-      mile: "120.01 sec",
-    },
-    {
-      rank: 2,
-      username: "Siward",
-      auraPoints: 30,
-      pr: "215 kg",
-      mile: "220.01 sec",
-    },
-    {
-      rank: 3,
-      username: "Sheree",
-      auraPoints: 20,
-      pr: "115 kg",
-      mile: "320.01 sec",
-    },
-    {
-      rank: 1,
-      username: "Millicent",
-      auraPoints: 40,
-      pr: "315 kg",
-      mile: "120.01 sec",
-    },
-    {
-      rank: 2,
-      username: "Siward",
-      auraPoints: 30,
-      pr: "215 kg",
-      mile: "220.01 sec",
-    },
-    {
-      rank: 3,
-      username: "Sheree",
-      auraPoints: 20,
-      pr: "115 kg",
-      mile: "320.01 sec",
-    },
-    {
-      rank: 1,
-      username: "Millicent",
-      auraPoints: 40,
-      pr: "315 kg",
-      mile: "120.01 sec",
-    },
-    {
-      rank: 2,
-      username: "Siward",
-      auraPoints: 30,
-      pr: "215 kg",
-      mile: "220.01 sec",
-    },
-    {
-      rank: 3,
-      username: "Sheree",
-      auraPoints: 20,
-      pr: "115 kg",
-      mile: "320.01 sec",
-    },
-    // {
-    //   id: 4,
-    //   first_name: "Egor",
-    //   last_name: "Downing",
-    //   email: "edowning3@nymag.com",
-    //   gender: "Male",
-    //   university: "Universidad de Concepción del Uruguay",
-    // },
-    // {
-    //   id: 5,
-    //   first_name: "Donn",
-    //   last_name: "Wilce",
-    //   email: "dwilce4@answers.com",
-    //   gender: "Male",
-    //   university: "State University of New York at Binghamton",
-    // },
-    // {
-    //   id: 6,
-    //   first_name: "Kenon",
-    //   last_name: "Jersch",
-    //   email: "kjersch5@youtu.be",
-    //   gender: "Male",
-    //   university: "Université de Nantes",
-    // },
-  ];
+  const [data, setData] = useState<RowData[]>([]);
+  
+  useEffect(() => {
+    const fetchRank = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        const response = await fetch(`${apiUrl}/api/rank`);
+        if (!response.ok) throw new Error("Failed to fetch rank.");
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching rank:", error);
+      }
+    };
 
+    fetchRank();
+  }, []);
   return (
     <PageWrapper title="LEADERBOARD">
       <div className="Rank">
@@ -174,18 +35,14 @@ const Rank: React.FC = () => {
                 <th className="highlight">RANK</th>
                 <th>USER                        </th>
                 <th>AURA POINTS</th>
-                <th>PR</th>
-                <th>MILE</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((row) => (
-                <tr key={row.rank}>
-                  <td className="highlight1">{row.rank}</td>
+              {data.map((row, index) => (
+                <tr key={index}>
+                  <td className="highlight1">{index}</td>
                   <td className="highlight2">{row.username}</td>
                   <td className="highlight3">{row.auraPoints}</td>
-                  <td className="highlight4">{row.pr}</td>
-                  <td className="highlight5">{row.mile}</td>
                 </tr>
               ))}
             </tbody>

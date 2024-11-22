@@ -154,7 +154,7 @@ router.get("/activeChallenges", async (req, res) => {
 
 router.get("/rank", async (req, res) => {
   try {
-    const users = await User.find().sort({ auraPoints: -1 });
+    const users = await User.find({},{_id:0, username:true, auraPoints:true}).sort({ auraPoints: -1 });
     res.status(OK).json(users);
   } catch (error) {
     res.status(SERVER_ERROR).json({
