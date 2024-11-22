@@ -6,6 +6,7 @@ import Footer from "src/components/Footer";
 import Nav from "src/components/Nav";
 import Rank from "src/pages/Rank";
 import About from "src/pages/About";
+import CardPage from "src/pages/CardPage";
 import ApiTest from "src/pages/ApiTest";
 import Home from "src/pages/Home";
 import NotFound from "src/pages/NotFound";
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/rank/" element={<Rank />} />
         <Route path="/about/" element={<About />} />
+        <Route path="/cardPage/" element={<CardPage />} />
         <Route path="/api-test/" element={<ApiTest />} />
 
         {/* User Account Page Route */}

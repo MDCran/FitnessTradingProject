@@ -1,4 +1,3 @@
-// server/models/User.ts
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IUser extends Document {
@@ -6,8 +5,13 @@ export interface IUser extends Document {
   lastName: string;
   username: string;
   password: string;
-  createdChallenges: mongoose.Types.ObjectId[];
-  completedChallenges: mongoose.Types.ObjectId[];
+  activeChallenges: mongoose.Types.ObjectId[];
+  completedChallenges: {
+    challengeID: mongoose.Types.ObjectId;
+    completedAt: Date;
+    challengeType: "daily" | "weekly";
+  }[];
+  auraPoints: number;
   totalCompleted: number;
 }
 
@@ -16,8 +20,15 @@ const UserSchema: Schema = new Schema({
   lastName: { type: String, required: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  createdChallenges: { type: [mongoose.Schema.Types.ObjectId], ref:"Challenge", default: [] },
-  completedChallenges: { type: [mongoose.Schema.Types.ObjectId], ref:"Challenge", default: [] },
+  activeChallenges: [{ type: Schema.Types.ObjectId, ref: "Challenge" }],
+  completedChallenges: [
+    {
+      challengeID: { type: Schema.Types.ObjectId, ref: "Challenge" },
+      completedAt: { type: Date },
+      challengeType: { type: String, enum: ["daily", "weekly"] },
+    },
+  ],
+  auraPoints: { type: Number, default: 0 },
   totalCompleted: { type: Number, default: 0 },
 });
 

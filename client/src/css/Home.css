@@ -1,0 +1,52 @@
+/* Home.css */
+.challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+  gap: 20px; /* Space between the cards */
+  margin: 20px 0;
+  padding: 0 16px; /* Add some padding on the sides */
+}
+
+.challenge-card {
+  position: relative; /* Required for positioning the reward tag */
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white; /* Ensure the card has a distinct background */
+}
+
+.reward-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: black; /* Background color for the reward tag */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 1; /* Ensure the reward tag is above other elements */
+}
+
+.challenge-label {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  border-radius: 12px;
+  margin-right: 8px;
+}
+
+.challenge-label.daily {
+  background-color: #007bff; /* Blue for daily challenges */
+}
+
+.challenge-label.weekly {
+  background-color: #28a745; /* Green for weekly challenges */
+}
+
+.challenge-grid h1 {
+  text-align: center; /* Center the title */
+  margin-bottom: 20px;
+}

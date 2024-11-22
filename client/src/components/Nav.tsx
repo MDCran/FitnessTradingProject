@@ -23,8 +23,20 @@ const Nav = () => {
     setIsLoggedIn(!!token);  // Set login state based on token presence
   }, []);
 
+  useEffect(() => {
+    const handleStorage = () => {
+      const token = localStorage.getItem("authToken");
+      setIsLoggedIn(!!token);  
+    };
+
+    window.addEventListener("storage", handleStorage);  
+    return () => window.removeEventListener("storage", handleStorage);  
+  }, []);
+  
+  
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("username");
     setIsLoggedIn(false);
     navigate("/login");  // Redirect to login page after logout
   };
@@ -38,19 +50,20 @@ const Nav = () => {
   return (
     <nav className="flex items-center justify-between w-100 nav pv2 ph4">
       <div className="flex items-center justify-between bar-container">
-        <UnstyledLink className="nav-title" to="/">
-          Skeleton
+        <UnstyledLink className=" text-accent nav-title" to="/">
+          FitKnight
         </UnstyledLink>
         <div className="mobile">
           <Hamburger open={open} onClick={() => setOpen(!open)} />
         </div>
       </div>
       <ul
-        className="flex items-center desktop link-container ma0"
+        className=" text-secondary flex items-center desktop link-container ma0"
         style={{ display: open ? "flex" : undefined }}
       >
         <Navlink to="/">Home</Navlink>
         <Navlink to="/about/">About</Navlink>
+        <Navlink to="/cardPage/">CardPage</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
         
         {isLoggedIn && <Navlink to={`/user/${localStorage.getItem("username")}`}>Profile</Navlink>}
