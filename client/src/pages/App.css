@@ -167,3 +167,53 @@ td:nth-child(5)
 {
   text-align: center;
 } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Home.css */
+.challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.challenge-card {
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-label {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  border-radius: 12px;
+  margin-right: 8px;
+}
+
+.challenge-label.daily {
+  background-color: #007bff; /* Blue for daily challenges */
+}
+
+.challenge-label.weekly {
+  background-color: #28a745; /* Green for weekly challenges */
+}

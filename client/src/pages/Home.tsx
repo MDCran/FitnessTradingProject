@@ -5,6 +5,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import "./Home.css"; // Import the CSS file for styles
 
 interface Challenge {
   _id: string;
@@ -54,12 +55,12 @@ const Home: React.FC = () => {
     try {
       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
       const authToken = localStorage.getItem("authToken");
-  
+
       if (!authToken) {
         alert("Authentication token is missing. Please log in again.");
         return;
       }
-  
+
       const response = await fetch(`${apiUrl}/api/joinChallenge`, {
         method: "POST",
         headers: {
@@ -68,16 +69,14 @@ const Home: React.FC = () => {
         },
         body: JSON.stringify({ challengeID }),
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Server response error:", errorText);
         alert(`Error joining challenge: ${response.status} - ${response.statusText}`);
         return;
       }
-  
-      const data = await response.json(); // Keep this if you need to debug
-      console.log("Join challenge response:", data);
+
       alert("Challenge joined successfully!");
       setActiveChallenges((prev) => [...prev, challengeID]);
     } catch (err) {
@@ -85,8 +84,7 @@ const Home: React.FC = () => {
       alert("An error occurred while joining the challenge. Please try again.");
     }
   };
-  
-  
+
   const renderButton = (challengeID: string) => {
     if (completedChallenges.includes(challengeID)) {
       return <Button disabled>Completed</Button>;
@@ -102,15 +100,17 @@ const Home: React.FC = () => {
   return (
     <PageWrapper title="Home">
       <h1>Challenges</h1>
-      <div className="challenge-list">
+      <div className="challenge-grid">
         {challenges.map((challenge) => (
-          <Card key={challenge._id}>
+          <Card key={challenge._id} className="challenge-card">
             <CardContent>
               <Typography variant="h5">{challenge.title}</Typography>
               <Typography>{challenge.description}</Typography>
               <Typography variant="caption">
-                {challenge.challengeType.toUpperCase()} | Expires:{" "}
-                {new Date(challenge.expiresAt).toLocaleString()}
+                <span className={`challenge-label ${challenge.challengeType}`}>
+                  {challenge.challengeType.toUpperCase()}
+                </span>{" "}
+                | Expires: {new Date(challenge.expiresAt).toLocaleString()}
               </Typography>
             </CardContent>
             <CardActions>{renderButton(challenge._id)}</CardActions>
