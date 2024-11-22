@@ -29,16 +29,11 @@ const UserProfile: React.FC = () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
         const response = await fetch(`${apiUrl}/api/user/${username}`);
+        if (!response.ok) throw new Error("Failed to fetch user data.");
         const data = await response.json();
-
-        if (!response.ok) throw new Error(data.message || "Error fetching user data.");
         setUserData(data);
       } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unexpected error occurred.");
-        }
+        setError("An error occurred while fetching user data.");
       } finally {
         setLoading(false);
       }

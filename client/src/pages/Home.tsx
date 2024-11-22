@@ -25,20 +25,23 @@ const Home: React.FC = () => {
       setLoading(true);
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+
         const challengesResponse = await fetch(`${apiUrl}/api/activeChallenges`);
+        if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
         const challengesData = await challengesResponse.json();
 
         const username = localStorage.getItem("username");
         const userResponse = await fetch(`${apiUrl}/api/user/${username}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
         });
+        if (!userResponse.ok) throw new Error("Failed to fetch user data.");
         const userData = await userResponse.json();
 
         setChallenges(challengesData);
         setActiveChallenges(userData.activeChallenges.map((challenge: any) => challenge._id));
         setCompletedChallenges(userData.completedChallenges.map((challenge: any) => challenge.challengeID));
       } catch (err) {
-        console.error("Error fetching challenges:", err);
+        console.error("Error fetching data:", err);
       } finally {
         setLoading(false);
       }
@@ -59,12 +62,13 @@ const Home: React.FC = () => {
         body: JSON.stringify({ challengeID }),
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        setActiveChallenges((prev) => [...prev, challengeID]);
-      } else {
+      if (!response.ok) {
+        const data = await response.json();
         alert(data.error || "Error joining challenge.");
+        return;
       }
+
+      setActiveChallenges((prev) => [...prev, challengeID]);
     } catch (err) {
       console.error("Error joining challenge:", err);
     }

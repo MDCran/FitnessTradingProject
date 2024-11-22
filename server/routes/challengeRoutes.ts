@@ -123,4 +123,17 @@ router.post(
   }
 );
 
+router.get("/activeChallenges", async (req, res) => {
+  try {
+    const challenges = await Challenge.find({ expiresAt: { $gt: new Date() } });
+    res.status(OK).json(challenges);
+  } catch (error) {
+    res.status(SERVER_ERROR).json({
+      error: "Error fetching active challenges.",
+      details: error.message,
+    });
+  }
+});
+
+
 export default router;
