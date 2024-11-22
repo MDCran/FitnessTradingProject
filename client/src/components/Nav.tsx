@@ -62,7 +62,7 @@ const Nav = () => {
         style={{ display: open ? "flex" : undefined }}
       >
         <Navlink to="/">Home</Navlink>
-        <Navlink to="/">About</Navlink>
+        <Navlink to="/about/">About</Navlink>
         <Navlink to="/cardPage/">CardPage</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
         {isLoggedIn && <Navlink to={`/user/${localStorage.getItem("username")}`}>Profile</Navlink>}
