@@ -27,44 +27,63 @@ if (!API_URL) {
 }
 
 // Function to create a test challenge
-const createTestChallenge = async () => {
+const createTestChallenges = async () => {
   try {
-    // Check if a test challenge already exists
-    const existingChallenge = await Challenge.findOne({ title: "Test Challenge" });
+    // Define test challenges
+    const testChallenges = [
+      // Weekly challenges
+      { title: "Weekly Challenge 1", description: "Complete 5 miles of running this week.", challengeType: "weekly", reward: 100 },
+      { title: "Weekly Challenge 2", description: "Cook three healthy meals.", challengeType: "weekly", reward: 75 },
+      { title: "Weekly Challenge 3", description: "Read a book for 5 hours.", challengeType: "weekly", reward: 120 },
+      // Daily challenges
+      { title: "Daily Challenge 1", description: "Drink 8 glasses of water.", challengeType: "daily", reward: 20 },
+      { title: "Daily Challenge 2", description: "Meditate for 10 minutes.", challengeType: "daily", reward: 25 },
+      { title: "Daily Challenge 3", description: "Do 30 pushups.", challengeType: "daily", reward: 30 },
+      { title: "Daily Challenge 4", description: "Write in a gratitude journal.", challengeType: "daily", reward: 15 },
+      { title: "Daily Challenge 5", description: "Take a 20-minute walk.", challengeType: "daily", reward: 20 },
+    ];
 
-    if (!existingChallenge) {
-      console.log("No test challenge found. Creating one...");
+    // Iterate over each challenge and create it if it doesn't already exist
+    for (const challengeData of testChallenges) {
+      const existingChallenge = await Challenge.findOne({ title: challengeData.title });
 
-      // Create a new test challenge
-      const testChallenge = new Challenge({
-        title: "Test Challenge",
-        description: "This is a test challenge for development purposes.",
-        createdBy: new mongoose.Types.ObjectId(), // Use a valid user ID if available
-        reward: 50, // Test reward points
-      });
+      if (!existingChallenge) {
+        console.log(`Creating test challenge: ${challengeData.title}`);
 
-      await testChallenge.save();
-      console.log("Test challenge created successfully:", testChallenge);
-    } else {
-      console.log("Test challenge already exists.");
+        // Create a new challenge
+        const testChallenge = new Challenge({
+          title: challengeData.title,
+          description: challengeData.description,
+          challengeType: challengeData.challengeType,
+          reward: challengeData.reward,
+          createdBy: new mongoose.Types.ObjectId(), // Replace with a valid user ID if needed
+        });
+
+        await testChallenge.save();
+        console.log(`Test challenge created successfully: ${testChallenge.title}`);
+      } else {
+        console.log(`Test challenge already exists: ${challengeData.title}`);
+      }
     }
   } catch (error) {
-    console.error("Error creating test challenge:", error);
+    console.error("Error creating test challenges:", error);
   }
-}
+};
+
 
 // Connect to MongoDB and initialize the application
 const mongoClient = mongoose
   .connect(MONGO_URL)
   .then(async (mongo) => {
     console.log("Connected to MongoDB database.");
-    await createTestChallenge(); // Call the function to create a test challenge
+    await createTestChallenges(); // Call the function to create test challenges
     return mongo.connection.getClient();
   })
   .catch((error) => {
     console.error(`Error connecting to MongoDB database: ${error}`);
     throw new Error(error.message);
   });
+
 
 const app = express();
 
