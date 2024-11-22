@@ -77,6 +77,7 @@ router.post("/joinChallenge", auth, isInfoSupplied("body", "challengeID"), async
 
 
 // Complete a challenge
+// Complete a challenge
 router.post(
   "/completeChallenge",
   auth,
@@ -105,25 +106,38 @@ router.post(
         return res.status(BAD_REQUEST).json({ error: "Challenge already completed." });
       }
 
+      // Remove the challenge from activeChallenges
       user.activeChallenges = user.activeChallenges.filter(
         (id) => id.toString() !== challengeID
       );
+
+      // Add the challenge to completedChallenges
       user.completedChallenges.push({
         challengeID,
         completedAt: new Date(),
         challengeType: challenge.challengeType,
       });
 
+      // Add the reward points to the user's auraPoints
+      user.auraPoints += challenge.reward;
+
+      // Save the updated user document
       await user.save();
 
-      res.status(OK).json({ message: "Challenge completed successfully!" });
+      res.status(OK).json({
+        message: "Challenge completed successfully!",
+        auraPoints: user.auraPoints,
+      });
     } catch (error) {
-      res
-        .status(SERVER_ERROR)
-        .json({ error: "Couldn't complete challenge!", details: error.message });
+      console.error("Error completing challenge:", error);
+      res.status(SERVER_ERROR).json({
+        error: "Couldn't complete challenge!",
+        details: error.message,
+      });
     }
   }
 );
+
 
 router.get("/activeChallenges", async (req, res) => {
   try {
