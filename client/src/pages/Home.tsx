@@ -5,7 +5,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import "../css/Home.css"; // Import the CSS file for styles
+import "./Home.css"; // Import the CSS file
 
 interface Challenge {
   _id: string;
