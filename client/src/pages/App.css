@@ -94,7 +94,8 @@ h1, h2 {
 .styled-table thead tr {
   background-color: #009879;
   color: #ffffff;
-  text-align: left;
+  /* text-align: left; */
+  text-align: center;
 }
 
 .styled-table th,
@@ -111,7 +112,7 @@ h1, h2 {
 }
 
 .styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #ffffff;
+  border-bottom: 2px solid #171515;
 }
 
 /* .styled-table tbody tr:hover {
