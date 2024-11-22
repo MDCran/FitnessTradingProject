@@ -5,7 +5,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import "../css/Home.css"; // Import the CSS file
+import "../css/Home.css";
 
 interface Challenge {
   _id: string;
@@ -85,12 +85,47 @@ const Home: React.FC = () => {
     }
   };
 
+  const completeChallenge = async (challengeID: string) => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const authToken = localStorage.getItem("authToken");
+
+      if (!authToken) {
+        alert("Authentication token is missing. Please log in again.");
+        return;
+      }
+
+      const response = await fetch(`${apiUrl}/api/completeChallenge`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({ challengeID }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Server response error:", errorText);
+        alert(`Error completing challenge: ${response.status} - ${response.statusText}`);
+        return;
+      }
+
+      alert("Challenge marked as completed!");
+      setActiveChallenges((prev) => prev.filter((id) => id !== challengeID));
+      setCompletedChallenges((prev) => [...prev, challengeID]);
+    } catch (err) {
+      console.error("Error completing challenge:", err);
+      alert("An error occurred while completing the challenge. Please try again.");
+    }
+  };
+
   const renderButton = (challengeID: string) => {
     if (completedChallenges.includes(challengeID)) {
       return <Button disabled>Completed</Button>;
     }
     if (activeChallenges.includes(challengeID)) {
-      return <Button disabled>Active</Button>;
+      return <Button onClick={() => completeChallenge(challengeID)}>Mark as Complete</Button>;
     }
     return <Button onClick={() => joinChallenge(challengeID)}>Join</Button>;
   };
