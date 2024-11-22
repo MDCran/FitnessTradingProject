@@ -1,7 +1,10 @@
 /* Home.css */
 .challenge-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(300px, 1fr)
+  ); /* Responsive columns */
   gap: 20px; /* Space between the cards */
   margin: 20px 0;
   padding: 0 16px; /* Add some padding on the sides */
@@ -49,4 +52,22 @@
 .challenge-grid h1 {
   text-align: center; /* Center the title */
   margin-bottom: 20px;
+}
+
+.animated-title {
+  font-size: 3rem;
+  text-align: center;
+  color: #007bff;
+  animation: fadeSlideIn 2s ease-in-out;
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -135,7 +135,7 @@ const Home: React.FC = () => {
 
   return (
     <PageWrapper title="Home">
-      <h1>Challenges</h1>
+      <h1 className="animated-title">Challenges</h1>
       <div className="challenge-grid">
         {challenges.map((challenge) => (
           <Card key={challenge._id} className="challenge-card">
