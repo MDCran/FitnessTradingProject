@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Box, Typography, Card, CardContent, List, ListItem, Divider } from "@mui/material";
 
 interface Challenge {
   title: string;
@@ -42,40 +43,82 @@ const UserProfile: React.FC = () => {
     fetchUserData();
   }, [username]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography color="error">{error}</Typography>;
 
   return (
-    <div className="user-profile">
+    <Box sx={{ maxWidth: 800, margin: "0 auto", padding: 2 }}>
       {userData ? (
-        <div>
-          <h1>{userData.firstName} {userData.lastName}</h1>
-          <p>Username: @{userData.username}</p>
-          <p>Aura Points: {userData.auraPoints}</p>
+        <Box>
+          <Typography variant="h4" gutterBottom>
+            {userData.firstName} {userData.lastName}
+          </Typography>
+          <Typography variant="body1">Username: @{userData.username}</Typography>
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            Aura Points: {userData.auraPoints}
+          </Typography>
 
-          <h2>Active Challenges</h2>
-          <ul>
-            {userData.activeChallenges.map((challenge, index) => (
-              <li key={index}>
-                <strong>{challenge.title}</strong> - {challenge.description}
-              </li>
-            ))}
-          </ul>
+          <Card sx={{ mb: 4 }}>
+            <CardContent>
+              <Typography variant="h5" gutterBottom>
+                Active Challenges
+              </Typography>
+              {userData.activeChallenges.length > 0 ? (
+                <List>
+                  {userData.activeChallenges.map((challenge, index) => (
+                    <React.Fragment key={index}>
+                      <ListItem>
+                        <Box>
+                          <Typography variant="subtitle1">
+                            <strong>{challenge.title}</strong>
+                          </Typography>
+                          <Typography variant="body2">{challenge.description}</Typography>
+                        </Box>
+                      </ListItem>
+                      {index < userData.activeChallenges.length - 1 && <Divider />}
+                    </React.Fragment>
+                  ))}
+                </List>
+              ) : (
+                <Typography>No active challenges.</Typography>
+              )}
+            </CardContent>
+          </Card>
 
-          <h2>Completed Challenges</h2>
-          <ul>
-            {userData.completedChallenges.map((challenge, index) => (
-              <li key={index}>
-                <strong>{challenge.title}</strong> - {challenge.description} <br />
-                Completed on: {new Date(challenge.completedAt).toLocaleString()} ({challenge.challengeType})
-              </li>
-            ))}
-          </ul>
-        </div>
+          <Card>
+            <CardContent>
+              <Typography variant="h5" gutterBottom>
+                Completed Challenges
+              </Typography>
+              {userData.completedChallenges.length > 0 ? (
+                <List>
+                  {userData.completedChallenges.map((challenge, index) => (
+                    <React.Fragment key={index}>
+                      <ListItem>
+                        <Box>
+                          <Typography variant="subtitle1">
+                            <strong>{challenge.title}</strong> ({challenge.challengeType.toUpperCase()})
+                          </Typography>
+                          <Typography variant="body2">{challenge.description}</Typography>
+                          <Typography variant="caption">
+                            Completed on: {new Date(challenge.completedAt).toLocaleString()}
+                          </Typography>
+                        </Box>
+                      </ListItem>
+                      {index < userData.completedChallenges.length - 1 && <Divider />}
+                    </React.Fragment>
+                  ))}
+                </List>
+              ) : (
+                <Typography>No completed challenges.</Typography>
+              )}
+            </CardContent>
+          </Card>
+        </Box>
       ) : (
-        <p>User not found.</p>
+        <Typography>User not found.</Typography>
       )}
-    </div>
+    </Box>
   );
 };
 

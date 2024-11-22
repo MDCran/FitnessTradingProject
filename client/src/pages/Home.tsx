@@ -53,27 +53,40 @@ const Home: React.FC = () => {
   const joinChallenge = async (challengeID: string) => {
     try {
       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const authToken = localStorage.getItem("authToken");
+  
+      if (!authToken) {
+        alert("Authentication token is missing. Please log in again.");
+        return;
+      }
+  
       const response = await fetch(`${apiUrl}/api/joinChallenge`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({ challengeID }),
       });
-
+  
       if (!response.ok) {
-        const data = await response.json();
-        alert(data.error || "Error joining challenge.");
+        const errorText = await response.text();
+        console.error("Server response error:", errorText);
+        alert(`Error joining challenge: ${response.status} - ${response.statusText}`);
         return;
       }
-
+  
+      const data = await response.json(); // Keep this if you need to debug
+      console.log("Join challenge response:", data);
+      alert("Challenge joined successfully!");
       setActiveChallenges((prev) => [...prev, challengeID]);
     } catch (err) {
       console.error("Error joining challenge:", err);
+      alert("An error occurred while joining the challenge. Please try again.");
     }
   };
-
+  
+  
   const renderButton = (challengeID: string) => {
     if (completedChallenges.includes(challengeID)) {
       return <Button disabled>Completed</Button>;

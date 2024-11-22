@@ -68,11 +68,13 @@ router.post("/joinChallenge", auth, isInfoSupplied("body", "challengeID"), async
     user.activeChallenges.push(challengeID);
     await user.save();
 
-    res.status(OK).json({ message: "Challenge joined successfully." });
+    return res.status(OK).json({ message: "Challenge joined successfully." });
   } catch (error) {
-    res.status(SERVER_ERROR).json({ error: "Error joining challenge.", details: error.message });
+    console.error("Error processing joinChallenge:", error);
+    return res.status(SERVER_ERROR).json({ error: "Error joining challenge.", details: error.message });
   }
 });
+
 
 // Complete a challenge
 router.post(
