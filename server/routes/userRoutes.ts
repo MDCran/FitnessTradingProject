@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
 import { BAD_REQUEST, CREATED, OK, NOT_FOUND, SERVER_ERROR } from "../util";
-import { isInfoSupplied } from "../middleware";  // Import validation middleware
+import { isInfoSupplied } from "../middleware";
 
 const router = express.Router();
 
@@ -28,7 +28,11 @@ router.post(
       const user = new User({ firstName, lastName, username, password: hashedPassword });
       await user.save();
 
-      res.status(CREATED).json({ message: "Account created successfully" });
+      const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET!, {
+        expiresIn: "1h",
+      });
+
+      res.status(CREATED).json({ message: "Account created successfully", token });
     } catch (error) {
       console.error("Error during registration:", error);
       res.status(SERVER_ERROR).json({ error: "Error creating user", details: error.message });
@@ -68,12 +72,7 @@ router.post(
   }
 );
 
-
-
-
-
-
-// User PROFILE
+// User profile endpoint
 router.get("/user/:username", async (req, res) => {
   const { username } = req.params;
 
@@ -82,14 +81,29 @@ router.get("/user/:username", async (req, res) => {
       { username },
       "firstName lastName username auraPoints activeChallenges completedChallenges"
     )
-      .populate("activeChallenges", "title description")
-      .populate("completedChallenges", "title description");
+      .populate("activeChallenges", "title description expiresAt challengeType")
+      .populate({
+        path: "completedChallenges.challengeID",
+        select: "title description",
+        model: "Challenge",
+      });
 
     if (!user) {
       return res.status(NOT_FOUND).json({ message: "User not found." });
     }
 
-    res.status(OK).json(user);
+    const formattedUser = {
+      ...user.toObject(),
+      completedChallenges: user.completedChallenges.map((completed) => ({
+        challengeID: (completed.challengeID as any)?._id,
+        title: (completed.challengeID as any)?.title,
+        description: (completed.challengeID as any)?.description,
+        completedAt: completed.completedAt,
+        challengeType: completed.challengeType,
+      })),
+    };
+
+    res.status(OK).json(formattedUser);
   } catch (error) {
     console.error("Error fetching user profile:", error);
     res.status(SERVER_ERROR).json({
@@ -98,8 +112,5 @@ router.get("/user/:username", async (req, res) => {
     });
   }
 });
-
-
-
 
 export default router;
