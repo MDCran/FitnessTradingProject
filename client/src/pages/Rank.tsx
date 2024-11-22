@@ -13,7 +13,7 @@ const Rank: React.FC = () => {
   useEffect(() => {
     const fetchRank = async () => {
       try {
-        const apiUrl = process.env.REACT_APP_API_URL;
+        const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
         const response = await fetch(`${apiUrl}/api/rank`);
         if (!response.ok) throw new Error("Failed to fetch rank.");
         const data = await response.json();
