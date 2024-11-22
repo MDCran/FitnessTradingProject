@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/rank/" element={<Rank />} />
         <Route path="/about/" element={<About />} />
-        <Route path="/CardPage" element={<CardPage />} />
+        <Route path="/cardPage/" element={<CardPage />} />
         <Route path="/api-test/" element={<ApiTest />} />
 
         {/* User Account Page Route */}
