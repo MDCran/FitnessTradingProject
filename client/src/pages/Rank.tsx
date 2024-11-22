@@ -172,7 +172,7 @@ const Rank: React.FC = () => {
             <thead>
               <tr>
                 <th className="highlight">RANK</th>
-                <th>USER</th>
+                <th>USER                        </th>
                 <th>AURA POINTS</th>
                 <th>PR</th>
                 <th>MILE</th>

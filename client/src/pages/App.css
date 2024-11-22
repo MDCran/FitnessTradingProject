@@ -155,7 +155,7 @@ h1, h2 {
   height: 110px;
 }
 
-td:nth-child(3)
+/* td:nth-child(3)
 {
   text-align: center;
 }
@@ -166,4 +166,4 @@ td:nth-child(4)
 td:nth-child(5)
 {
   text-align: center;
-}
+} */
