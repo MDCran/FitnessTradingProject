@@ -50,7 +50,7 @@ const Nav = () => {
   return (
     <nav className="flex items-center justify-between w-100 nav pv2 ph4">
       <div className="flex items-center justify-between bar-container">
-        <UnstyledLink className="nav-title" to="/">
+        <UnstyledLink className=" text-accent nav-title" to="/">
           FitKnight
         </UnstyledLink>
         <div className="mobile">
@@ -58,7 +58,7 @@ const Nav = () => {
         </div>
       </div>
       <ul
-        className="flex items-center desktop link-container ma0"
+        className=" text-secondary flex items-center desktop link-container ma0"
         style={{ display: open ? "flex" : undefined }}
       >
         <Navlink to="/">Home</Navlink>
@@ -66,6 +66,7 @@ const Nav = () => {
         <Navlink to="/about/">About</Navlink>
         <Navlink to="/cardPage/">CardPage</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
+        
         {isLoggedIn && <Navlink to={`/user/${localStorage.getItem("username")}`}>Profile</Navlink>}
         {isLoggedIn ? (
           <li className="navlink-li">
