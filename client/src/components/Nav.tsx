@@ -62,6 +62,7 @@ const Nav = () => {
         style={{ display: open ? "flex" : undefined }}
       >
         <Navlink to="/">Home</Navlink>
+        <Navlink to="/challenges/">Challenges</Navlink>
         <Navlink to="/about/">About</Navlink>
         <Navlink to="/cardPage/">CardPage</Navlink>
         <Navlink to="/rank/">Rank</Navlink>

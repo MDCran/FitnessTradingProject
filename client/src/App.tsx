@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import UserProfile from "./pages/UserProfile";
 import DailyChallenges from "./pages/DailyChallenges";  // Import DailyChallenges page
 import WeeklyChallenges from "./pages/WeeklyChallenges"; // Import WeeklyChallenges page
+import Challenges from "./pages/Challenges";
 
 const App = () => {
   return (
@@ -32,7 +33,7 @@ const App = () => {
         <Route path="/weekly-challenges" element={<WeeklyChallenges />} />
 
         <Route path="/login/" element={<Login />} />
-
+        <Route path="/challenges/" element={<Challenges />} />
         {/* 404 Page Not Found - Keep this as the last route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
