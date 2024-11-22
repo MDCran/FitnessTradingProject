@@ -33,6 +33,111 @@ const Rank: React.FC = () => {
       pr: "115 kg",
       mile: "320.01 sec",
     },
+    {
+      rank: 1,
+      username: "Millicent",
+      auraPoints: 40,
+      pr: "315 kg",
+      mile: "120.01 sec",
+    },
+    {
+      rank: 2,
+      username: "Siward",
+      auraPoints: 30,
+      pr: "215 kg",
+      mile: "220.01 sec",
+    },
+    {
+      rank: 3,
+      username: "Sheree",
+      auraPoints: 20,
+      pr: "115 kg",
+      mile: "320.01 sec",
+    },
+    {
+      rank: 1,
+      username: "Millicent",
+      auraPoints: 40,
+      pr: "315 kg",
+      mile: "120.01 sec",
+    },
+    {
+      rank: 2,
+      username: "Siward",
+      auraPoints: 30,
+      pr: "215 kg",
+      mile: "220.01 sec",
+    },
+    {
+      rank: 3,
+      username: "Sheree",
+      auraPoints: 20,
+      pr: "115 kg",
+      mile: "320.01 sec",
+    },
+    {
+      rank: 1,
+      username: "Millicent",
+      auraPoints: 40,
+      pr: "315 kg",
+      mile: "120.01 sec",
+    },
+    {
+      rank: 2,
+      username: "Siward",
+      auraPoints: 30,
+      pr: "215 kg",
+      mile: "220.01 sec",
+    },
+    {
+      rank: 3,
+      username: "Sheree",
+      auraPoints: 20,
+      pr: "115 kg",
+      mile: "320.01 sec",
+    },
+    {
+      rank: 1,
+      username: "Millicent",
+      auraPoints: 40,
+      pr: "315 kg",
+      mile: "120.01 sec",
+    },
+    {
+      rank: 2,
+      username: "Siward",
+      auraPoints: 30,
+      pr: "215 kg",
+      mile: "220.01 sec",
+    },
+    {
+      rank: 3,
+      username: "Sheree",
+      auraPoints: 20,
+      pr: "115 kg",
+      mile: "320.01 sec",
+    },
+    {
+      rank: 1,
+      username: "Millicent",
+      auraPoints: 40,
+      pr: "315 kg",
+      mile: "120.01 sec",
+    },
+    {
+      rank: 2,
+      username: "Siward",
+      auraPoints: 30,
+      pr: "215 kg",
+      mile: "220.01 sec",
+    },
+    {
+      rank: 3,
+      username: "Sheree",
+      auraPoints: 20,
+      pr: "115 kg",
+      mile: "320.01 sec",
+    },
     // {
     //   id: 4,
     //   first_name: "Egor",
@@ -60,7 +165,7 @@ const Rank: React.FC = () => {
   ];
 
   return (
-    <PageWrapper title="Rank">
+    <PageWrapper title="LEADERBOARD">
       <div className="Rank">
         <div className="container" style={{width: "1100px"}}>
           <table className="styled-table">
