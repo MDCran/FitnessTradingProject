@@ -8,10 +8,24 @@
 }
 
 .challenge-card {
+  position: relative; /* Required for positioning the reward tag */
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: white; /* Ensure the card has a distinct background */
+}
+
+.reward-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: black; /* Background color for the reward tag */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 1; /* Ensure the reward tag is above other elements */
 }
 
 .challenge-label {

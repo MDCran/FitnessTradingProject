@@ -5,7 +5,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import "../css/Home.css";
+import "../css/Home.css"; // Ensure you have the required CSS file
 
 interface Challenge {
   _id: string;
@@ -13,6 +13,7 @@ interface Challenge {
   description: string;
   expiresAt: string;
   challengeType: string;
+  reward: number; // Add reward property
 }
 
 const Home: React.FC = () => {
@@ -139,6 +140,7 @@ const Home: React.FC = () => {
         {challenges.map((challenge) => (
           <Card key={challenge._id} className="challenge-card">
             <CardContent>
+              <div className="reward-tag">Reward: {challenge.reward} Aura Points</div>
               <Typography variant="h5">{challenge.title}</Typography>
               <Typography>{challenge.description}</Typography>
               <Typography variant="caption">
