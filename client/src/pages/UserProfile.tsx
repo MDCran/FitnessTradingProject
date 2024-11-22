@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Typography, Card, CardContent, List, ListItem, Divider } from "@mui/material";
+import "../css/UserProfile.css"; // Add a CSS file for styling
 
 interface Challenge {
   title: string;
@@ -70,6 +71,9 @@ const UserProfile: React.FC = () => {
                       <ListItem>
                         <Box>
                           <Typography variant="subtitle1">
+                            <span className={`challenge-label ${challenge.challengeType}`}>
+                              {challenge.challengeType.toUpperCase()}
+                            </span>{" "}
                             <strong>{challenge.title}</strong>
                           </Typography>
                           <Typography variant="body2">{challenge.description}</Typography>
@@ -97,7 +101,10 @@ const UserProfile: React.FC = () => {
                       <ListItem>
                         <Box>
                           <Typography variant="subtitle1">
-                            <strong>{challenge.title}</strong> ({challenge.challengeType.toUpperCase()})
+                            <span className={`challenge-label ${challenge.challengeType}`}>
+                              {challenge.challengeType.toUpperCase()}
+                            </span>{" "}
+                            <strong>{challenge.title}</strong>
                           </Typography>
                           <Typography variant="body2">{challenge.description}</Typography>
                           <Typography variant="caption">
