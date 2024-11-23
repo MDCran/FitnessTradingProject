@@ -47,3 +47,10 @@
     margin: 0.5rem 0;
   }
 }
+
+.nav-logo {
+  width: 2px; /* Adjust size */
+  height: 2px; /* Maintain consistent size */
+  margin-right: 2px; /* Space between the logo and title */
+}
+
