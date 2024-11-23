@@ -18,6 +18,7 @@
   white-space: nowrap;
   margin: 0;
   display: inline-block;
+
 }
 
 .navlink-li {
@@ -53,6 +54,11 @@
 .nav-logo {
   width: 10%;
   height: auto;
-  margin-right: 0.5rem;
+  margin-right: 0;
+}
+
+.bar-container {
+  display: flex;
+  align-items: center; /* Align logo and title vertically */
 }
 
