@@ -145,7 +145,7 @@ const Home: React.FC = () => {
           </div>
         ))}
       </div>
-      <h1>Weekly Challenges</h1>
+      <h1 className="animated-title">Weekly Challenges</h1>
       <div className="carousel rounded-box max-w-5xl mx-auto p-4 space-x-4">
         {weeklyChallenges.map((challenge) => (
           <div key={challenge._id} className="carousel-item">

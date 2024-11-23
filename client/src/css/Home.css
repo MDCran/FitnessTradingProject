@@ -52,7 +52,7 @@
 }
 
 .animated-title {
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
   color: #007bff;
   animation: fadeSlideIn 2s ease-in-out;
