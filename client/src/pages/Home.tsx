@@ -127,7 +127,7 @@ const Home: React.FC = () => {
 
   return (
     <PageWrapper title="Home">
-      <h1>Daily Challenges</h1>
+      <h1 className="animated-title">Daily Challenges</h1>
       <div className="carousel rounded-box max-w-5xl mx-auto p-4 space-x-4">
         {dailyChallenges.map((challenge) => (
           <div key={challenge._id} className="carousel-item">
