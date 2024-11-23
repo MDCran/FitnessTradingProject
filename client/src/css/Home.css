@@ -51,24 +51,20 @@
   margin-bottom: 20px;
 }
 
-@keyframes fadeInEaseUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px); /* Start slightly below */
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(0); /* Fade in and settle */
-  }
-  100% {
-    transform: translateY(-10px); /* Ease up a bit */
-  }
-}
-
 .animated-title {
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
   color: #007bff;
-  animation: fadeInEaseUp 2s ease-in-out forwards;
+  animation: fadeSlideIn 2s ease-in-out;
 }
 
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
