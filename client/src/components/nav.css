@@ -16,6 +16,9 @@
   font-size: 1.5rem;
   font-weight: 700;
   white-space: nowrap;
+  margin: 0;
+  display: inline-block;
+
 }
 
 .navlink-li {
@@ -47,3 +50,15 @@
     margin: 0.5rem 0;
   }
 }
+
+.nav-logo {
+  width: 10%;
+  height: auto;
+  margin-right: 0;
+}
+
+.bar-container {
+  display: flex;
+  align-items: center; /* Align logo and title vertically */
+}
+

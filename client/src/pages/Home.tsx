@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PageWrapper from "src/components/PageWrapper";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import "../css/Home.css"; // Ensure you have the required CSS file
 
 interface Challenge {
@@ -13,18 +8,16 @@ interface Challenge {
   description: string;
   expiresAt: string;
   challengeType: string;
-  reward: number; // Add reward property
+  reward: number;
 }
 
 const Home: React.FC = () => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [activeChallenges, setActiveChallenges] = useState<string[]>([]);
   const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchChallenges = async () => {
-      setLoading(true);
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
 
@@ -44,8 +37,6 @@ const Home: React.FC = () => {
         setCompletedChallenges(userData.completedChallenges.map((challenge: any) => challenge.challengeID));
       } catch (err) {
         console.error("Error fetching data:", err);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -123,35 +114,53 @@ const Home: React.FC = () => {
 
   const renderButton = (challengeID: string) => {
     if (completedChallenges.includes(challengeID)) {
-      return <Button disabled>Completed</Button>;
+      return <button className="btn btn-disabled">Completed</button>;
     }
     if (activeChallenges.includes(challengeID)) {
-      return <Button onClick={() => completeChallenge(challengeID)}>Mark as Complete</Button>;
+      return <button className="btn btn-primary" onClick={() => completeChallenge(challengeID)}>Mark as Complete</button>;
     }
-    return <Button onClick={() => joinChallenge(challengeID)}>Join</Button>;
+    return <button className="btn btn-primary" onClick={() => joinChallenge(challengeID)}>Join</button>;
   };
 
-  if (loading) return <p>Loading...</p>;
+  const dailyChallenges = challenges.filter((challenge) => challenge.challengeType === "daily");
+  const weeklyChallenges = challenges.filter((challenge) => challenge.challengeType === "weekly");
 
   return (
     <PageWrapper title="Home">
-      <h1>Challenges</h1>
-      <div className="challenge-grid">
-        {challenges.map((challenge) => (
-          <Card key={challenge._id} className="challenge-card">
-            <CardContent>
-              <div className="reward-tag">Reward: {challenge.reward} Aura Points</div>
-              <Typography variant="h5">{challenge.title}</Typography>
-              <Typography>{challenge.description}</Typography>
-              <Typography variant="caption">
-                <span className={`challenge-label ${challenge.challengeType}`}>
-                  {challenge.challengeType.toUpperCase()}
-                </span>{" "}
-                | Expires: {new Date(challenge.expiresAt).toLocaleString()}
-              </Typography>
-            </CardContent>
-            <CardActions>{renderButton(challenge._id)}</CardActions>
-          </Card>
+      <h1 className="animated-title">Daily Challenges</h1>
+      <div className="carousel rounded-box max-w-5xl mx-auto p-4 space-x-4">
+        {dailyChallenges.map((challenge) => (
+          <div key={challenge._id} className="carousel-item">
+            <div className="card bg-green-100 w-80 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title text-green-900">{challenge.title}</h2>
+                <p>{challenge.description}</p>
+                <div className="card-actions justify-end">
+                  {renderButton(challenge._id)}
+                </div>
+                <div className="reward-tag">Reward: {challenge.reward} Aura Points</div>
+                <p>Expires: {new Date(challenge.expiresAt).toLocaleString()}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <h1 className="animated-title">Weekly Challenges</h1>
+      <div className="carousel rounded-box max-w-5xl mx-auto p-4 space-x-4">
+        {weeklyChallenges.map((challenge) => (
+          <div key={challenge._id} className="carousel-item">
+            <div className="card bg-blue-100 w-80 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title text-blue-900">{challenge.title}</h2>
+                <p>{challenge.description}</p>
+                <div className="card-actions justify-end">
+                  {renderButton(challenge._id)}
+                </div>
+                <div className="reward-tag">Reward: {challenge.reward} Aura Points</div>
+                <p>Expires: {new Date(challenge.expiresAt).toLocaleString()}</p>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </PageWrapper>
