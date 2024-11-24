@@ -59,6 +59,6 @@
 
 .bar-container {
   display: flex;
-  align-items: center; /* Align logo and title vertically */
+  align-items: left; 
 }
 
