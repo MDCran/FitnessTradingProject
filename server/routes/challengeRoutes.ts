@@ -164,5 +164,41 @@ router.get("/rank", async (req, res) => {
   }
 });
 
+router.get("/createdChallenges", auth, async (req: CustomRequest, res) => {
+  try{
+    const challenges = await Challenge.find({createdBy: req.userID});
+    res.status(OK).json(challenges);
+  }
+  catch(error){
+    res.status(SERVER_ERROR).json({
+      error: "Error fetching created challenges.",
+      details: error.message,
+    });
+  }
+});
 
+
+router.post("/updateChallenge", auth, isInfoSupplied("body", "challengeID", "title", "description"), async (req: CustomRequest, res) => {
+  const { challengeID, title, description } = req.body;
+
+  try {
+    const challenge = await Challenge.findById(challengeID);
+    if (!challenge) {
+      return res.status(NOT_FOUND).json({ error: "Challenge not found." });
+    }
+    const user = await User.findById(req.userID);
+    if (!user) {
+      return res.status(NOT_FOUND).json({ error: "User not found." });
+    }
+    if (challenge.createdBy.toString() !== req.userID) {
+      return res.status(BAD_REQUEST).json({ error: "User is not the creator of the challenge." });
+    }
+    challenge.title = title;
+    challenge.description = description;
+    await challenge.save();
+    res.status(OK).json({ message: "Challenge updated successfully." });
+  } catch (error) {
+    res.status(SERVER_ERROR).json({ error: "Error updating challenge.", details: error.message });
+  }
+});
 export default router;
