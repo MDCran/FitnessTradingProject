@@ -48,7 +48,7 @@ function Challenges() {
     };
 
     fetchChallenges();
-    console.log(challenges);
+    //console.log(challenges);
   },[challenges]);
 
   
@@ -159,7 +159,12 @@ function Challenges() {
 
 
   return (
-    <PageWrapper title="challenge">
+    <PageWrapper title="Challenges">
+        <div className="search-challenge">
+          <form>
+            <input type="text" id="params" placeholder="Search challenges"></input>
+          </form>
+        </div>
         {challenges.map((challenge) => (
           <div key={challenge._id}>
             <div className="card bg-green-100 w-80 shadow-xl">
