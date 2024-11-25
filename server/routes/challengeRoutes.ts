@@ -224,4 +224,31 @@ router.post("/deleteChallenge", auth, isInfoSupplied("body", "challengeID"), Rem
     res.status(SERVER_ERROR).json({ error: "Error deleting challenge.", details: error.message });
   }
 });
+
+// router.get("/Challenge", async (req, res) => {
+//   try {
+//     const limit = parseInt(req.query.limit) || 10;
+
+//     const startIndex = parseInt(req.query.page)- 1 || 0;
+
+//     const searchTerm = req.query.searchTerm || "";
+
+//     const sort = req.query.sort || "createdAt";
+
+//     const order = req.query.order || "desc";
+
+//     const challenges = await Challenge.find({
+//       name: { $regex: searchTerm, $options: "i" },
+//     })
+//       .sort({ [sort]: order })
+//       .limit(limit)
+//       .skip(startIndex);
+
+//       return res.status(OK).json(challenges)
+
+//   } catch (error) {
+//     res.status(SERVER_ERROR).json({ error: "Error finding challenge.", details: error.message });
+//   }
+// });
+
 export default router;
