@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import { BAD_REQUEST } from "./util";
 import User from "./models/User";
 import Challenge from "./models/Challenge"; // Import Challenge model
+import mongoose from "mongoose";
 
 type RequestInfo = "body" | "params" | "query";
 
@@ -82,5 +83,33 @@ export const isInfoValidId =
     } catch (error) {
       console.error("Error expiring challenges:", error);
       next(error); // Pass the error to the error-handling middleware
+    }
+  };
+
+  export const RemoveAllReferencesToChallengeMiddleware = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const challengeID = req.body.challengeID;
+  
+      if (!mongoose.Types.ObjectId.isValid(challengeID)) {
+        return res.status(400).json({ error: "Invalid challenge ID" });
+      }
+  
+      const challengeObjectID = new mongoose.Types.ObjectId(challengeID);
+  
+      const result = await User.updateMany(
+        { activeChallenges: challengeObjectID },
+        { $pull: { activeChallenges: challengeObjectID } }
+      );
+  
+      console.log(`References removed from ${result.modifiedCount} user(s).`);
+  
+      next();
+    } catch (error) {
+      console.error("Error removing references to challenge:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   };

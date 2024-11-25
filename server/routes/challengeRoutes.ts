@@ -4,6 +4,7 @@ import { isInfoSupplied } from "../middleware"; // Import validation middleware
 import Challenge from "../models/Challenge";
 import { auth } from "../authMiddleware";
 import User from "../models/User";
+import { RemoveAllReferencesToChallengeMiddleware } from "../middleware";
 
 const router = express.Router();
 
@@ -199,6 +200,28 @@ router.post("/updateChallenge", auth, isInfoSupplied("body", "challengeID", "tit
     res.status(OK).json({ message: "Challenge updated successfully." });
   } catch (error) {
     res.status(SERVER_ERROR).json({ error: "Error updating challenge.", details: error.message });
+  }
+});
+
+router.post("/deleteChallenge", auth, isInfoSupplied("body", "challengeID"), RemoveAllReferencesToChallengeMiddleware, async (req: CustomRequest, res) => {
+  const { challengeID } = req.body;
+
+  try {
+    const challenge = await Challenge.findById(challengeID);
+    if (!challenge) {
+      return res.status(NOT_FOUND).json({ error: "Challenge not found." });
+    }
+    const user = await User.findById(req.userID);
+    if (!user) {
+      return res.status(NOT_FOUND).json({ error: "User not found." });
+    }
+    if (challenge.createdBy.toString() !== req.userID) {
+      return res.status(BAD_REQUEST).json({ error: "User is not the creator of the challenge." });
+    }
+    await challenge.delete();
+    res.status(OK).json({ message: "Challenge deleted successfully." });
+  } catch (error) {
+    res.status(SERVER_ERROR).json({ error: "Error deleting challenge.", details: error.message });
   }
 });
 export default router;

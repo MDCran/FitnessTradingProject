@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-//import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-//import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 
 
@@ -10,21 +7,16 @@ interface UpdateFormProps {
     title: string;
     description: string;
   }) => void;
+  challengeID: string | null;
 }
 
-/*interface Challenge {
-    _id: string;
-    title: string;
-    description: string;
-  }*/
+
 
 const UpdateForm: React.FC<UpdateFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    challenge: "",
   });
-  //const [challenges, setChallenges] = useState<Challenge[]>([]);
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,35 +28,8 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ onSubmit }) => {
     onSubmit(formData); 
   };
 
-  /*const handleSelectChange = (event: SelectChangeEvent) => {
-    setFormData({ ...formData, challenge: event.target.value as string });
-  };*/
 
-  /*const fetchUserCreatedChallenges = async () => {
-    try {
-      const apiUrl = process.env.REACT_APP_API_URL;
-      const endpoint = "createdChallenges";
-      const url = `${apiUrl}/api/${endpoint}`;
-      const authToken = localStorage.getItem("authToken");
-
-      console.log("Constructed URL:", url); // Debugging: log the constructed URL
-
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-      const data = await response.json();
-      setChallenges(data);
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
-    } catch (error) {
-      console.error("Error fetching user created challenges:", error);
-    }
-  };*/
+  
 
   return(
     <div className="flex">
@@ -89,7 +54,6 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ onSubmit }) => {
           variant="outlined"
           label="Description"
         />
-        <InputLabel id="type">Type</InputLabel>
         <button type="submit">
           Update Challenge
         </button>
