@@ -46,7 +46,7 @@ function Challenges() {
       setCBuffer(challengesData);
 
       const visibleChallenges: Challenge[] = [];
-      if (searchInput != "") {
+      if (params != "") {
         challenges.map((challenge) => {
           if (challenge.title.toLowerCase().includes(params)) {
             visibleChallenges.push(challenge);
