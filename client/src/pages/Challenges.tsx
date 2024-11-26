@@ -19,6 +19,7 @@ interface Challenge {
 function Challenges() {
   const [open, setOpen] = useState<string | false>(false);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [cbuffer, setCBuffer] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const handleOpen = (operation: string, id?: string) => {
@@ -42,10 +43,27 @@ function Challenges() {
       });
       if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
       const challengesData = await challengesResponse.json();
+      setCBuffer(challengesData);
 
-      console.log(challengesData)
+      const visibleChallenges: Challenge[] = [];
+      if (searchInput != "") {
+        challenges.map((challenge) => {
+          if (challenge.title.toLowerCase().includes(params)) {
+            visibleChallenges.push(challenge);
+          }
+        });
+        console.log(visibleChallenges);
+        setChallenges(visibleChallenges);
+      } else {
+        console.log(challengesData);
+        setChallenges(challengesData);
+      }
+      
 
-      setChallenges(challengesData);
+      //console.log(challengesData);
+      //setChallenges(challengesData);
+
+      
     } catch (err) {
       console.error("Error fetching data:", err);
     }
