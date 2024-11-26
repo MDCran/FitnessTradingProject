@@ -48,11 +48,11 @@ function Challenges() {
     }
   };
 
-  fetchChallenges(searchInput);
+  //fetchChallenges(searchInput);
 
   
   useEffect(() => {
-    //fetchChallenges("");
+    fetchChallenges(searchInput);
     //console.log(challenges);
   },[challenges]);
   
