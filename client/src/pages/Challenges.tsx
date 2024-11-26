@@ -190,6 +190,7 @@ function Challenges() {
           <form>
             <input type="text" id="params" placeholder="Search challenges" onChange={(t) => setSearchInput(t.target.value)}></input>
           </form>
+          <br></br>
         </div>
         {challenges.map((challenge) => (
           <div key={challenge._id}>
