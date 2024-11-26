@@ -45,9 +45,7 @@ function Challenges() {
       setCBuffer(challengesData);
 
       const visibleChallenges: Challenge[] = [];
-      console.log("params");
       if (params != "") {
-        console.log("!! not blank");
         cbuffer.map((challenge) => {
           if (challenge.title.toLowerCase().includes(params)) {
             visibleChallenges.push(challenge);
@@ -56,8 +54,7 @@ function Challenges() {
         console.log(visibleChallenges);
         setChallenges(visibleChallenges);
       } else {
-        console.log("!! blank");
-        //console.log(challengesData);
+        console.log(challengesData);
         setChallenges(challengesData);
       }
       
@@ -192,7 +189,6 @@ function Challenges() {
         <div className="search-challenge">
           <form>
             <input type="text" id="params" placeholder="Search challenges" onChange={(t) => setSearchInput(t.target.value)}></input>
-            <button className="btn btn-primary" onClick={() => fetchChallenges(searchInput)}>Search</button>
           </form>
         </div>
         {challenges.map((challenge) => (
