@@ -55,7 +55,7 @@ function Challenges() {
         console.log(visibleChallenges);
         setChallenges(visibleChallenges);
       } else {
-        console.log(challengesData);
+        //console.log(challengesData);
         setChallenges(challengesData);
       }
       
