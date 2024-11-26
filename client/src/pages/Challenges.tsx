@@ -48,7 +48,7 @@ function Challenges() {
       console.log(params);
       if (params != "") {
         console.log("!! not blank");
-        challenges.map((challenge) => {
+        cbuffer.map((challenge) => {
           if (challenge.title.toLowerCase().includes(params)) {
             visibleChallenges.push(challenge);
           }
