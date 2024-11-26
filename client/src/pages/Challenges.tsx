@@ -20,6 +20,7 @@ function Challenges() {
   const [open, setOpen] = useState<string | false>(false);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
+  const [searchInput, setSearchInput] = useState("");
   const handleOpen = (operation: string, id?: string) => {
     setOpen(operation);
     if (id) {
@@ -30,24 +31,25 @@ function Challenges() {
     setOpen(false);
   };
 
+  const fetchChallenges = async (params: string) => {
+    console.log(params)
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const authToken = localStorage.getItem("authToken");
+      const challengesResponse = await fetch(`${apiUrl}/api/createdChallenges`, {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+      if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
+      const challengesData = await challengesResponse.json();
+
+      setChallenges(challengesData);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchChallenges = async () => {
-      try {
-        const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-        const authToken = localStorage.getItem("authToken");
-        const challengesResponse = await fetch(`${apiUrl}/api/createdChallenges`, {
-          headers: { Authorization: `Bearer ${authToken}` }
-        });
-        if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
-        const challengesData = await challengesResponse.json();
-
-        setChallenges(challengesData);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
-    };
-
-    fetchChallenges();
+    fetchChallenges("");
     //console.log(challenges);
   },[challenges]);
 
@@ -162,7 +164,8 @@ function Challenges() {
     <PageWrapper title="Challenges">
         <div className="search-challenge">
           <form>
-            <input type="text" id="params" placeholder="Search challenges"></input>
+            <input type="text" id="params" placeholder="Search challenges" onChange={(t) => setSearchInput(t.target.value)}></input>
+            <button className="btn btn-primary" onClick={() => fetchChallenges(searchInput)}>Search</button>
           </form>
         </div>
         {challenges.map((challenge) => (
