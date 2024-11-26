@@ -48,10 +48,14 @@ function Challenges() {
     }
   };
 
+  fetchChallenges(searchInput);
+
+  
   useEffect(() => {
-    fetchChallenges("");
+    //fetchChallenges("");
     //console.log(challenges);
   },[challenges]);
+  
 
   
     const deleteChallenge = async (ChallengeID: string) => {
