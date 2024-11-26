@@ -45,7 +45,7 @@ function Challenges() {
       setCBuffer(challengesData);
 
       const visibleChallenges: Challenge[] = [];
-      console.log(params);
+      console.log("params");
       if (params != "") {
         console.log("!! not blank");
         cbuffer.map((challenge) => {
