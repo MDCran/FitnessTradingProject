@@ -33,7 +33,6 @@ function Challenges() {
   };
 
   const fetchChallenges = async (params: string) => {
-    console.log(params)
     params = params.toLowerCase();
     try {
       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
@@ -46,7 +45,9 @@ function Challenges() {
       setCBuffer(challengesData);
 
       const visibleChallenges: Challenge[] = [];
+      console.log(params);
       if (params != "") {
+        console.log("!! not blank");
         challenges.map((challenge) => {
           if (challenge.title.toLowerCase().includes(params)) {
             visibleChallenges.push(challenge);
@@ -55,6 +56,7 @@ function Challenges() {
         console.log(visibleChallenges);
         setChallenges(visibleChallenges);
       } else {
+        console.log("!! blank");
         //console.log(challengesData);
         setChallenges(challengesData);
       }
