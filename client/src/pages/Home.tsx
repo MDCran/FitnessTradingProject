@@ -11,6 +11,7 @@ interface Challenge {
   reward: number;
 }
 
+
 const Home: React.FC = () => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [activeChallenges, setActiveChallenges] = useState<string[]>([]);

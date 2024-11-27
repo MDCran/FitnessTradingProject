@@ -227,36 +227,35 @@ router.post("/deleteChallenge", auth, isInfoSupplied("body", "challengeID"), Rem
 
 router.get("/Challenge", async (req, res) => {
   try {
-    // const { q } = req.query
 
-    // const keys = ["title"]
+    const limit = parseInt(req.query.limit as string) || 5;
 
-    // const search = (data) =>{
-    //   return data.filter((item) =>
-    //     keys.some((key) => item[key].toLowerCase().includes(q))
-    //   );
-    // };
-    // res.status(200).json(search(Challenge).splice(0, 5));
-
-    const limit = parseInt(req.query.limit as string) || 6;
-
-    const startIndex = parseInt(req.query.startIndex as string)- 1 || 0;
+    const page = parseInt(req.query.page as string)- 1 || 0;
 
     const search = req.query.search || "";
-
-  
 
     // const sort = req.query.sort as string || "title";
   
     //const order = req.query.order as string || "desc";
 
-    const challenges = await Challenge.find({ title: { $regex: search, $options: "i" },
+    const challengess = await Challenge.find({ title: { $regex: search, $options: "i" },
     })
       .sort({reward : -1 })
       .limit(limit)
-      .skip(startIndex);
+      .skip(page*limit);
 
-      return res.status(200).json(challenges);
+      const total = await Challenge.countDocuments({
+        title: {$regex: search, $options: "i"},
+      });
+      const response = {
+        error: false,
+        total,
+        page: page + 1,
+        limit,
+        challengess,
+      }
+
+      return res.status(200).json(response);
 
   } catch (error) {
     res.status(SERVER_ERROR).json({ error: "Error finding challenge.", details: error.message });
