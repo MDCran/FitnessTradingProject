@@ -225,30 +225,42 @@ router.post("/deleteChallenge", auth, isInfoSupplied("body", "challengeID"), Rem
   }
 });
 
-// router.get("/Challenge", async (req, res) => {
-//   try {
-//     const limit = parseInt(req.query.limit) || 10;
+router.get("/Challenge", async (req, res) => {
+  try {
+    // const { q } = req.query
 
-//     const startIndex = parseInt(req.query.page)- 1 || 0;
+    // const keys = ["title"]
 
-//     const searchTerm = req.query.searchTerm || "";
+    // const search = (data) =>{
+    //   return data.filter((item) =>
+    //     keys.some((key) => item[key].toLowerCase().includes(q))
+    //   );
+    // };
+    // res.status(200).json(search(Challenge).splice(0, 5));
 
-//     const sort = req.query.sort || "createdAt";
+    const limit = parseInt(req.query.limit as string) || 6;
 
-//     const order = req.query.order || "desc";
+    const startIndex = parseInt(req.query.startIndex as string)- 1 || 0;
 
-//     const challenges = await Challenge.find({
-//       name: { $regex: searchTerm, $options: "i" },
-//     })
-//       .sort({ [sort]: order })
-//       .limit(limit)
-//       .skip(startIndex);
+    const search = req.query.search || "";
 
-//       return res.status(OK).json(challenges)
+  
 
-//   } catch (error) {
-//     res.status(SERVER_ERROR).json({ error: "Error finding challenge.", details: error.message });
-//   }
-// });
+    // const sort = req.query.sort as string || "title";
+  
+    //const order = req.query.order as string || "desc";
+
+    const challenges = await Challenge.find({ title: { $regex: search, $options: "i" },
+    })
+      .sort({reward : -1 })
+      .limit(limit)
+      .skip(startIndex);
+
+      return res.status(200).json(challenges);
+
+  } catch (error) {
+    res.status(SERVER_ERROR).json({ error: "Error finding challenge.", details: error.message });
+  }
+});
 
 export default router;
