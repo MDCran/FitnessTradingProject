@@ -22,6 +22,7 @@ function Challenges() {
   //const [cbuffer, setCBuffer] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState("");
+  const [pageNum, setPageNum] = useState(0);
   const handleOpen = (operation: string, id?: string) => {
     setOpen(operation);
     if (id) {
@@ -37,7 +38,7 @@ function Challenges() {
     try {
       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
       const authToken = localStorage.getItem("authToken");
-      const challengesResponse = await fetch(`${apiUrl}/api/Challenge`, {
+      const challengesResponse = await fetch(`${apiUrl}/api/Challenge?limit=5&page=${pageNum}&search=${params}`, {
         headers: { Authorization: `Bearer ${authToken}` },
         body: JSON.stringify({
           search: params,
