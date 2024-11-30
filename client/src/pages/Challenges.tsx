@@ -42,8 +42,9 @@ function Challenges() {
       });
       if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
       const challengesData = await challengesResponse.json();
-      setCBuffer(challengesData.challenges);
+      //setCBuffer(challengesData.challenges);
 
+      /*
       const visibleChallenges: Challenge[] = [];
       if (params != "") {
         cbuffer.map((challenge) => {
@@ -57,10 +58,11 @@ function Challenges() {
         //console.log(challengesData);
         setChallenges(challengesData);
       }
+      */
       
 
       //console.log(challengesData);
-      //setChallenges(challengesData);
+      setChallenges(challengesData);
 
       
     } catch (err) {
