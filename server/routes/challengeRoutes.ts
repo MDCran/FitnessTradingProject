@@ -240,7 +240,7 @@ router.get("/Challenge", async (req, res) => {
 
     const challengess = await Challenge.find({ title: { $regex: search, $options: "i" },
     })
-      .sort({reward : -1 })
+      .sort({createdAt : -1 })
       .limit(limit)
       .skip(page*limit);
 
