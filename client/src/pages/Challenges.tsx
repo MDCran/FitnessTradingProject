@@ -42,7 +42,7 @@ function Challenges() {
       });
       if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
       const challengesData = await challengesResponse.json();
-      setCBuffer(challengesData);
+      setCBuffer(challengesData.challenges);
 
       const visibleChallenges: Challenge[] = [];
       if (params != "") {
