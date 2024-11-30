@@ -113,4 +113,42 @@ router.get("/user/:username", async (req, res) => {
   }
 });
 
+router.get("/user", async (req, res) => {
+  try {
+
+    const limit = parseInt(req.query.limit as string) || 5;
+
+    const page = parseInt(req.query.page as string)- 1 || 0;
+
+    const search = req.query.search || "";
+
+    // const sort = req.query.sort as string || "title";
+  
+    //const order = req.query.order as string || "desc";
+
+    const userss = await User.find({ title: { $regex: search, $options: "i" },
+    })
+      .sort({username : -1 })
+      .limit(limit)
+      .skip(page*limit);
+
+      const total = await User.countDocuments({
+        title: {$regex: search, $options: "i"},
+      });
+      const response = {
+        error: false,
+        total: total,
+        page: page + 1,
+        limit: limit,
+        users: userss,
+      }
+
+      res.status(OK).json(response);
+
+  } catch (error) {
+    res.status(SERVER_ERROR).json({ error: "Error finding users.", details: error.message });
+  }
+});
+
+
 export default router;
