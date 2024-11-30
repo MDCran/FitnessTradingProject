@@ -37,7 +37,7 @@ function Challenges() {
     try {
       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
       const authToken = localStorage.getItem("authToken");
-      const challengesResponse = await fetch(`${apiUrl}/api/createdChallenges`, {
+      const challengesResponse = await fetch(`${apiUrl}/api/Challenge`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
