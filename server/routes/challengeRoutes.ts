@@ -249,13 +249,13 @@ router.get("/Challenge", async (req, res) => {
       });
       const response = {
         error: false,
-        total,
+        total: total,
         page: page + 1,
-        limit,
-        challengess,
+        limit: limit,
+        challenges: challengess,
       }
 
-      return res.status(200).json(response);
+      res.status(OK).json(response);
 
   } catch (error) {
     res.status(SERVER_ERROR).json({ error: "Error finding challenge.", details: error.message });

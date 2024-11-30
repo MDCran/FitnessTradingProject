@@ -19,9 +19,10 @@ interface Challenge {
 function Challenges() {
   const [open, setOpen] = useState<string | false>(false);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
-  const [cbuffer, setCBuffer] = useState<Challenge[]>([]);
+  //const [cbuffer, setCBuffer] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState("");
+  const [pageNum, setPageNum] = useState(0);
   const handleOpen = (operation: string, id?: string) => {
     setOpen(operation);
     if (id) {
@@ -33,17 +34,18 @@ function Challenges() {
   };
 
   const fetchChallenges = async (params: string) => {
-    params = params.toLowerCase();
+    //params = params.toLowerCase();
     try {
       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
       const authToken = localStorage.getItem("authToken");
-      const challengesResponse = await fetch(`${apiUrl}/api/createdChallenges`, {
+      const challengesResponse = await fetch(`${apiUrl}/api/Challenge?limit=5&page=${pageNum}&search=${params}`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
       const challengesData = await challengesResponse.json();
-      setCBuffer(challengesData);
+      //setCBuffer(challengesData.challenges);
 
+      /*
       const visibleChallenges: Challenge[] = [];
       if (params != "") {
         cbuffer.map((challenge) => {
@@ -51,16 +53,17 @@ function Challenges() {
             visibleChallenges.push(challenge);
           }
         });
-        console.log(visibleChallenges);
+        //console.log(visibleChallenges);
         setChallenges(visibleChallenges);
       } else {
-        console.log(challengesData);
+        //console.log(challengesData);
         setChallenges(challengesData);
       }
+      */
       
 
       //console.log(challengesData);
-      //setChallenges(challengesData);
+      setChallenges(challengesData);
 
       
     } catch (err) {

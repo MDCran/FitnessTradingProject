@@ -64,7 +64,6 @@ const Nav = () => {
       >
         <Navlink to="/">Home</Navlink>
         <Navlink to="/challenges/">Challenges</Navlink>
-        <Navlink to="/about/">About</Navlink>
         <Navlink to="/cardPage/">CardPage</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
         
@@ -82,5 +81,7 @@ const Nav = () => {
     </nav>
   );
 };
+
+//<Navlink to="/about/">About</Navlink>
 
 export default Nav;
