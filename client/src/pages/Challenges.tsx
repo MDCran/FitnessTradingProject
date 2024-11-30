@@ -63,7 +63,7 @@ function Challenges() {
       
 
       //console.log(challengesData);
-      setChallenges(challengesData);
+      setChallenges(challengesData.challenges);
 
       
     } catch (err) {
