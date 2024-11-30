@@ -19,7 +19,7 @@ interface Challenge {
 function Challenges() {
   const [open, setOpen] = useState<string | false>(false);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
-  const [cbuffer, setCBuffer] = useState<Challenge[]>([]);
+  //const [cbuffer, setCBuffer] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const handleOpen = (operation: string, id?: string) => {
