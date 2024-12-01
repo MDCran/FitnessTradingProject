@@ -171,7 +171,7 @@ function Challenges() {
       const data = await response.json();
 
       //console.log(data);
-      setYourChallenges(data.challenges);
+      setYourChallenges(data);
       
     } catch (err) {
       console.error("Error fetching data:", err);

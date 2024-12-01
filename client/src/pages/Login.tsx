@@ -15,7 +15,7 @@ const Login: React.FC = () => {
     confirmPassword: "",
   });
   const [error, setError] = useState<string>("");
-  const [userResult, setUserResult] = useState();
+  //const [userResult, setUserResult] = useState();
 
   const navigate = useNavigate();
 
@@ -33,8 +33,8 @@ const Login: React.FC = () => {
       });
       if (!response.ok) throw new Error("Failed to fetch challenges.");
       const data = await response.json();
-
-      setUserResult(data.users[0]);
+      console.log("User data:", data);
+      //setUserResult(data.users[0]);
     } catch(err) {
       console.error("Error fetching data:", err);
     }
