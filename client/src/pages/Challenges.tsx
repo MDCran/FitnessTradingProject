@@ -82,7 +82,7 @@ function Challenges() {
   useEffect(() => {
     fetchChallenges(searchInput);
     //console.log(challenges);
-  },[searchInput]);
+  },[searchInput, pageNum]);
   
 
   
@@ -176,7 +176,7 @@ function Challenges() {
 
   const handlePageTurn = async (page: number) => {
     setPageNum(page);
-    fetchChallenges(searchInput);
+    //fetchChallenges(searchInput);
   }
 
   const BackDropMapping: {[key: string]: React.ReactNode} = {
