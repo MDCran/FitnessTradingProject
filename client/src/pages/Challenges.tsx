@@ -22,7 +22,8 @@ function Challenges() {
   //const [cbuffer, setCBuffer] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState("");
-  //const [pageNum, setPageNum] = useState(0);
+  const [pageNum, setPageNum] = useState(0);
+  const [total, setTotal] = useState(0);
   const handleOpen = (operation: string, id?: string) => {
     setOpen(operation);
     if (id) {
@@ -41,7 +42,7 @@ function Challenges() {
       if (params === "") {
         params = " ";
       }
-      const challengesResponse = await fetch(`${apiUrl}/api/Challenge?limit=5&page=1&search=${params}`, {
+      const challengesResponse = await fetch(`${apiUrl}/api/Challenge?limit=5&page=${pageNum}&search=${params}`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
@@ -67,6 +68,7 @@ function Challenges() {
 
       //console.log(challengesData);
       setChallenges(challengesData.challenges);
+      setTotal(challengesData.total);
 
       
     } catch (err) {
@@ -213,6 +215,8 @@ function Challenges() {
               </div>
             </div>
           </div>))}
+        {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum - 1)}>Previous Page</button>)}
+        {pageNum * 5 > total ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum + 1)}>Next Page</button>)}
         <Backdrop
         open={!!open}
         onClick={handleClose}
