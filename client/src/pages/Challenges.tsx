@@ -223,6 +223,7 @@ function Challenges() {
               </div>
             </div>
           </div>))}
+          <br></br>
         {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => handlePageTurn(pageNum - 1)}>Previous Page</button>)}
         {pageNum * 5 > total ? (<></>) : (<button className="btn btn-primary" onClick={() => handlePageTurn(pageNum + 1)}>Next Page</button>)}
         <Backdrop
