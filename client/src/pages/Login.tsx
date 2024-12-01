@@ -15,11 +15,29 @@ const Login: React.FC = () => {
     confirmPassword: "",
   });
   const [error, setError] = useState<string>("");
+  const [userResult, setUserResult] = useState();
 
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const getUser = async (name: string) => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const authToken = localStorage.getItem("authToken");
+      const url = `${apiUrl}/api/user?search=${name}`;
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+      if (!response.ok) throw new Error("Failed to fetch challenges.");
+      const data = await response.json();
+
+      setUserResult(data.users[0]);
+    } catch(err) {
+      console.error("Error fetching data:", err);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,6 +86,8 @@ const Login: React.FC = () => {
         // Save the token and username in localStorage
         localStorage.setItem("authToken", token);
         localStorage.setItem("username", formData.username);
+        getUser(formData.username);
+        //localStorage.setItem("userID", userResult._id);
 
         alert(formType === "login" ? "Login successful!" : "Account created and logged in successfully!");
 
