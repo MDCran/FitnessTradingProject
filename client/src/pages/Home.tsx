@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageWrapper from "src/components/PageWrapper";
 import "../css/Home.css"; // Ensure you have the required CSS file
-import "src/pages/challenges"
 
 interface Challenge {
   _id: string;
