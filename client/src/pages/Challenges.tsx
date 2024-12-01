@@ -22,7 +22,7 @@ function Challenges() {
   //const [cbuffer, setCBuffer] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState("");
-  const [pageNum, setPageNum] = useState(0);
+  const [pageNum, setPageNum] = useState(1);
   const [total, setTotal] = useState(0);
   const handleOpen = (operation: string, id?: string) => {
     setOpen(operation);
