@@ -203,7 +203,7 @@ function Challenges() {
           <br></br>
         <div>
           {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum - 1)}>Previous Page</button>)}
-          {pageNum * 5 > total ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum + 1)}>Next Page</button>)}
+          {pageNum * 5 >= total ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum + 1)}>Next Page</button>)}
         </div>
         <Backdrop
         open={!!open}
