@@ -174,6 +174,11 @@ function Challenges() {
     }
   }
 
+  const handlePageTurn = async (page: number) => {
+    setPageNum(page);
+    fetchChallenges(searchInput);
+  }
+
   const BackDropMapping: {[key: string]: React.ReactNode} = {
     create: (
     <div
@@ -215,8 +220,8 @@ function Challenges() {
               </div>
             </div>
           </div>))}
-        {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum - 1)}>Previous Page</button>)}
-        {pageNum * 5 > total ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum + 1)}>Next Page</button>)}
+        {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => handlePageTurn(pageNum - 1)}>Previous Page</button>)}
+        {pageNum * 5 > total ? (<></>) : (<button className="btn btn-primary" onClick={() => handlePageTurn(pageNum + 1)}>Next Page</button>)}
         <Backdrop
         open={!!open}
         onClick={handleClose}
