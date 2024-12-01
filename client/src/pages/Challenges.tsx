@@ -104,6 +104,7 @@ function Challenges() {
       if (!response.ok) {
         throw new Error(data.message);
       }
+      fetchChallenges(searchInput);
     } catch (error) {
       console.error("Error updating challenge:", error);
       
@@ -136,6 +137,7 @@ function Challenges() {
       if (!response.ok) {
         throw new Error(data.message);
       }
+      fetchChallenges(searchInput);
     } catch (error) {
       console.error("Error creating challenge:", error);
     }
@@ -167,6 +169,7 @@ function Challenges() {
       if (!response.ok) {
         throw new Error(data.message);
       }
+      fetchChallenges(searchInput);
     } catch (error) {
       console.error("Error updating challenge:", error);
     }
