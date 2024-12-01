@@ -1,0 +1,26 @@
+.bg-green-100 {
+    --tw-bg-opacity: 1;
+    /* background-color: #dcfce7; */
+    background-color: #fffefe;
+    /* border-block-color: black; */
+    /* border: gray; */
+    background: border-box;
+    /* background: bottom; */
+    /* background: top; */
+    border: 1px solid #395034;
+    font-size: 18px;
+    color: black;
+    /* font-weight: 550; */
+    width: 50rem;
+}
+
+.bg-blue-100 {
+    --tw-bg-opacity: 1;
+    background-color: #dbeafe;
+    background-color: rgb(255 255 255);
+    border: 2px solid #ac54a7;
+    background: border-box;
+    color: black;
+    width: 50rem;
+    font-size: 18px;
+}
