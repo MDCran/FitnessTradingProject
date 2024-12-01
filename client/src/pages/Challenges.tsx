@@ -19,6 +19,7 @@ interface Challenge {
 function Challenges() {
   const [open, setOpen] = useState<string | false>(false);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [yourchallenges, setYourChallenges] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const [pageNum, setPageNum] = useState(1);
@@ -59,6 +60,7 @@ function Challenges() {
   
   useEffect(() => {
     fetchChallenges(searchInput);
+    fetchYourChallenges();
     //console.log(challenges);
   },[searchInput, pageNum]);
   
@@ -85,6 +87,7 @@ function Challenges() {
         throw new Error(data.message);
       }
       fetchChallenges(searchInput);
+      fetchYourChallenges();
     } catch (error) {
       console.error("Error updating challenge:", error);
       
@@ -118,6 +121,7 @@ function Challenges() {
         throw new Error(data.message);
       }
       fetchChallenges(searchInput);
+      fetchYourChallenges();
     } catch (error) {
       console.error("Error creating challenge:", error);
     }
@@ -150,9 +154,43 @@ function Challenges() {
         throw new Error(data.message);
       }
       fetchChallenges(searchInput);
+      fetchYourChallenges();
     } catch (error) {
       console.error("Error updating challenge:", error);
     }
+  }
+
+  const fetchYourChallenges = async () => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+      const authToken = localStorage.getItem("authToken");
+      const response = await fetch(`${apiUrl}/api/createdChallenges`, {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+      if (!response.ok) throw new Error("Failed to fetch challenges.");
+      const data = await response.json();
+
+      //console.log(data);
+      setYourChallenges(data.challenges);
+      
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  }
+
+  const evaluateChallenge = (challenge: Challenge) => {
+    let count = 0;
+    let flag = true;
+    yourchallenges.map((yourchallenge) => {
+      count++;
+      if (challenge._id !== yourchallenge._id) {
+        flag = false;
+      }
+    })
+    if (count == 0) {
+      flag = false;
+    }
+    return flag;
   }
 
   const BackDropMapping: {[key: string]: React.ReactNode} = {
@@ -193,16 +231,22 @@ function Challenges() {
                 <div className="reward-tag">Reward: {challenge.reward} Aura Points</div>
                 <p>Expires: {new Date(challenge.expiresAt).toLocaleString()}</p>
                 <div>
-                  {}
-                  <button className="btn btn-primary" onClick={() => handleOpen("update", challenge._id)}>Update</button>
-                  <button className="btn btn-danger" onClick={() => deleteChallenge(challenge._id)}>Delete</button>
+                  {evaluateChallenge(challenge)
+                    ? (
+                      <>
+                      <button className="btn btn-primary" onClick={() => handleOpen("update", challenge._id)}>Update</button>
+                      <button className="btn btn-danger" onClick={() => deleteChallenge(challenge._id)}>Delete</button>
+                      </>
+                    ) : (<></>)
+                  }
+                  
                 </div>
               </div>
             </div>
           </div>))}
           <br></br>
         <div>
-          {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum - 1)}>Previous Page</button>)}
+          {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum - 1)}>Prev Page</button>)}
           {pageNum * 5 >= total ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum + 1)}>Next Page</button>)}
         </div>
         <Backdrop
