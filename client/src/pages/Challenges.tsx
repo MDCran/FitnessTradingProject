@@ -6,6 +6,7 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import Backdrop from '@mui/material/Backdrop';
 import UpdateForm from "src/components/UpdateForm";
+import "src/pages/challenges"
 
 interface Challenge {
   _id: string;
