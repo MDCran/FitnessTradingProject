@@ -150,5 +150,20 @@ router.get("/user", async (req, res) => {
   }
 });
 
+router.get("/userIDFromName/:username", async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await User.findOne(
+      { username }
+    )
+    if (!user) {
+      return res.status(NOT_FOUND).json({ message: "User not found." });
+    }
+    res.status(OK).json(user._id);
+  } catch (error) {
+    res.status(SERVER_ERROR).json({ error: "Error logging userID.", details: error.message });
+  }
+});
+
 
 export default router;

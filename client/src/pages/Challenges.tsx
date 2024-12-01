@@ -193,6 +193,7 @@ function Challenges() {
                 <div className="reward-tag">Reward: {challenge.reward} Aura Points</div>
                 <p>Expires: {new Date(challenge.expiresAt).toLocaleString()}</p>
                 <div>
+                  {}
                   <button className="btn btn-primary" onClick={() => handleOpen("update", challenge._id)}>Update</button>
                   <button className="btn btn-danger" onClick={() => deleteChallenge(challenge._id)}>Delete</button>
                 </div>
@@ -200,8 +201,10 @@ function Challenges() {
             </div>
           </div>))}
           <br></br>
-        {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum - 1)}>Previous Page</button>)}
-        {pageNum * 5 > total ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum + 1)}>Next Page</button>)}
+        <div>
+          {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum - 1)}>Previous Page</button>)}
+          {pageNum * 5 > total ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum + 1)}>Next Page</button>)}
+        </div>
         <Backdrop
         open={!!open}
         onClick={handleClose}
