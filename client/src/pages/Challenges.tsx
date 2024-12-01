@@ -201,7 +201,10 @@ function Challenges() {
     <PageWrapper title="Challenges">
         <div className="search-challenge">
           <form>
-            <input type="text" id="params" placeholder="Search challenges" onChange={(t) => setSearchInput(t.target.value)}></input>
+            <input type="text" id="params" placeholder="Search challenges" onChange={(t) => {
+              setSearchInput(t.target.value);
+              setPageNum(1);
+            }}></input>
           </form>
           <br></br>
         </div>
