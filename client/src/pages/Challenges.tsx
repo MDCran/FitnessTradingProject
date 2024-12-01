@@ -6,6 +6,7 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import Backdrop from '@mui/material/Backdrop';
 import UpdateForm from "src/components/UpdateForm";
+import "src/css/StyleForChallenges.css";
 
 interface Challenge {
   _id: string;
@@ -224,7 +225,7 @@ function Challenges() {
         </div>
         {challenges.map((challenge) => (
           <div key={challenge._id}>
-            <div className="card bg-green-100 w-80 shadow-xl">
+            <div className="card bg-green-100 w-[50rem] box-border border-green-900 border-1 shadow-xl">
               <div className="card-body">
                 <h2 className="card-title text-green-900">{challenge.title}</h2>
                 <p>{challenge.description}</p>
