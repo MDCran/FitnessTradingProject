@@ -19,10 +19,10 @@ interface Challenge {
 function Challenges() {
   const [open, setOpen] = useState<string | false>(false);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
-  //const [cbuffer, setCBuffer] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState("");
-  //const [pageNum, setPageNum] = useState(0);
+  const [pageNum, setPageNum] = useState(1);
+  const [total, setTotal] = useState(0);
   const handleOpen = (operation: string, id?: string) => {
     setOpen(operation);
     if (id) {
@@ -34,39 +34,21 @@ function Challenges() {
   };
 
   const fetchChallenges = async (params: string) => {
-    //params = params.toLowerCase();
     try {
       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
       const authToken = localStorage.getItem("authToken");
       if (params === "") {
         params = " ";
       }
-      const challengesResponse = await fetch(`${apiUrl}/api/Challenge?limit=5&page=1&search=${params}`, {
+      const challengesResponse = await fetch(`${apiUrl}/api/Challenge?limit=5&page=${pageNum}&search=${params}`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
       const challengesData = await challengesResponse.json();
-      //setCBuffer(challengesData.challenges);
-
-      /*
-      const visibleChallenges: Challenge[] = [];
-      if (params != "") {
-        cbuffer.map((challenge) => {
-          if (challenge.title.toLowerCase().includes(params)) {
-            visibleChallenges.push(challenge);
-          }
-        });
-        //console.log(visibleChallenges);
-        setChallenges(visibleChallenges);
-      } else {
-        //console.log(challengesData);
-        setChallenges(challengesData);
-      }
-      */
-      
 
       //console.log(challengesData);
       setChallenges(challengesData.challenges);
+      setTotal(challengesData.total);
 
       
     } catch (err) {
@@ -74,13 +56,11 @@ function Challenges() {
     }
   };
 
-  //fetchChallenges(searchInput);
-
   
   useEffect(() => {
     fetchChallenges(searchInput);
     //console.log(challenges);
-  },[searchInput]);
+  },[searchInput, pageNum]);
   
 
   
@@ -197,7 +177,10 @@ function Challenges() {
     <PageWrapper title="Challenges">
         <div className="search-challenge">
           <form>
-            <input type="text" id="params" placeholder="Search challenges" onChange={(t) => setSearchInput(t.target.value)}></input>
+            <input type="text" id="params" placeholder="Search challenges" onChange={(t) => {
+              setSearchInput(t.target.value);
+              setPageNum(1);
+            }}></input>
           </form>
           <br></br>
         </div>
@@ -216,6 +199,9 @@ function Challenges() {
               </div>
             </div>
           </div>))}
+          <br></br>
+        {pageNum < 2 ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum - 1)}>Previous Page</button>)}
+        {pageNum * 5 > total ? (<></>) : (<button className="btn btn-primary" onClick={() => setPageNum(pageNum + 1)}>Next Page</button>)}
         <Backdrop
         open={!!open}
         onClick={handleClose}
