@@ -152,8 +152,7 @@ button, input, optgroup, select, textarea {
 }
 
 .css-1pv2xcc {
-    display: inline-flex
-;
+    display: inline-flex;
     flex-direction: column;
     position: relative;
     min-width: 0px;
@@ -165,8 +164,7 @@ button, input, optgroup, select, textarea {
 
 .css-bgb8jr {
     z-index: 1050;
-    display: flex
-;
+    display: flex;
     -webkit-box-align: center;
     pointer-events: none;
     flex-direction: column-reverse;
@@ -174,4 +172,44 @@ button, input, optgroup, select, textarea {
     top: 100px;
     right: 16px;
     align-items: center;
+}
+
+.css-1nhf7wy {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    min-height: 36px;
+    min-width: 0px;
+    width: 56px;
+    height: 56px;
+    z-index: 1050;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0.43, 0.15, 283.08, 1);
+    pointer-events: auto;
+    outline: 0px;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    margin: 0px;
+    text-decoration: none;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+    padding: 0px;
 }
