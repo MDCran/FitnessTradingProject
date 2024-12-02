@@ -150,3 +150,28 @@ button, input, optgroup, select, textarea {
     flex-direction: column;
     background: white;
 }
+
+.css-1pv2xcc {
+    display: inline-flex
+;
+    flex-direction: column;
+    position: relative;
+    min-width: 0px;
+    padding: 5px;
+    margin: 0px;
+    border: 0px;
+    vertical-align: top;
+}
+
+.css-bgb8jr {
+    z-index: 1050;
+    display: flex
+;
+    -webkit-box-align: center;
+    pointer-events: none;
+    flex-direction: column-reverse;
+    position: absolute;
+    top: 100px;
+    right: 16px;
+    align-items: center;
+}
