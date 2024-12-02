@@ -31,6 +31,10 @@ h2 {
 .card-image img {  
   width: 554px;  
   height: 300px;  
+  border-radius: 10px;
+  padding: 3px;
+  /* color: black; */
+  background: black;
 }  
   
 .card-description {  

@@ -14,8 +14,8 @@ const CardPage = () => (
     </div>  
   
     <div className="card-description">  
-      <h3>Rank: "input rank"</h3>
-      <h4>Could put the latest completed challenges here.</h4>  
+      <h4>Rank: "input rank"</h4>
+      <h5>Could put the latest completed challenges here.</h5>  
     </div>  
    </div>  
   </PageWrapper>  
