@@ -9,6 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
   overflow-x: hidden;
+  background: linear-gradient(135deg, #32cd32, #228b22);
 }
 
 code {
