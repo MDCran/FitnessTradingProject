@@ -68,7 +68,17 @@ input#title {
     /* font-size: 18px; */
     /* line-height: 26px; */
     width: 780px;
+    height: 60px;
     /* height: 00px; */
+}
+
+input#description {
+    height: 60px;
+}
+
+.border-box, a, article, aside, blockquote, body, code, dd, div, dl, dt, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, html, input[type=email], input[type=number], input[type=password], input[type=tel], input[type=text], input[type=url], legend, li, main, nav, ol, p, pre, section, table, td, textarea, th, tr, ul {
+    box-sizing: border-box;
+    padding: 8px;
 }
 
 .bg-cyan-300 {

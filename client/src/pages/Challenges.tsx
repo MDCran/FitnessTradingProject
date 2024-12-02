@@ -7,6 +7,7 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import Backdrop from '@mui/material/Backdrop';
 import UpdateForm from "src/components/UpdateForm";
 import "src/css/StyleForChallenges.css";
+import { blue } from "@mui/material/colors";
 
 interface Challenge {
   _id: string;
@@ -259,7 +260,7 @@ function Challenges() {
         </Backdrop>
         <SpeedDial
         ariaLabel="SpeedDial to handle challenge crud"
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
+        sx={{ position: 'absolute', top: 100, right: 16, bgcolor: "oklch(.43 .15 283.08)"}}
         icon={<SpeedDialIcon />}
         >
         <SpeedDialAction
