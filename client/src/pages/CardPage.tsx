@@ -19,7 +19,6 @@ const CardPage: React.FC = () => {
 };
 
 export default CardPage;
-
 const initTiltEffect = (): void => {
   const logoContainer = document.querySelector<HTMLDivElement>(".mdcran-logo-container");
   const logoImage = document.querySelector<HTMLImageElement>(".mdcran-logo");
@@ -29,18 +28,14 @@ const initTiltEffect = (): void => {
 
   const tiltIntensity = 50;
 
-  let isHovered = false;
-
   // Handle mouse enter
   logoContainer.addEventListener("mouseenter", () => {
-    isHovered = true;
     overlay.style.transition = "opacity 2s ease-in";
     overlay.style.opacity = "0.5"; // Fade in overlay
   });
 
   // Handle mouse leave
   logoContainer.addEventListener("mouseleave", () => {
-    isHovered = false;
     overlay.style.transition = "opacity 2s ease-out, transform 0.5s ease-out";
     overlay.style.opacity = "0"; // Fade out overlay
     logoImage.style.transition = "transform 0.5s ease-out";
