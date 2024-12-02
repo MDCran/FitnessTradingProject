@@ -214,12 +214,18 @@ const Home: React.FC = () => {
 
   return (
     <PageWrapper title="Home">
+      <div className="header-section">
+        <h1 className="header-title">Welcome to Home</h1>
+        <p className="header-description">
+          Discover and participate in exciting daily and weekly challenges to earn rewards and level up your experience!
+        </p>
+      </div>
       <h1 className="animated-title1">Daily Challenges</h1>
       {renderCarousel(dailyChallenges, currentDailySlide, setCurrentDailySlide, "bg-green-100", "text-green-900")}
       <h1 className="animated-title2">Weekly Challenges</h1>
       {renderCarousel(weeklyChallenges, currentWeeklySlide, setCurrentWeeklySlide, "bg-blue-100", "text-blue-900")}
     </PageWrapper>
-  );
+  );  
 };
 
 export default Home;
