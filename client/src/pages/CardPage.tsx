@@ -5,8 +5,8 @@ const CardPage = () => (
   <PageWrapper title="CardPage">  
    <div className="user-card">  
     <div className="card-header">  
-      <h2>Test</h2>  
-      <p>Aura Points: 60</p>  
+      <h2>Test</h2>
+      <h3>Aura Points: 60</h3>  
     </div>  
   
     <div className="card-image">  
@@ -14,8 +14,8 @@ const CardPage = () => (
     </div>  
   
     <div className="card-description">  
-      <p>Rank: "input rank"</p>  
-      <p>Could put the latest completed challenges here.</p>  
+      <h3>Rank: "input rank"</h3>
+      <h4>Could put the latest completed challenges here.</h4>  
     </div>  
    </div>  
   </PageWrapper>  
