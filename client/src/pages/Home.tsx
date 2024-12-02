@@ -215,9 +215,9 @@ const Home: React.FC = () => {
   return (
     <PageWrapper title="Home">
       <div className="header-section">
-        <h1 className="header-title">Welcome to Home</h1>
+        <h1 className="header-title">Level Up Your Fitness</h1>
         <p className="header-description">
-          Discover and participate in exciting daily and weekly challenges to earn rewards and level up your experience!
+          Discover and participate in exciting daily and weekly challenges to earn aura and level up!
         </p>
       </div>
       <h1 className="animated-title1">Daily Challenges</h1>
