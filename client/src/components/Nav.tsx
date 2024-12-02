@@ -50,7 +50,7 @@ const Nav = () => {
   return (
     <nav className="flex items-center justify-between w-100 nav pv2 ph4">
       <div className="flex items-center justify-between bar-container">
-      <img src="fitknights_vector_white.svg" alt="Logo" className="nav-logo" />
+      <img src="fitknights_vector.svg" alt="Logo" className="nav-logo" />
         <UnstyledLink className=" text-accent nav-title" to="/">
           FitKnight
         </UnstyledLink>
