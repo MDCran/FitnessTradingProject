@@ -27,8 +27,7 @@
 
 .css-bgb8jr {
     z-index: 1050;
-    display: flex
-;
+    display: flex;
     -webkit-box-align: center;
     pointer-events: none;
     flex-direction: column-reverse;
@@ -42,7 +41,7 @@
     FONT-WEIGHT: 200;
     font: inherit;
     letter-spacing: inherit;
-    color: rgb(0 0 0 / 87%);
+    color: rgba(0, 0, 0, 0.87);
     box-sizing: content-box;
     /* background: white; */
     height: 5em;
@@ -54,6 +53,7 @@
     animation-name: mui-auto-fill-cancel;
     animation-duration: 10ms;
     padding: 35px 10px;
+    background-color: white;
 }
 
 label#type {
@@ -118,8 +118,7 @@ button, input, optgroup, select, textarea {
     color: oklch(1 0 0);
     color: oklch(1 0 0);
     cursor: pointer;
-    display: inline-flex
-;
+    display: inline-flex;
     flex-shrink: 0;
     flex-wrap: wrap;
     font-size: .875rem;
@@ -140,4 +139,14 @@ button, input, optgroup, select, textarea {
     transition-timing-function: cubic-bezier(0,0,.2,1);
     -webkit-user-select: none;
     user-select: none;
+}
+
+*, :after, :before {
+    border: 0 solid rgb(224, 224, 224);
+    /* box-sizing: border-box; */
+}
+
+.flex-col {
+    flex-direction: column;
+    background: white;
 }
