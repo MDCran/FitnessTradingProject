@@ -3,6 +3,7 @@ import { TripleFade as Hamburger } from "@adamjanicki/ui";
 import { useNavigate } from "react-router-dom";
 import "src/components/nav.css";
 import { UnstyledLink } from "src/components/Link";
+import fitknightsVector from "src/fitknights_vector.svg";
 
 type NavlinkProps = {
   to: string;
@@ -50,7 +51,7 @@ const Nav = () => {
       <div className="flex items-center justify-start gap-2 bar-container">
         {/* Group logo and title */}
         <div className="flex items-center gap-2">
-          <img src="fitknights_vector.svg" alt="Logo" className="nav-logo" />
+          <img src={fitknightsVector} alt="Logo" className="nav-logo" />
           <UnstyledLink className="text-accent nav-title" to="/">
             FitKnight
           </UnstyledLink>
