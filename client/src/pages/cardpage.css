@@ -1,0 +1,29 @@
+.user-card {  
+    width: 200px;  
+    height: 300px;  
+    border: 1px solid black;  
+    border-radius: 10px;  
+    background-color: #f0f0f0;  
+    padding: 10px;  
+  }  
+    
+  .card-header {  
+    background-color: #007bff;  
+    color: white;  
+    padding: 5px;  
+    border-bottom: 1px solid black;  
+  }  
+    
+  .card-image {  
+    text-align: center;  
+  }  
+    
+  .card-image img {  
+    width: 100px;  
+    height: 100px;  
+  }  
+    
+  .card-description {  
+    padding: 10px;  
+  }
+  
