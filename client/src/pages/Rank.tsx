@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import PageWrapper from "src/components/PageWrapper";
 import { motion } from "framer-motion"; // Import motion for animations
 
@@ -10,6 +11,7 @@ type RowData = {
 
 const Rank: React.FC = () => {
   const [data, setData] = useState<RowData[]>([]);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Function to generate a random color for avatar
   const getRandomColor = () => {
@@ -37,6 +39,11 @@ const Rank: React.FC = () => {
 
     fetchRank();
   }, []);
+
+  // Navigate to the profile page
+  const handleUserClick = (username: string) => {
+    navigate(`/user/${username}`);
+  };
 
   return (
     <PageWrapper title="LEADERBOARD">
@@ -68,10 +75,18 @@ const Rank: React.FC = () => {
                     duration: 0.6, // Animation duration
                   }}
                 >
-                  <motion.td className="p-6 max-width" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
+                  <motion.td
+                    className="p-6 max-width"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     {index + 1}
                   </motion.td>
-                  <motion.td className="p-3 max-width">
+                  <motion.td
+                    className="p-3 max-width cursor-pointer"
+                    onClick={() => handleUserClick(row.username)} // Navigate on click
+                  >
                     {/* Avatar with Random Color */}
                     <div className="flex items-start justify-start gap-3 w-full">
                       <motion.div
@@ -81,10 +96,22 @@ const Rank: React.FC = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
                       />
-                      <motion.span className="font-medium">{row.username}</motion.span>
+                      <motion.span
+                        className="font-medium"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {row.username}
+                      </motion.span>
                     </div>
                   </motion.td>
-                  <motion.td className="p-3" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
+                  <motion.td
+                    className="p-3"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     {row.auraPoints}
                   </motion.td>
                 </motion.tr>
