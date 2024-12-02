@@ -1,4 +1,5 @@
 /* Home.css */
+
 .challenge-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
@@ -51,11 +52,19 @@
   margin-bottom: 20px;
 }
 
-.animated-title {
+.animated-title1 {
   font-size: 2rem;
   text-align: center;
-  color: #007bff;
+  color: #0c8432;
   animation: fadeSlideIn 2s ease-in-out;
+  font-weight: bold;
+}
+.animated-title2 {
+  font-size: 2rem;
+  text-align: center;
+  color: #0a2ea6;
+  animation: fadeSlideIn 2s ease-in-out;
+  font-weight: bold;
 }
 
 @keyframes fadeSlideIn {
@@ -68,3 +77,61 @@
     transform: translateY(0);
   }
 }
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%; /* Adjust based on desired layout */
+}
+
+.carousel-item {
+  display: none;
+  width: 100%;
+  justify-content: center;
+}
+
+.carousel-item.block {
+  display: flex; /* Flex to center content */
+}
+
+.card {
+  max-width: 500px; /* Set max width for the card */
+  margin: 0 auto;
+}
+
+.btn-circle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.btn-circle.btn-primary {
+  background-color: #007bff; /* Adjust to match your theme */
+  border: none;
+}
+
+.btn-circle.left {
+  left: -60px; /* Position the left arrow next to the carousel container */
+}
+
+.btn-circle.right {
+  right: -60px; /* Position the right arrow next to the carousel container */
+}
+
+/* Adjust padding and spacing for overall layout */
+.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+  padding: 20px;
+}
+
+.animated-title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
