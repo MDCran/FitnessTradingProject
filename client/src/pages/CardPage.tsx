@@ -9,9 +9,14 @@ const CardPage = () => (
       <p>Aura Points: 60</p>  
     </div>  
   
-    <div className="card-image">  
+    {/* <div className="card-image">  
       <img src="user.png" alt="User" />  
-    </div>  
+
+    </div>   */}
+
+    <div className="card-image">
+      <p>image here</p>
+    </div>
   
     <div className="card-description">  
       <p>Rank: "input rank"</p>  

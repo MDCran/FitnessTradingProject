@@ -18,10 +18,11 @@
     text-align: center;  
   }  
     
-  .card-image img {  
+  /* .card-image img {  
     width: 100px;  
     height: 100px;  
-  }  
+  }   */
+     
     
   .card-description {  
     padding: 10px;  
