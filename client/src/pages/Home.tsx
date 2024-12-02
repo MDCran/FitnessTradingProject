@@ -11,11 +11,13 @@ interface Challenge {
   reward: number;
 }
 
-
 const Home: React.FC = () => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [activeChallenges, setActiveChallenges] = useState<string[]>([]);
   const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
+  const [currentDailySlide, setCurrentDailySlide] = useState(0); // For Daily Challenges
+  const [currentWeeklySlide, setCurrentWeeklySlide] = useState(0); // For Weekly Challenges
+  const [timers, setTimers] = useState<{ [key: string]: { hours: number; minutes: number; seconds: number } }>({});
 
   useEffect(() => {
     const fetchChallenges = async () => {
@@ -43,6 +45,100 @@ const Home: React.FC = () => {
 
     fetchChallenges();
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const updatedTimers = challenges.reduce((acc, challenge) => {
+        const now = new Date().getTime();
+        const expiration = new Date(challenge.expiresAt).getTime();
+        const remaining = Math.max(expiration - now, 0);
+
+        const hours = Math.floor(remaining / (1000 * 60 * 60));
+        const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+
+        acc[challenge._id] = { hours, minutes, seconds };
+        return acc;
+      }, {} as { [key: string]: { hours: number; minutes: number; seconds: number } });
+
+      setTimers(updatedTimers);
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [challenges]);
+
+  const renderCarousel = (
+    filteredChallenges: Challenge[],
+    currentSlide: number,
+    setSlide: React.Dispatch<React.SetStateAction<number>>,
+    colorClass: string,
+    titleColor: string
+  ) => {
+    const handlePrev = () => {
+      setSlide((prev) => (prev === 0 ? filteredChallenges.length - 1 : prev - 1));
+    };
+  
+    const handleNext = () => {
+      setSlide((prev) => (prev === filteredChallenges.length - 1 ? 0 : prev + 1));
+    };
+  
+    return (
+      <div className="carousel w-full relative">
+        {/* Challenges */}
+        {filteredChallenges.map((challenge, index) => (
+          <div
+            key={challenge._id}
+            className={`carousel-item w-full ${
+              index === currentSlide ? "block" : "hidden"
+            } transition-all duration-500`}
+          >
+            <div className={`card ${colorClass} w-full shadow-xl`}>
+              <div className="card-body">
+                <h2 className={`card-title ${titleColor}`}>{challenge.title}</h2>
+                <p>{challenge.description}</p>
+                <div className="countdown font-mono text-2xl">
+                  <span style={{ ["--value" as string]: timers[challenge._id]?.hours || 0 }}></span>h
+                  <span style={{ ["--value" as string]: timers[challenge._id]?.minutes || 0 }}></span>m
+                  <span style={{ ["--value" as string]: timers[challenge._id]?.seconds || 0 }}></span>s
+                </div>
+                {/* Display the expiration date */}
+                <div className="expiration-date font-mono text-sm text-gray-500">
+                  Expires at: {new Date(challenge.expiresAt).toLocaleString()}
+                </div>
+                <div className="card-actions justify-end">{renderButton(challenge._id)}</div>
+                <div className="reward-tag">Reward: {challenge.reward} Aura Points</div>
+              </div>
+            </div>
+          </div>
+        ))}
+  
+        {/* Navigation Buttons */}
+        <button
+          onClick={handlePrev}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
+        >
+          ❮
+        </button>
+        <button
+          onClick={handleNext}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
+        >
+          ❯
+        </button>
+      </div>
+    );
+  };
+  
+
+  const renderButton = (challengeID: string) => {
+    if (completedChallenges.includes(challengeID)) {
+      return <button className="btn btn-disabled">Completed</button>;
+    }
+    if (activeChallenges.includes(challengeID)) {
+      return <button className="btn btn-primary" onClick={() => completeChallenge(challengeID)}>Mark as Complete</button>;
+    }
+    return <button className="btn btn-primary" onClick={() => joinChallenge(challengeID)}>Join</button>;
+  };
 
   const joinChallenge = async (challengeID: string) => {
     try {
@@ -113,57 +209,15 @@ const Home: React.FC = () => {
     }
   };
 
-  const renderButton = (challengeID: string) => {
-    if (completedChallenges.includes(challengeID)) {
-      return <button className="btn btn-disabled">Completed</button>;
-    }
-    if (activeChallenges.includes(challengeID)) {
-      return <button className="btn btn-primary" onClick={() => completeChallenge(challengeID)}>Mark as Complete</button>;
-    }
-    return <button className="btn btn-primary" onClick={() => joinChallenge(challengeID)}>Join</button>;
-  };
-
   const dailyChallenges = challenges.filter((challenge) => challenge.challengeType === "daily");
   const weeklyChallenges = challenges.filter((challenge) => challenge.challengeType === "weekly");
 
   return (
     <PageWrapper title="Home">
-      <h1 className="animated-title">Daily Challenges</h1>
-      <div className="carousel rounded-box max-w-5xl mx-auto p-4 space-x-4">
-        {dailyChallenges.map((challenge) => (
-          <div key={challenge._id} className="carousel-item">
-            <div className="card bg-green-100 w-80 shadow-xl">
-              <div className="card-body">
-                <h2 className="card-title text-green-900">{challenge.title}</h2>
-                <p>{challenge.description}</p>
-                <div className="card-actions justify-end">
-                  {renderButton(challenge._id)}
-                </div>
-                <div className="reward-tag">Reward: {challenge.reward} Aura Points</div>
-                <p>Expires: {new Date(challenge.expiresAt).toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <h1 className="animated-title">Weekly Challenges</h1>
-      <div className="carousel rounded-box max-w-5xl mx-auto p-4 space-x-4">
-        {weeklyChallenges.map((challenge) => (
-          <div key={challenge._id} className="carousel-item">
-            <div className="card bg-blue-100 w-80 shadow-xl">
-              <div className="card-body">
-                <h2 className="card-title text-blue-900">{challenge.title}</h2>
-                <p>{challenge.description}</p>
-                <div className="card-actions justify-end">
-                  {renderButton(challenge._id)}
-                </div>
-                <div className="reward-tag">Reward: {challenge.reward} Aura Points</div>
-                <p>Expires: {new Date(challenge.expiresAt).toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <h1 className="animated-title1">Daily Challenges</h1>
+      {renderCarousel(dailyChallenges, currentDailySlide, setCurrentDailySlide, "bg-green-100", "text-green-900")}
+      <h1 className="animated-title2">Weekly Challenges</h1>
+      {renderCarousel(weeklyChallenges, currentWeeklySlide, setCurrentWeeklySlide, "bg-blue-100", "text-blue-900")}
     </PageWrapper>
   );
 };

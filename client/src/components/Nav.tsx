@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "src/components/nav.css";
 import { UnstyledLink } from "src/components/Link";
 
-
 type NavlinkProps = {
   to: string;
   children: React.ReactNode;
@@ -12,7 +11,7 @@ type NavlinkProps = {
 
 const Nav = () => {
   const [open, setOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);  // Track login state
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
   const navigate = useNavigate();
 
   const closeMenu = () => setOpen(false);
@@ -20,25 +19,24 @@ const Nav = () => {
   // Check if token exists in localStorage on mount
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    setIsLoggedIn(!!token);  // Set login state based on token presence
+    setIsLoggedIn(!!token); // Set login state based on token presence
   }, []);
 
   useEffect(() => {
     const handleStorage = () => {
       const token = localStorage.getItem("authToken");
-      setIsLoggedIn(!!token);  
+      setIsLoggedIn(!!token);
     };
 
-    window.addEventListener("storage", handleStorage);  
-    return () => window.removeEventListener("storage", handleStorage);  
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, []);
-  
-  
+
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("username");
     setIsLoggedIn(false);
-    navigate("/login");  // Redirect to login page after logout
+    navigate("/login"); // Redirect to login page after logout
   };
 
   const Navlink = (props: NavlinkProps) => (
@@ -49,24 +47,27 @@ const Nav = () => {
 
   return (
     <nav className="flex items-center justify-between w-100 nav pv2 ph4">
-      <div className="flex items-center justify-between bar-container">
-      <img src="fitknights_vector.svg" alt="Logo" className="nav-logo" />
-        <UnstyledLink className=" text-accent nav-title" to="/">
-          FitKnight
-        </UnstyledLink>
+      <div className="flex items-center justify-start gap-2 bar-container">
+        {/* Group logo and title */}
+        <div className="flex items-center gap-2">
+          <img src="fitknights_vector.svg" alt="Logo" className="nav-logo" />
+          <UnstyledLink className="text-accent nav-title" to="/">
+            FitKnight
+          </UnstyledLink>
+        </div>
         <div className="mobile">
           <Hamburger open={open} onClick={() => setOpen(!open)} />
         </div>
       </div>
       <ul
-        className=" text-secondary flex items-center desktop link-container ma0"
+        className="text-secondary flex items-center desktop link-container ma0"
         style={{ display: open ? "flex" : undefined }}
       >
         <Navlink to="/">Home</Navlink>
         <Navlink to="/challenges/">Challenges</Navlink>
         <Navlink to="/cardPage/">CardPage</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
-        
+
         {isLoggedIn && <Navlink to={`/user/${localStorage.getItem("username")}`}>Profile</Navlink>}
         {isLoggedIn ? (
           <li className="navlink-li">
@@ -81,7 +82,5 @@ const Nav = () => {
     </nav>
   );
 };
-
-//<Navlink to="/about/">About</Navlink>
 
 export default Nav;
