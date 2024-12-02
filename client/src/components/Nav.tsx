@@ -3,7 +3,7 @@ import { TripleFade as Hamburger } from "@adamjanicki/ui";
 import { useNavigate } from "react-router-dom";
 import "src/components/nav.css";
 import { UnstyledLink } from "src/components/Link";
-import fitknightsVector from "public/fitknights_vector.svg";
+import fitknightsVector from "src/fitknights_vector.svg";
 
 type NavlinkProps = {
   to: string;
