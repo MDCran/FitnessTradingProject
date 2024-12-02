@@ -1,35 +1,72 @@
-import PageWrapper from "src/components/PageWrapper";  
-import './cardpage.css';  
-  
-const CardPage = () => (  
-  <PageWrapper title="CardPage">  
-   <div className="user-card">  
+import React, { useEffect } from "react";
+import PageWrapper from "src/components/PageWrapper";
+import "./cardpage.css";
+import fitknightsVector from "src/fitknights_vector.svg";
 
-    <div className="card-logo">  
-      <img src="fitknights_logo.png" alt="Logo" />  
-    </div>
+const CardPage: React.FC = () => {
+  useEffect(() => {
+    initTiltEffect(); // Initialize the hover effect after the component mounts
+  }, []);
 
-    <div className="card-header">  
-      <h2>Test</h2>
-      <h3>Aura Points: 60</h3>  
-    </div>  
-  
-    <div className="card-image">  
-      <img src="https://images.unsplash.com/photo-1458349726531-234ad56ba80f?q=80&w=2362&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User" />  
-    </div>  
+  return (
+    <PageWrapper title="CardPage">
+      <div className="mdcran-logo-container">
+        <div className="mdcran-overlay"></div>
+        <img className="mdcran-logo" src={fitknightsVector} alt="Logo" />
+      </div>
+    </PageWrapper>
+  );
+};
 
-    <div className="bottom-bar">
-    </div>
-
-    <div className="bottom-bar2">
-    </div>
-  
-    <div className="card-description">  
-      <h4>Rank: "input rank"</h4>
-      <h5>Could put the latest completed challenges here.</h5>  
-    </div>  
-   </div>  
-  </PageWrapper>  
-);  
-  
 export default CardPage;
+
+const initTiltEffect = (): void => {
+  const logoContainer = document.querySelector<HTMLDivElement>(".mdcran-logo-container");
+  const logoImage = document.querySelector<HTMLImageElement>(".mdcran-logo");
+  const overlay = document.querySelector<HTMLDivElement>(".mdcran-overlay");
+
+  if (!logoContainer || !logoImage || !overlay) return;
+
+  const tiltIntensity = 50;
+
+  let isHovered = false;
+
+  // Handle mouse enter
+  logoContainer.addEventListener("mouseenter", () => {
+    isHovered = true;
+    overlay.style.transition = "opacity 2s ease-in";
+    overlay.style.opacity = "0.5"; // Fade in overlay
+  });
+
+  // Handle mouse leave
+  logoContainer.addEventListener("mouseleave", () => {
+    isHovered = false;
+    overlay.style.transition = "opacity 2s ease-out, transform 0.5s ease-out";
+    overlay.style.opacity = "0"; // Fade out overlay
+    logoImage.style.transition = "transform 0.5s ease-out";
+    logoImage.style.transform = "perspective(1000px) rotateX(0) rotateY(0)";
+    overlay.style.transform = "perspective(1000px) rotateX(0) rotateY(0)";
+  });
+
+  // Handle mouse move
+  logoContainer.addEventListener("mousemove", (e: MouseEvent) => {
+    const tiltX = -(e.clientY / window.innerHeight - 0.5) * tiltIntensity;
+    const tiltY = (e.clientX / window.innerWidth - 0.5) * tiltIntensity;
+
+    logoImage.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    overlay.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+
+    const containerRect = logoContainer.getBoundingClientRect();
+    const containerCenterX = containerRect.left + containerRect.width / 2;
+    const containerCenterY = containerRect.top + containerRect.height / 2;
+
+    const offsetX = containerCenterX - e.clientX;
+    const offsetY = containerCenterY - e.clientY;
+
+    overlay.style.backgroundPositionX = `${offsetX}px`;
+    overlay.style.backgroundPositionY = `${offsetY}px`;
+  });
+
+  overlay.style.background = `radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 250px)`;
+  overlay.style.backgroundRepeat = "no-repeat";
+};
