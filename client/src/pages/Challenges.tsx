@@ -7,7 +7,6 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import Backdrop from '@mui/material/Backdrop';
 import UpdateForm from "src/components/UpdateForm";
 import "src/css/StyleForChallenges.css";
-import { blue } from "@mui/material/colors";
 
 interface Challenge {
   _id: string;
