@@ -1,14 +1,18 @@
 .user-card {  
-  width: 600px;  
-  height: 700px;  
-  border: 3px solid black;  
-  border-radius: 10px;  
-  background-color: #f0f0f0;  
-  padding: 20px;  
+  background-color: #f0f0f0;
+  border: 10px solid #ffffff;
+  border-radius: 10px;
+  height: 750px;
+  padding: 20px;
+  width: 600px;
+  outline: 3px solid black;
+  box-shadow: 7px 12px 12px 12px #0000008f;  
 }  
 
 .card-logo {  
-  height: 5px; 
+  height: 40px;
+  width: 40px;
+  margin-top: -20px;
 }  
   
 .card-logo img {  
@@ -25,7 +29,7 @@
   border-bottom: 1px solid #000;
   color: #fff;
   padding: 5px;
-  height: 85px;
+  height: 40px;
   border-radius: 10px;
 }
 
@@ -48,23 +52,36 @@ h3 {
 }  
   
 .card-image img {  
-  width: 554px;  
-  height: 250px;  
+  background: #9c5ca2;
   border-radius: 10px;
+  height: 250px;
   padding: 3px;
-  /* color: black; */
-  background: black;
+  width: 554px;
+  border: 3px solid #000000;
 }  
 
 .bottom-bar {
   padding: 3px;
+  margin-top: -14px;
+  background: #ac54a7;
+  height: 1px;
+  border-radius: 5px;
+}
+
+.bottom-bar2 {
+  padding: 3px;
+  margin-top: -20px;
+  background: #ac54a7;
+  height: 1px;
+  border-radius: 5px;
 }
   
 .card-description {  
-  padding: 10px;
-  background: black;
+  background: #000;
   border-radius: 10px;
-  height: 270px;
+  color: #fff;
   font-size: 18px;
-  color: white;  
+  height: 270px;
+  padding: 11px;
+  margin-top: 40px; 
 }

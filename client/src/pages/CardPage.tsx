@@ -20,6 +20,9 @@ const CardPage = () => (
 
     <div className="bottom-bar">
     </div>
+
+    <div className="bottom-bar2">
+    </div>
   
     <div className="card-description">  
       <h4>Rank: "input rank"</h4>
