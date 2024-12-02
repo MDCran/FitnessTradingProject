@@ -1,5 +1,5 @@
 import PageWrapper from "src/components/PageWrapper";  
-import './CardPage.css';  
+import './cardpage.css';  
   
 const CardPage = () => (  
   <PageWrapper title="CardPage">  
@@ -9,14 +9,9 @@ const CardPage = () => (
       <p>Aura Points: 60</p>  
     </div>  
   
-    {/* <div className="card-image">  
+    <div className="card-image">  
       <img src="user.png" alt="User" />  
-
-    </div>   */}
-
-    <div className="card-image">
-      <p>image here</p>
-    </div>
+    </div>  
   
     <div className="card-description">  
       <p>Rank: "input rank"</p>  
