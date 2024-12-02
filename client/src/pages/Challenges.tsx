@@ -180,19 +180,8 @@ function Challenges() {
   }
 
   const evaluateChallenge = (challenge: Challenge) => {
-    let count = 0;
-    let flag = true;
-    yourchallenges.map((yourchallenge) => {
-      count++;
-      if (challenge._id !== yourchallenge._id) {
-        flag = false;
-      }
-    })
-    if (count == 0) {
-      flag = false;
-    }
-    return flag;
-  }
+    return yourchallenges.some((yourchallenge) => challenge._id === yourchallenge._id);
+  };
 
   const BackDropMapping: {[key: string]: React.ReactNode} = {
     create: (
