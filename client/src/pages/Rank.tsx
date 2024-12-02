@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PageWrapper from "src/components/PageWrapper";
 import { motion } from "framer-motion"; // Import motion for animations
 
-// Type definition for each row's data
 type RowData = {
   username: string;
   auraPoints: number;
@@ -10,8 +9,8 @@ type RowData = {
 
 const Rank: React.FC = () => {
   const [data, setData] = useState<RowData[]>([]);
+  const currentUsername = process.env.REACT_APP_CURRENT_USERNAME || "currentUser"; // Replace this with actual logic
 
-  // Function to generate a random color for avatar
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -21,7 +20,6 @@ const Rank: React.FC = () => {
     return color;
   };
 
-  // Fetch the leaderboard data from the API
   useEffect(() => {
     const fetchRank = async () => {
       try {
@@ -39,15 +37,14 @@ const Rank: React.FC = () => {
   }, []);
 
   return (
-    <PageWrapper title="LEADERBOARD">
+    <PageWrapper title="Leaderboard">
       <div className="Rank bg-white p-5">
-        {/* Adjust the container's maxWidth to make it wider */}
         <div className="container mx-auto" style={{ maxWidth: "1500px" }}>
           <motion.table
             className="styled-table w-full table-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1 }} // Fade in the whole table
+            transition={{ duration: 1 }}
           >
             <thead>
               <tr className="bg-accent text-white">
@@ -60,19 +57,20 @@ const Rank: React.FC = () => {
               {data.map((row, index) => (
                 <motion.tr
                   key={index}
-                  className={`text-center ${index % 2 === 0 ? "bg-gray-100" : ""}`}
-                  initial={{ opacity: 0, y: 20 }} // Rows start with slight offset
-                  animate={{ opacity: 1, y: 0 }} // Rows slide in and fade in
+                  className={`text-center ${
+                    row.username === currentUsername ? "bg-yellow-200 font-bold" : index % 2 === 0 ? "bg-gray-100" : ""
+                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: index * 0.1, // Stagger animation for each row
-                    duration: 0.6, // Animation duration
+                    delay: index * 0.1,
+                    duration: 0.6,
                   }}
                 >
                   <motion.td className="p-6 max-width" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
                     {index + 1}
                   </motion.td>
                   <motion.td className="p-3 max-width">
-                    {/* Avatar with Random Color */}
                     <div className="flex items-start justify-start gap-3 w-full">
                       <motion.div
                         className="mask mask-squircle h-12 w-12"
