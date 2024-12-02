@@ -90,7 +90,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000"], // Replace with your frontend domain
+    origin: [API_URL], // Replace with your frontend domain
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
