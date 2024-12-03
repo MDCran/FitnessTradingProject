@@ -126,7 +126,6 @@ h2 {
 }
 
 h3 {
-  /* margin-top: -100px; */
   top: 320px;
   right: 0px;
   font-size: 30px;
@@ -136,7 +135,8 @@ h3 {
   font-size: 60px;
   font-family: -webkit-body;
   font-weight: 600;
-  color: black;
+  color: #ffffff;
+  text-shadow: 1px 1px 10px #000000, 1px 1px 1px #000000, 1px 1px 11px #000000, 1px 1px 2px #000000;
 }
 
 h6 {
@@ -151,8 +151,14 @@ h6 {
 
 }
 
+h4 {
+  color: white;
+}
+
 h2.title {
   font-size: 18px;
+  color: #ffffff;
+  text-shadow: 1px 1px 10px #000000, 1px 1px 1px #000000, 1px 1px 11px #000000, 1px 1px 2px #000000;
 }
 
 h3.at {
@@ -161,6 +167,8 @@ h3.at {
   position: absolute;
   top: 455px;
   font-weight: 520;
+  color: #ffffff;
+  text-shadow: 1px 1px 10px #000000, 1px 1px 1px #000000, 1px 1px 11px #000000, 1px 1px 2px #000000;
 }
 
 

@@ -55,8 +55,8 @@ const CardPage: React.FC = () => {
         <div className="pokemon-card front">
           <div className="glow-effect"></div>
           <div className="card-header">
-            <h2>Name: FitKnight</h2>
-            <h3>Aura Points: 60</h3>
+            <h2>First Last Name</h2>
+            <h3>600</h3>
             <h6>Aura Points</h6>
           </div>
           <div className="card-image">
