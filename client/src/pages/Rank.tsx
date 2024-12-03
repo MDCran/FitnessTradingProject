@@ -46,7 +46,7 @@ const Rank: React.FC = () => {
   };
 
   return (
-    <PageWrapper title="LEADERBOARD">
+    <PageWrapper title="Rank">
       <div className="Rank bg-white p-5">
         {/* Adjust the container's maxWidth to make it wider */}
         <div className="container mx-auto" style={{ maxWidth: "1500px" }}>

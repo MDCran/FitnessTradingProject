@@ -109,7 +109,7 @@
   border-radius: 3px;
 }
 
-h2 {
+h2.title {
   margin-top: -20px;
   margin-left: -10px;
   font-weight: 1000;
@@ -125,10 +125,10 @@ h2 {
   /* text-shadow: 1px 1px 1px #ffffff; */
 }
 
-h3 {
+h3.aurapoints{
   top: 320px;
   right: 0px;
-  font-size: 30px;
+  font-size: 60px;
   /* align-content: center; */
   width: 100%;
   text-align: center;
@@ -139,7 +139,7 @@ h3 {
   text-shadow: 1px 1px 10px #000000, 1px 1px 1px #000000, 1px 1px 11px #000000, 1px 1px 2px #000000;
 }
 
-h6 {
+h6.aurapoints-label {
   position: absolute;
   top: 389px;
   width: 100%;
@@ -151,7 +151,11 @@ h6 {
 
 }
 
-h4 {
+h4.skills {
+  color: white;
+}
+
+h4.challenges {
   color: white;
 }
 
@@ -233,7 +237,7 @@ h3.at {
 .card-details h4 {
   margin: 10px 0 5px;
   font-size: 16px;
-  color: #000;
+  color: #ffffff;
   text-decoration: underline;
 }
 
