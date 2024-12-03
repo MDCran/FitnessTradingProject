@@ -24,7 +24,7 @@
 .pokemon-card.front {
   background: linear-gradient(40deg, #000000, #000000);
   z-index: 2;
-  border: 2px solid #ac54a7;
+  border: 2px solid #000000;
   background: repeating-linear-gradient(45deg, #320330, #ffffff 3px);
 }
 
@@ -125,6 +125,23 @@ h2.title {
   /* text-shadow: 1px 1px 1px #ffffff; */
 }
 
+h2.username {
+  position: absolute;
+  top: 7px;
+  left: 16px;
+  bottom: 463px;
+  width: 91%;
+  text-align: left;
+  /* margin-left: 30px; */
+  line-height: 16px;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px #000000, 1px 1px 1px #000000, 1px 1px 1px #000000, 1px 1px 3px #000000;
+  /* background-color: #00000000; */
+  /* background: linear-gradient(44deg, #000000, #00000000); */
+  background: linear-gradient(45deg, #68506b, transparent 210px);
+  /* background-repeat: no-repeat !important; */
+}
+
 h3.aurapoints{
   top: 320px;
   right: 0px;
@@ -167,12 +184,12 @@ h2.title {
 
 h3.at {
   font-size: 16px;
-  /* margin-top: 100px; */
+  font-weight: 520;
   position: absolute;
   top: 455px;
-  font-weight: 520;
-  color: #ffffff;
-  text-shadow: 1px 1px 10px #000000, 1px 1px 1px #000000, 1px 1px 11px #000000, 1px 1px 2px #000000;
+  width: 100%;
+  /* text-align: center; */
+  right: 0px;
 }
 
 
@@ -238,7 +255,7 @@ h3.at {
   margin: 10px 0 5px;
   font-size: 16px;
   color: #ffffff;
-  text-decoration: underline;
+  /*text-decoration: underline;*/
 }
 
 .card-details ul {
