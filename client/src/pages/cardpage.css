@@ -22,9 +22,20 @@
 }
 
 .pokemon-card.front {
-  background: linear-gradient(135deg, #e0e0e0, #c0c0c0);
+  background: linear-gradient(40deg, #000000, #000000);
   z-index: 2;
+  border: 2px solid #ac54a7;
+  background: repeating-linear-gradient(45deg, #320330, #ffffff 3px);
 }
+
+  /*
+.pokemon-card.front {
+  background: linear-gradient(279deg, #000000, #000000);
+  z-index: 2;
+  border: 2px solid #000000;
+  background: repeating-linear-gradient(232deg, #320330, #ffffff 3px);
+}
+  */
 
 .pokemon-card.back {
   background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
@@ -37,7 +48,9 @@
 }
 
 .pokemon-card-container.flipped .back {
+  background: repeating-radial-gradient(#92569800, #4728499c 1px);
   transform: rotateY(0);
+  border: 2px solid black;
 }
 
 /* Glow effect */
@@ -63,9 +76,94 @@
 
 .card-header h2,
 .card-header h3 {
-  margin: 0;
+  /*margin: 0;*/
+  /*font-size: 18px;*/
+  position: absolute;
+}
+
+
+
+/*
+
+.pokemon-card.front {
+    background: linear-gradient(40deg, #000000, #000000);
+    z-index: 2;
+    border: 2px solid black;
+}
+
+.pokemo
+
+*/
+
+
+.card-details h4 {
+  color: #ffffff;
+  font-size: 16px;
+  margin: 10px 0 5px;
+  height: 24px;
+  background: repeating-linear-gradient(20deg, #000000, #000000 2px);
+  outline: 2px solid black;
+  line-height: 8px;
+  font-weight: 700;
+  font-family: math;
+  border-radius: 3px;
+}
+
+h2 {
+  margin-top: -20px;
+  margin-left: -10px;
+  font-weight: 1000;
+  /* letter-spacing: .4px; */
+  font-family: c;
+  width: 290px;
+  text-align: left;
+  color: #ffffff;
+  text-shadow: 1px 1px 10px #000000, 1px 1px 1px #000000, 1px 1px 11px #000000, 1px 1px 2px #000000;
+  /* -webkit-text-stroke: 1px #ffffff; */
+  letter-spacing: .5px;
+  font-size: 20px;
+  /* text-shadow: 1px 1px 1px #ffffff; */
+}
+
+h3 {
+  /* margin-top: -100px; */
+  top: 320px;
+  right: 0px;
+  font-size: 30px;
+  /* align-content: center; */
+  width: 100%;
+  text-align: center;
+  font-size: 60px;
+  font-family: -webkit-body;
+  font-weight: 600;
+  color: black;
+}
+
+h6 {
+  position: absolute;
+  top: 389px;
+  width: 100%;
+  right: 0px;
+  font-family: math;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 10px #000000, 1px 1px 1px #000000, 1px 1px 11px #000000, 1px 1px 2px #000000;
+
+}
+
+h2.title {
   font-size: 18px;
 }
+
+h3.at {
+  font-size: 16px;
+  /* margin-top: 100px; */
+  position: absolute;
+  top: 455px;
+  font-weight: 520;
+}
+
+
 
 /* Image styles */
 .card-image {
@@ -82,6 +180,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
+  border: 2px solid black;
 }
 
 .username {
@@ -107,6 +206,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid black;
 }
 
 .card-logo img {
@@ -130,8 +230,12 @@
 }
 
 .card-details ul {
+  height: 157px;
   list-style: none;
   padding: 0;
+  background: white;
+  box-shadow: 2px 3px 1px black;
+  border: 2px solid black;
 }
 
 .card-details li {

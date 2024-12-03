@@ -57,6 +57,7 @@ const CardPage: React.FC = () => {
           <div className="card-header">
             <h2>Name: FitKnight</h2>
             <h3>Aura Points: 60</h3>
+            <h6>Aura Points</h6>
           </div>
           <div className="card-image">
             <img
@@ -73,19 +74,18 @@ const CardPage: React.FC = () => {
         {/* Back Side */}
         <div className="pokemon-card back">
           <div className="card-details">
-            <h2>Trainer: John Doe</h2>
-            <h3>@FitKnightHero</h3>
-            <h4>Skills:</h4>
+            <h2 className="title">Trainer: John Doe</h2>
+            <h3 className="at">@FitKnightHero</h3>
+            <h4 className="skills">Rank</h4>
             <ul>
-              <li>Strength</li>
-              <li>Endurance</li>
-              <li>Agility</li>
+              <li>Aura Points: #</li>
+              <li>Rank:</li>
             </ul>
-            <h4>Challenges Completed:</h4>
+            <h4>Challenges Completed</h4>
             <ul>
-              <li>5K Run</li>
-              <li>Push-Up Mastery</li>
-              <li>Marathon</li>
+              <li>Challenge 1</li>
+              <li>Challenge 2</li>
+              <li>Challenge 3</li>
             </ul>
           </div>
         </div>
