@@ -162,4 +162,10 @@
   text-align: center;
 }
 
+.custom-link {
+  color: #7ac1ff;
+}
 
+.custom-link:hover {
+  color: #2e9dff;
+}
