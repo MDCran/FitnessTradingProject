@@ -1,110 +1,88 @@
-/* General Layout */
-body {
-  font-family: 'Arial', sans-serif; /* Modern font */
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #f9fafb; /* Light background for better contrast */
-  color: #333; /* Consistent text color */
-}
+/* Home.css */
 
-/* Header Section */
-.header-section {
-  background: linear-gradient(to bottom right, #4caf50, #81c784);
-  padding: 40px 20px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.header-title {
-  font-size: 3rem;
-  color: white;
-  margin: 0;
-  font-weight: bold;
-}
-
-.header-description {
-  font-size: 1.2rem;
-  color: #f0f8ff;
-  margin-top: 10px;
-  line-height: 1.5;
-}
-
-/* Challenge Grid */
 .challenge-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+  gap: 20px; /* Space between the cards */
+  margin: 20px 0;
+  padding: 0 16px; /* Add some padding on the sides */
 }
 
 .challenge-card {
-  position: relative;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.challenge-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  position: relative; /* Required for positioning the reward tag */
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white; /* Ensure the card has a distinct background */
 }
 
 .reward-tag {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #ff9800;
+  background-color: black; /* Background color for the reward tag */
   color: white;
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 15px;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: bold;
+  z-index: 1; /* Ensure the reward tag is above other elements */
 }
 
 .challenge-label {
-  padding: 8px 14px;
-  border-radius: 20px;
-  color: white;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 12px;
   font-weight: bold;
-  font-size: 0.8rem;
+  color: white;
+  border-radius: 12px;
+  margin-right: 8px;
 }
 
 .challenge-label.daily {
-  background-color: #2196f3;
+  background-color: #007bff; /* Blue for daily challenges */
 }
 
 .challenge-label.weekly {
-  background-color: #4caf50;
+  background-color: #28a745; /* Green for weekly challenges */
 }
 
-/* Animated Titles */
-.animated-title1, .animated-title2 {
-  font-size: 2.5rem;
-  text-align: center;
+.challenge-grid h1 {
+  text-align: center; /* Center the title */
   margin-bottom: 20px;
-  font-weight: bold;
-  animation: fadeSlideIn 1s ease-in-out;
 }
 
 .animated-title1 {
-  color: #00796b;
+  font-size: 2rem;
+  text-align: center;
+  color: #0c8432;
+  animation: fadeSlideIn 2s ease-in-out;
+  font-weight: bold;
 }
-
 .animated-title2 {
-  color: #3f51b5;
+  font-size: 2rem;
+  text-align: center;
+  color: #0a2ea6;
+  animation: fadeSlideIn 2s ease-in-out;
+  font-weight: bold;
 }
 
-/* Carousel */
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .carousel {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   position: relative;
-  width: 100%;
-  margin: 30px 0;
+  width: 100%; /* Adjust based on desired layout */
 }
 
 .carousel-item {
@@ -114,85 +92,80 @@ body {
 }
 
 .carousel-item.block {
-  display: flex;
+  display: flex; /* Flex to center content */
 }
 
 .card {
-  width: 100%;
-  max-width: 500px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px; /* Set max width for the card */
+  margin: 0 auto;
 }
 
 .btn-circle {
-  background-color: #4caf50;
-  color: white;
-  border: none;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
+  z-index: 10;
 }
 
-.btn-circle:hover {
-  background-color: #388e3c;
+.btn-circle.btn-primary {
+  background-color: #007bff; /* Adjust to match your theme */
+  border: none;
 }
 
-/* Not Logged In Section */
-.not-logged-in-message {
-  text-align: center;
-  margin-top: 50px;
+.btn-circle.left {
+  left: -60px; /* Position the left arrow next to the carousel container */
+}
+
+.btn-circle.right {
+  right: -60px; /* Position the right arrow next to the carousel container */
+}
+
+/* Adjust padding and spacing for overall layout */
+.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
   padding: 20px;
-  background: #ffebee;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.not-logged-in-message h1 {
-  color: #d32f2f;
-  font-size: 2rem;
+.animated-title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.header-section {
+  width: 100%;
+  background-color: #f0f8ff; 
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.header-title {
+  font-size: 2.5rem;
+  color: #0a2ea6; 
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.not-logged-in-message p {
-  font-size: 1.2rem;
+.header-description {
+  font-size: 1rem;
+  color: #333; 
+  max-width: 800px;
+  margin: 0 auto; 
+}
+
+.not-logged-in-message {
+  font-size: 2rem;
+  text-align: center;
 }
 
 .custom-link {
-  color: #2196f3;
-  font-weight: bold;
-  text-decoration: none;
+  color: #7ac1ff;
 }
 
 .custom-link:hover {
-  text-decoration: underline;
-}
-
-/* Animations */
-@keyframes fadeSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .header-title {
-    font-size: 2rem;
-  }
-
-  .header-description {
-    font-size: 1rem;
-  }
-
-  .animated-title1, .animated-title2 {
-    font-size: 2rem;
-  }
+  color: #2e9dff;
 }
