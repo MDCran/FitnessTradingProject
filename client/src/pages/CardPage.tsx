@@ -4,13 +4,20 @@ import { useParams } from "react-router-dom";
 import "./cardpage.css";
 import fitknightsVector from "src/fitknights_vector.svg";
 
+interface Challenge {
+  title: string;
+  description: string;
+  completedAt: string;
+  challengeType: string;
+}
+
 interface UserData {
   firstName: string;
   lastName: string;
   username: string;
   auraPoints: number;
-  //activeChallenges: Challenge[];
-  //completedChallenges: Challenge[];
+  activeChallenges: Challenge[];
+  completedChallenges: Challenge[];
 }
 
 
