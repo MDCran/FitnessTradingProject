@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageWrapper from "src/components/PageWrapper";
-import "../css/Home.css"; // Ensure you have the required CSS file
+import "../css/Home.css";
 
 interface Challenge {
   _id: string;
@@ -18,8 +18,14 @@ const Home: React.FC = () => {
   const [currentDailySlide, setCurrentDailySlide] = useState(0); // For Daily Challenges
   const [currentWeeklySlide, setCurrentWeeklySlide] = useState(0); // For Weekly Challenges
   const [timers, setTimers] = useState<{ [key: string]: { hours: number; minutes: number; seconds: number } }>({});
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    setIsLoggedIn(!!authToken);
+
+    if (!authToken) return; // Stop fetching challenges if the user is not logged in
+
     const fetchChallenges = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
@@ -30,7 +36,7 @@ const Home: React.FC = () => {
 
         const username = localStorage.getItem("username");
         const userResponse = await fetch(`${apiUrl}/api/user/${username}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
+          headers: { Authorization: `Bearer ${authToken}` },
         });
         if (!userResponse.ok) throw new Error("Failed to fetch user data.");
         const userData = await userResponse.json();
@@ -47,6 +53,8 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!isLoggedIn) return;
+
     const interval = setInterval(() => {
       const updatedTimers = challenges.reduce((acc, challenge) => {
         const now = new Date().getTime();
@@ -65,7 +73,7 @@ const Home: React.FC = () => {
     }, 1000);
 
     return () => clearInterval(interval); // Cleanup on unmount
-  }, [challenges]);
+  }, [challenges, isLoggedIn]);
 
   const renderCarousel = (
     filteredChallenges: Challenge[],
@@ -77,14 +85,13 @@ const Home: React.FC = () => {
     const handlePrev = () => {
       setSlide((prev) => (prev === 0 ? filteredChallenges.length - 1 : prev - 1));
     };
-  
+
     const handleNext = () => {
       setSlide((prev) => (prev === filteredChallenges.length - 1 ? 0 : prev + 1));
     };
-  
+
     return (
       <div className="carousel w-full relative">
-        {/* Challenges */}
         {filteredChallenges.map((challenge, index) => (
           <div
             key={challenge._id}
@@ -101,7 +108,6 @@ const Home: React.FC = () => {
                   <span style={{ ["--value" as string]: timers[challenge._id]?.minutes || 0 }}></span>m
                   <span style={{ ["--value" as string]: timers[challenge._id]?.seconds || 0 }}></span>s
                 </div>
-                {/* Display the expiration date */}
                 <div className="expiration-date font-mono text-sm text-gray-500">
                   Expires at: {new Date(challenge.expiresAt).toLocaleString()}
                 </div>
@@ -111,8 +117,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         ))}
-  
-        {/* Navigation Buttons */}
         <button
           onClick={handlePrev}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 btn btn-circle btn-primary"
@@ -128,7 +132,6 @@ const Home: React.FC = () => {
       </div>
     );
   };
-  
 
   const renderButton = (challengeID: string) => {
     if (completedChallenges.includes(challengeID)) {
@@ -209,6 +212,17 @@ const Home: React.FC = () => {
     }
   };
 
+  if (!isLoggedIn) {
+    return (
+      <PageWrapper title="Home">
+        <div className="not-logged-in-message">
+          <h1>You must be logged in to view challenges.</h1>
+          <p>Please log in or sign up to access the platform.</p>
+        </div>
+      </PageWrapper>
+    );
+  }
+
   const dailyChallenges = challenges.filter((challenge) => challenge.challengeType === "daily");
   const weeklyChallenges = challenges.filter((challenge) => challenge.challengeType === "weekly");
 
@@ -225,7 +239,7 @@ const Home: React.FC = () => {
       <h1 className="animated-title2">Weekly Challenges</h1>
       {renderCarousel(weeklyChallenges, currentWeeklySlide, setCurrentWeeklySlide, "bg-blue-100", "text-blue-900")}
     </PageWrapper>
-  );  
+  );
 };
 
 export default Home;
