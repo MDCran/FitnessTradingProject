@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageWrapper from "src/components/PageWrapper";
+import { Link } from "react-router-dom";
 import "../css/Home.css";
 
 interface Challenge {
