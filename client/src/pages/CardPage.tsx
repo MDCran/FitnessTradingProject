@@ -63,15 +63,12 @@ const CardPage: React.FC = () => {
 
     card.addEventListener("mousemove", handleMouseMove);
     card.addEventListener("mouseleave", handleMouseLeave);
-
-    
-    
     
     const fetchUserData = async () => {
       setLoading(true);
       try {
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-        const response = await fetch(`${apiUrl}/api/user/${username}`);
+        const response = await fetch(`${apiUrl}/api/user/admin`);
         if (!response.ok) throw new Error("Failed to fetch user data.");
         const data = await response.json();
         setUserData(data);
@@ -82,11 +79,11 @@ const CardPage: React.FC = () => {
       }
     };
     fetchUserData();
-    // return () => {
-    //   card.removeEventListener("mousemove", handleMouseMove);
-    //   card.removeEventListener("mouseleave", handleMouseLeave);
-    // };
-  }, []);
+    return () => {
+      card.removeEventListener("mousemove", handleMouseMove);
+      card.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [username]);
 
   
   if (loading) return <h2 className="username">loadingstill</h2>;
