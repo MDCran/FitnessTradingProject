@@ -13,28 +13,7 @@ interface UserData {
   //completedChallenges: Challenge[];
 }
 
-// function User() {
-//   const fetchUser = async (params: string) => {
-//     try {
-//       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-//       const authToken = localStorage.getItem("authToken");
-//       if (params === "") {
-//         params = " ";
-//       }
-//       const challengesResponse = await fetch(`${apiUrl}/api/user`, {
-//         headers: { Authorization: `Bearer ${authToken}` }
-//       });
-//       if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
-//       const challengesData = await challengesResponse.json();
 
-//       setChallenges(challengesData.challenges);
-//       setTotal(challengesData.total);
-//     } catch (err) {
-//       console.error("Error fetching data:", err);
-//     }
-//   };
-
-// }
 const CardPage: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const { username } = useParams<{ username: string }>();
@@ -42,13 +21,10 @@ const CardPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
   };
 
-
-  
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
