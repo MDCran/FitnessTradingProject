@@ -223,7 +223,7 @@ const Home: React.FC = () => {
         </div>
         <div className="not-logged-in-message">
           <h1>You must be logged in to view challenges!</h1>
-          <p>Log in or Create an Account to Join!</p>
+          <p><Link to="/login">Log in or Create an Account</Link> to Join!</p>
         </div>
       </PageWrapper>
     );
