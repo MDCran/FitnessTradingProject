@@ -66,7 +66,7 @@ const CardPage: React.FC = () => {
     };
 
     fetchUserData();
-    
+
     const card = document.querySelector<HTMLDivElement>(".pokemon-card-container");
     const glow = document.querySelector<HTMLDivElement>(".glow-effect");
 
@@ -99,7 +99,9 @@ const CardPage: React.FC = () => {
       card.removeEventListener("mousemove", handleMouseMove);
       card.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, []);
+  }, [username]);
+  if (loading) return <h2 className="username">d</h2>;
+  if (error) return <h2 className="username">d</h2>;
 
   return (
     <PageWrapper title="CardPage">
