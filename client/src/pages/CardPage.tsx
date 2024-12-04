@@ -100,8 +100,8 @@ const CardPage: React.FC = () => {
       card.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, [username]);
-  if (loading) return <h2 className="username">d</h2>;
-  if (error) return <h2 className="username">d</h2>;
+  if (loading) return <h2 className="username">loading</h2>;
+  if (error) return <h2 className="username">error</h2>;
 
   return (
     <PageWrapper title="CardPage">
