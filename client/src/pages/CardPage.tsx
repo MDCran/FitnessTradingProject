@@ -3,6 +3,8 @@ import PageWrapper from "src/components/PageWrapper";
 import { useParams } from "react-router-dom";
 import "./cardpage.css";
 import fitknightsVector from "src/fitknights_vector.svg";
+import "../css/UserProfile.css"; // Add a CSS file for styling
+
 
 interface Challenge {
   title: string;
@@ -84,11 +86,11 @@ const CardPage: React.FC = () => {
     //   card.removeEventListener("mousemove", handleMouseMove);
     //   card.removeEventListener("mouseleave", handleMouseLeave);
     // };
-  }, [username]);
+  }, []);
 
   
-  if (loading) <h2 className="username">loadingstill</h2>;
-  if (error) <h2 className="username">errorstill</h2>;
+  if (loading) return <h2 className="username">loadingstill</h2>;
+  if (error) return <h2 className="username">errorstill</h2>;
 
   return (
     <PageWrapper title="CardPage">
