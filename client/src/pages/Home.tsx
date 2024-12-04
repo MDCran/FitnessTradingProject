@@ -215,9 +215,15 @@ const Home: React.FC = () => {
   if (!isLoggedIn) {
     return (
       <PageWrapper title="Home">
+        <div className="header-section">
+          <h1 className="header-title">Level Up Your Fitness</h1>
+          <p className="header-description">
+            Discover and participate in exciting daily and weekly challenges to earn aura and level up!
+          </p>
+        </div>
         <div className="not-logged-in-message">
-          <h1>You must be logged in to view challenges.</h1>
-          <p>Please log in or sign up to access the platform.</p>
+          <h1>You must be logged in to view challenges!</h1>
+          <p>Log in or Create an Account to Join!</p>
         </div>
       </PageWrapper>
     );

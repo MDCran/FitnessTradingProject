@@ -157,4 +157,8 @@
   margin: 0 auto; 
 }
 
+.not-logged-in-message {
+  font-size: 2rem;
+}
+
 
