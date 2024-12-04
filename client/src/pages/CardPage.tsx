@@ -66,6 +66,7 @@ const CardPage: React.FC = () => {
     };
 
     fetchUserData();
+    
     const card = document.querySelector<HTMLDivElement>(".pokemon-card-container");
     const glow = document.querySelector<HTMLDivElement>(".glow-effect");
 
@@ -147,9 +148,7 @@ const CardPage: React.FC = () => {
           </div>
         </div>
       </div>
-      ) : (
-        <Typography>User not found.</Typography>
-      )}
+      ) : (<h3 className="at">@</h3>)}
     </PageWrapper>
   );
 };
