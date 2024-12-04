@@ -1,16 +1,71 @@
 import React, { useEffect, useState } from "react";
 import PageWrapper from "src/components/PageWrapper";
+import { useParams } from "react-router-dom";
 import "./cardpage.css";
 import fitknightsVector from "src/fitknights_vector.svg";
 
+interface UserData {
+  firstName: string;
+  lastName: string;
+  username: string;
+  auraPoints: number;
+  //activeChallenges: Challenge[];
+  //completedChallenges: Challenge[];
+}
+
+// function User() {
+//   const fetchUser = async (params: string) => {
+//     try {
+//       const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+//       const authToken = localStorage.getItem("authToken");
+//       if (params === "") {
+//         params = " ";
+//       }
+//       const challengesResponse = await fetch(`${apiUrl}/api/user`, {
+//         headers: { Authorization: `Bearer ${authToken}` }
+//       });
+//       if (!challengesResponse.ok) throw new Error("Failed to fetch challenges.");
+//       const challengesData = await challengesResponse.json();
+
+//       setChallenges(challengesData.challenges);
+//       setTotal(challengesData.total);
+//     } catch (err) {
+//       console.error("Error fetching data:", err);
+//     }
+//   };
+
+// }
 const CardPage: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
+  const { username } = useParams<{ username: string }>();
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
   };
 
+
+  
   useEffect(() => {
+    const fetchUserData = async () => {
+      setLoading(true);
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+        const response = await fetch(`${apiUrl}/api/user/${username}`);
+        if (!response.ok) throw new Error("Failed to fetch user data.");
+        const data = await response.json();
+        setUserData(data);
+      } catch (err) {
+        setError("An error occurred while fetching user data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
     const card = document.querySelector<HTMLDivElement>(".pokemon-card-container");
     const glow = document.querySelector<HTMLDivElement>(".glow-effect");
 
@@ -47,16 +102,18 @@ const CardPage: React.FC = () => {
 
   return (
     <PageWrapper title="CardPage">
+      {userData ? (
       <div
         className={`pokemon-card-container ${isFlipped ? "flipped" : ""}`}
         onClick={handleCardClick}
       >
+
         {/* Front Side */}
         <div className="pokemon-card front">
           <div className="glow-effect"></div>
           <div className="card-header">
-            <h2 className="username">First Last Name</h2>
-            <h3 className = "aurapoints">600</h3>
+            <h2 className="username">{userData.username}</h2>
+            <h3 className = "aurapoints">{userData.auraPoints}</h3>
             <h6 className = "aurapoints-label">Aura Points</h6>
           </div>
           <div className="card-image">
@@ -90,6 +147,9 @@ const CardPage: React.FC = () => {
           </div>
         </div>
       </div>
+      ) : (
+        <Typography>User not found.</Typography>
+      )}
     </PageWrapper>
   );
 };
