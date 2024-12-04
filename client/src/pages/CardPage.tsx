@@ -33,22 +33,6 @@ const CardPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      setLoading(true);
-      try {
-        const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-        const response = await fetch(`${apiUrl}/api/user/${username}`);
-        if (!response.ok) throw new Error("Failed to fetch user data.");
-        const data = await response.json();
-        setUserData(data);
-      } catch (err) {
-        setError("An error occurred while fetching user data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
 
     const card = document.querySelector<HTMLDivElement>(".pokemon-card-container");
     const glow = document.querySelector<HTMLDivElement>(".glow-effect");
@@ -78,11 +62,31 @@ const CardPage: React.FC = () => {
     card.addEventListener("mousemove", handleMouseMove);
     card.addEventListener("mouseleave", handleMouseLeave);
 
-    return () => {
-      card.removeEventListener("mousemove", handleMouseMove);
-      card.removeEventListener("mouseleave", handleMouseLeave);
+    
+    
+    
+    const fetchUserData = async () => {
+      setLoading(true);
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+        const response = await fetch(`${apiUrl}/api/user/${username}`);
+        if (!response.ok) throw new Error("Failed to fetch user data.");
+        const data = await response.json();
+        setUserData(data);
+      } catch (err) {
+        setError("An error occurred while fetching user data.");
+      } finally {
+        setLoading(false);
+      }
     };
+    fetchUserData();
+    // return () => {
+    //   card.removeEventListener("mousemove", handleMouseMove);
+    //   card.removeEventListener("mouseleave", handleMouseLeave);
+    // };
   }, [username]);
+
+  
   if (loading) <h2 className="username">loadingstill</h2>;
   if (error) <h2 className="username">errorstill</h2>;
 
