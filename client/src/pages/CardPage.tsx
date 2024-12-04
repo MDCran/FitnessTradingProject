@@ -121,7 +121,7 @@ const CardPage: React.FC = () => {
               src="https://images.unsplash.com/photo-1458349726531-234ad56ba80f?q=80&w=2362&auto=format&fit=crop"
               alt="Character"
             />
-            <h4 className="username">@FitKnightHero</h4>
+            <h4 className="username">@{userData.username}</h4>
           </div>
           <div className="card-logo">
             <img src={fitknightsVector} alt="Logo" />
@@ -131,11 +131,11 @@ const CardPage: React.FC = () => {
         {/* Back Side */}
         <div className="pokemon-card back">
           <div className="card-details">
-            <h2 className="title">Trainer: John Doe</h2>
-            <h3 className="at">@FitKnightHero</h3>
+            <h2 className="title">Trainer: {userData.firstName} {userData.lastName}</h2>
+            <h3 className="at">@{userData.username}</h3>
             <h4 className="skills">Rank</h4>
             <ul>
-              <li>Aura Points: #</li>
+              <li>Aura Points: #{userData.auraPoints}</li>
               <li>Rank:</li>
             </ul>
             <h4 className="challenges">Challenges Completed</h4>
