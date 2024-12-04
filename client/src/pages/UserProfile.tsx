@@ -54,7 +54,7 @@ const UserProfile: React.FC = () => {
           <Typography variant="h4" gutterBottom>
             {userData.firstName} {userData.lastName}
           </Typography>
-          <Typography variant="body1">Username: @d{userData.username}</Typography>
+          <Typography variant="body1">Username: @{userData.username}</Typography>
           <Typography variant="body1" sx={{ mb: 2 }}>
             Aura Points: {userData.auraPoints}
           </Typography>
