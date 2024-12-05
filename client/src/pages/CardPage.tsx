@@ -83,6 +83,7 @@ const CardPage: React.FC = () => {
         }
     
         const data = await response.json();
+        console.log(typeof(data));
         console.log("Fetched data:", data);
         setUserData(data);
       } catch (err) {
