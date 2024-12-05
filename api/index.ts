@@ -28,6 +28,7 @@ if (!API_URL) {
 
 // Function to create a test challenge
 const createTestChallenges = async () => {
+  
   try {
     // Define test challenges
     const testChallenges = [
