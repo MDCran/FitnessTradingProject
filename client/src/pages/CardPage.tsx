@@ -62,7 +62,7 @@ const CardPage: React.FC = () => {
     card.addEventListener("mousemove", handleMouseMove);
     card.addEventListener("mouseleave", handleMouseLeave);
 
-    console.log("version 2");
+    console.log("version 3");
     
     const fetchUserData = async () => {
     setLoading(true);
@@ -70,7 +70,7 @@ const CardPage: React.FC = () => {
     //     console.log("Fetching data...");
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
         const response = await fetch(`${apiUrl}/api/user/${username}`);
-    //     console.log("Response:", response);
+        console.log("Response:", response);
     
     //     if (!response.ok) {
     //       throw new Error("Failed to fetch user data.");
@@ -81,11 +81,11 @@ const CardPage: React.FC = () => {
     //     console.log("Fetched data:", data);
     //     setUserData(data);
     } catch (err) {
-    //     console.error("Error occurred:", err);
-    //     setError("An error occurred while fetching user data.");
+        console.error("Error occurred:", err);
+        setError("An error occurred while fetching user data.");
     } finally {
-    //     console.log("Setting loading to false");
-    //     setLoading(false);
+        console.log("Setting loading to false");
+        setLoading(false);
     }
     };
     
@@ -97,8 +97,8 @@ const CardPage: React.FC = () => {
   }, [/*username*/]);
 
   
-  // if (loading) return <h2 className="username">loadingstill</h2>;
-  // if (error) return <h2 className="username">errorstill</h2>;
+  if (loading) return <h2 className="username">loadingstill</h2>;
+  if (error) return <h2 className="username">errorstill</h2>;
 
   return (
     <PageWrapper title="CardPage">
