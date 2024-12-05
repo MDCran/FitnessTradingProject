@@ -13,22 +13,22 @@ interface Challenge {
   challengeType: string;
 }
 
-interface UserData {
-  firstName: string;
-  lastName: string;
-  username: string;
-  auraPoints: number;
-  activeChallenges: Challenge[];
-  completedChallenges: Challenge[];
-}
+// interface UserData {
+//   firstName: string;
+//   lastName: string;
+//   username: string;
+//   auraPoints: number;
+//   activeChallenges: Challenge[];
+//   completedChallenges: Challenge[];
+// }
 
 
 const CardPage: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const { username } = useParams<{ username: string }>();
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // const { username } = useParams<{ username: string }>();
+  // const [userData, setUserData] = useState<UserData | null>(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
@@ -64,45 +64,44 @@ const CardPage: React.FC = () => {
     card.addEventListener("mousemove", handleMouseMove);
     card.addEventListener("mouseleave", handleMouseLeave);
     
-    const fetchUserData = async () => {
-      setLoading(true);
-      try {
-        console.log("Fetching data...");
-        const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-        const response = await fetch(`${apiUrl}/api/user/${username}`);
-        console.log("Response:", response);
+    // const fetchUserData = async () => {
+    //   setLoading(true);
+    //   try {
+    //     console.log("Fetching data...");
+    //     const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+    //     const response = await fetch(`${apiUrl}/api/user/${username}`);
+    //     console.log("Response:", response);
     
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data.");
-        }
+    //     if (!response.ok) {
+    //       throw new Error("Failed to fetch user data.");
+    //     }
     
-        const data = await response.json();
-        console.log(typeof(data));
-        console.log("Fetched data:", data);
-        setUserData(data);
-      } catch (err) {
-        console.error("Error occurred:", err);
-        setError("An error occurred while fetching user data.");
-      } finally {
-        console.log("Setting loading to false");
-        setLoading(false);
-      }
-    };
+    //     const data = await response.json();
+    //     console.log(typeof(data));
+    //     console.log("Fetched data:", data);
+    //     setUserData(data);
+    //   } catch (err) {
+    //     console.error("Error occurred:", err);
+    //     setError("An error occurred while fetching user data.");
+    //   } finally {
+    //     console.log("Setting loading to false");
+    //     setLoading(false);
+    //   }
+    // };
     
-    fetchUserData();
+    // fetchUserData();
     return () => {
       card.removeEventListener("mousemove", handleMouseMove);
       card.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [username]);
+  }, [/*username*/]);
 
   
-  if (loading) return <h2 className="username">loadingstill</h2>;
-  if (error) return <h2 className="username">errorstill</h2>;
+  // if (loading) return <h2 className="username">loadingstill</h2>;
+  // if (error) return <h2 className="username">errorstill</h2>;
 
   return (
     <PageWrapper title="CardPage">
-      {userData ? (
       <div
         className={`pokemon-card-container ${isFlipped ? "flipped" : ""}`}
         onClick={handleCardClick}
@@ -112,8 +111,8 @@ const CardPage: React.FC = () => {
         <div className="pokemon-card front">
           <div className="glow-effect"></div>
           <div className="card-header">
-            <h2 className="username">{userData.username}</h2>
-            <h3 className = "aurapoints">{userData.auraPoints}</h3>
+            <h2 className="username">username</h2>
+            <h3 className = "aurapoints">32</h3>
             <h6 className = "aurapoints-label">Aura Points</h6>
           </div>
           <div className="card-image">
@@ -121,7 +120,7 @@ const CardPage: React.FC = () => {
               src="https://images.unsplash.com/photo-1458349726531-234ad56ba80f?q=80&w=2362&auto=format&fit=crop"
               alt="Character"
             />
-            <h4 className="username">@{userData.username}</h4>
+            <h4 className="username">@user2</h4>
           </div>
           <div className="card-logo">
             <img src={fitknightsVector} alt="Logo" />
@@ -131,11 +130,11 @@ const CardPage: React.FC = () => {
         {/* Back Side */}
         <div className="pokemon-card back">
           <div className="card-details">
-            <h2 className="title">Trainer: {userData.firstName} {userData.lastName}</h2>
-            <h3 className="at">@{userData.username}</h3>
+            <h2 className="title">Trainer: some guy</h2>
+            <h3 className="at">@yep</h3>
             <h4 className="skills">Rank</h4>
             <ul>
-              <li>Aura Points: #{userData.auraPoints}</li>
+              <li>Aura Points: #big number</li>
               <li>Rank:</li>
             </ul>
             <h4 className="challenges">Challenges Completed</h4>
@@ -147,7 +146,6 @@ const CardPage: React.FC = () => {
           </div>
         </div>
       </div>
-      ) : (<h3 className="at">@</h3>)}
     </PageWrapper>
   );
 };
