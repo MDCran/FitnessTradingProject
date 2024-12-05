@@ -87,7 +87,7 @@ const CardPage: React.FC = () => {
         console.log("Fetched data:", data);
         setUserData(data);
       } catch (err) {
-        console.error("Error occurred:", err.message);
+        console.error("Error occurred.");
         setError("An error occurred while fetching user data.");
       } finally {
         console.log("Setting loading to false");
