@@ -5,13 +5,12 @@ import "./cardpage.css";
 import fitknightsVector from "src/fitknights_vector.svg";
 import "../css/UserProfile.css"; // Add a CSS file for styling
 
-
-interface Challenge {
-  title: string;
-  description: string;
-  completedAt: string;
-  challengeType: string;
-}
+// interface Challenge {
+//   title: string;
+//   description: string;
+//   completedAt: string;
+//   challengeType: string;
+// }
 
 // interface UserData {
 //   firstName: string;
@@ -21,7 +20,6 @@ interface Challenge {
 //   activeChallenges: Challenge[];
 //   completedChallenges: Challenge[];
 // }
-
 
 const CardPage: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
