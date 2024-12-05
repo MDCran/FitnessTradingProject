@@ -102,7 +102,7 @@ const CardPage: React.FC = () => {
   // if (error) return <h2 className="username">errorstill</h2>;
 
   return (
-    <PageWrapper title="Upcoming Updates: CardPage">
+    <PageWrapper title="Future Updates: CardPage">
       <div
         className={`pokemon-card-container ${isFlipped ? "flipped" : ""}`}
         onClick={handleCardClick}
