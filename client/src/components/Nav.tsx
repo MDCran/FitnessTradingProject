@@ -66,7 +66,7 @@ const Nav = () => {
       >
         <Navlink to="/">Home</Navlink>
         <Navlink to="/challenges/">Challenges</Navlink>
-        <Navlink to="/cardPage/">Upcoming Updates</Navlink>
+        <Navlink to="/cardPage/">Future-Updates</Navlink>
         <Navlink to="/rank/">Rank</Navlink>
 
         {isLoggedIn && <Navlink to={`/user/${localStorage.getItem("username")}`}>Profile</Navlink>}
