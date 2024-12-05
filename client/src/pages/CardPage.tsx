@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageWrapper from "src/components/PageWrapper";
-//import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./cardpage.css";
 import fitknightsVector from "src/fitknights_vector.svg";
 import "../css/UserProfile.css"; // Add a CSS file for styling
@@ -23,7 +23,7 @@ import "../css/UserProfile.css"; // Add a CSS file for styling
 
 const CardPage: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
-  // const { username } = useParams<{ username: string }>();
+  const { username } = useParams<{ username: string }>();
   // const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -70,8 +70,8 @@ const CardPage: React.FC = () => {
     //     console.log("Fetching data...");
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
         console.log(apiUrl);
-        const response = await fetch(`${apiUrl}/api/user/${username}`);  <-- THIS IS THE PROBLEM LINE; never finishes loading / exits prematurely
-    //  console.log("Response:", response);
+        const response = await fetch(`${apiUrl}/api/user/${username}`);  //<-- THIS IS THE PROBLEM LINE; never finishes loading / exits prematurely
+        console.log("Response:", response);
     
     //     if (!response.ok) {
     //       throw new Error("Failed to fetch user data.");
