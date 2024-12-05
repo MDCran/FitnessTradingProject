@@ -25,8 +25,8 @@ const CardPage: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   // const { username } = useParams<{ username: string }>();
   // const [userData, setUserData] = useState<UserData | null>(null);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const handleCardClick = () => {
     setIsFlipped(!isFlipped);
@@ -62,9 +62,9 @@ const CardPage: React.FC = () => {
     card.addEventListener("mousemove", handleMouseMove);
     card.addEventListener("mouseleave", handleMouseLeave);
     
-    // const fetchUserData = async () => {
-    //   setLoading(true);
-    //   try {
+    const fetchUserData = async () => {
+    setLoading(true);
+    try {
     //     console.log("Fetching data...");
     //     const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
     //     const response = await fetch(`${apiUrl}/api/user/${username}`);
@@ -78,16 +78,16 @@ const CardPage: React.FC = () => {
     //     console.log(typeof(data));
     //     console.log("Fetched data:", data);
     //     setUserData(data);
-    //   } catch (err) {
+    } catch (err) {
     //     console.error("Error occurred:", err);
     //     setError("An error occurred while fetching user data.");
-    //   } finally {
+    } finally {
     //     console.log("Setting loading to false");
     //     setLoading(false);
-    //   }
-    // };
+    }
+    };
     
-    // fetchUserData();
+    fetchUserData();
     return () => {
       card.removeEventListener("mousemove", handleMouseMove);
       card.removeEventListener("mouseleave", handleMouseLeave);
