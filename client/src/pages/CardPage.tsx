@@ -136,7 +136,7 @@ const CardPage: React.FC = () => {
             <h4 className="skills">Rank</h4>
             <ul>
               <li>Aura Points: 32</li>
-              <li>Rank:</li>
+              <li>Rank: 5</li>
             </ul>
             <h4 className="challenges">Challenges Completed</h4>
             <ul>
