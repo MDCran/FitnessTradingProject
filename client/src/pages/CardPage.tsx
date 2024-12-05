@@ -71,6 +71,7 @@ const CardPage: React.FC = () => {
         const response = await fetch(`${apiUrl}/api/user/${username}`);
         if (!response.ok) throw new Error("Failed to fetch user data.");
         const data = await response.json();
+        console.log(typeof(data));
         setUserData(data);
       } catch (err) {
         setError("An error occurred while fetching user data.");
