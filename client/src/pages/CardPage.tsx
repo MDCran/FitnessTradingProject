@@ -70,7 +70,7 @@ const CardPage: React.FC = () => {
     //     console.log("Fetching data...");
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
         console.log(apiUrl);
-    //  const response = await fetch(`${apiUrl}/api/user/${username}`);  <-- THIS IS THE PROBLEM LINE; never finishes loading / exits prematurely
+        const response = await fetch(`${apiUrl}/api/user/${username}`);  <-- THIS IS THE PROBLEM LINE; never finishes loading / exits prematurely
     //  console.log("Response:", response);
     
     //     if (!response.ok) {
