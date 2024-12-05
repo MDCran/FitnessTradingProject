@@ -28,7 +28,7 @@ if (!API_URL) {
 
 // Function to create a test challenge
 const createTestChallenges = async () => {
-  
+
   try {
     // Define test challenges
     const testChallenges = [
@@ -36,6 +36,8 @@ const createTestChallenges = async () => {
       { title: "Weekly Challenge 1", description: "Complete 5 miles of running this week.", challengeType: "weekly", reward: 100 },
       { title: "Weekly Challenge 2", description: "Cook three healthy meals.", challengeType: "weekly", reward: 75 },
       { title: "Weekly Challenge 3", description: "Read a book for 5 hours.", challengeType: "weekly", reward: 120 },
+      { title: "Weekly Challenge 4", description: "Burn 2,000 calories through exxcercise alone.", challengeType: "weekly", reward: 85 },
+      { title: "Weekly Challenge 5", description: "Find a workout buddy and complete 3 workouts together.", challengeType: "weekly", reward: 100 },
       // Daily challenges
       { title: "Daily Challenge 1", description: "Drink 8 glasses of water.", challengeType: "daily", reward: 20 },
       { title: "Daily Challenge 2", description: "Meditate for 10 minutes.", challengeType: "daily", reward: 25 },
