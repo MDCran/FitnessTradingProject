@@ -77,7 +77,6 @@ router.get("/user/:username", async (req, res) => {
   const { username } = req.params;
 
   try {
-    console.log("let's find it");
     const user = await User.findOne(
       { username },
       "firstName lastName username auraPoints activeChallenges completedChallenges"
@@ -88,14 +87,10 @@ router.get("/user/:username", async (req, res) => {
         select: "title description",
         model: "Challenge",
       });
-    
-    console.log("found and populated");
 
     if (!user) {
       return res.status(NOT_FOUND).json({ message: "User not found." });
     }
-
-    console.log("user found");
 
     const formattedUser = {
       ...user.toObject(),
@@ -107,8 +102,6 @@ router.get("/user/:username", async (req, res) => {
         challengeType: completed.challengeType,
       })),
     };
-
-    console.log("formatted; sending to frontend");
 
     res.status(OK).json(formattedUser);
   } catch (error) {
