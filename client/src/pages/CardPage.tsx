@@ -97,8 +97,8 @@ const CardPage: React.FC = () => {
   }, [username]);
 
   
-  // if (loading) return <h2 className="username">loadingstill</h2>;
-  // if (error) return <h2 className="username">errorstill</h2>;
+  if (loading) return <h2 className="username">loadingstill</h2>;
+  if (error) return <h2 className="username">errorstill</h2>;
 
   return (
     <PageWrapper title="CardPage">
@@ -112,7 +112,7 @@ const CardPage: React.FC = () => {
         <div className="pokemon-card front">
           <div className="glow-effect"></div>
           <div className="card-header">
-            <h2 className="username"></h2>
+            <h2 className="username">{userData.username}</h2>
             <h3 className = "aurapoints">{userData.auraPoints}</h3>
             <h6 className = "aurapoints-label">Aura Points</h6>
           </div>
