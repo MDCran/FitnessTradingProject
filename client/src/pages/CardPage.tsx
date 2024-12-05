@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageWrapper from "src/components/PageWrapper";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import "./cardpage.css";
 import fitknightsVector from "src/fitknights_vector.svg";
 import "../css/UserProfile.css"; // Add a CSS file for styling
