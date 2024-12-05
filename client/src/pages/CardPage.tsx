@@ -23,7 +23,7 @@ import "../css/UserProfile.css"; // Add a CSS file for styling
 
 const CardPage: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
-  // const { username } = useParams<{ username: string }>();
+  const { username } = useParams<{ username: string }>();
   // const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,13 +61,15 @@ const CardPage: React.FC = () => {
 
     card.addEventListener("mousemove", handleMouseMove);
     card.addEventListener("mouseleave", handleMouseLeave);
+
+    console.log("version 2");
     
     const fetchUserData = async () => {
     setLoading(true);
     try {
     //     console.log("Fetching data...");
-    //     const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-    //     const response = await fetch(`${apiUrl}/api/user/${username}`);
+        const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
+        const response = await fetch(`${apiUrl}/api/user/${username}`);
     //     console.log("Response:", response);
     
     //     if (!response.ok) {
