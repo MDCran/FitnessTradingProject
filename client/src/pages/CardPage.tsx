@@ -69,8 +69,14 @@ const CardPage: React.FC = () => {
       try {
         console.log("Fetching data...");
         const apiUrl = process.env.REACT_APP_API_URL || "https://fitness-trading-project.vercel.app";
-        const response = await fetch(`${apiUrl}/api/user/${username}`);
-        console.log("Response:", response);
+        const response = await fetch(`${apiUrl}/api/user/${username}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+    
+        console.log("Response status:", response.status);
     
         if (!response.ok) {
           throw new Error("Failed to fetch user data.");
@@ -81,13 +87,15 @@ const CardPage: React.FC = () => {
         console.log("Fetched data:", data);
         setUserData(data);
       } catch (err) {
-        console.error("Error occurred:", err);
+        console.error("Error occurred.");
         setError("An error occurred while fetching user data.");
       } finally {
         console.log("Setting loading to false");
         setLoading(false);
       }
     };
+    
+    
     
     fetchUserData();
     return () => {
@@ -102,11 +110,13 @@ const CardPage: React.FC = () => {
 
   return (
     <PageWrapper title="CardPage">
+      
       {userData ? (
       <div
         className={`pokemon-card-container ${isFlipped ? "flipped" : ""}`}
         onClick={handleCardClick}
       >
+
 
         {/* Front Side */}
         <div className="pokemon-card front">
