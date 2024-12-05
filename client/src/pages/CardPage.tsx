@@ -112,7 +112,7 @@ const CardPage: React.FC = () => {
         <div className="pokemon-card front">
           <div className="glow-effect"></div>
           <div className="card-header">
-            <h2 className="username">username</h2>
+            <h2 className="username">Your Name Here</h2>
             <h3 className = "aurapoints">32</h3>
             <h6 className = "aurapoints-label">Aura Points</h6>
           </div>
@@ -121,7 +121,7 @@ const CardPage: React.FC = () => {
               src="https://images.unsplash.com/photo-1458349726531-234ad56ba80f?q=80&w=2362&auto=format&fit=crop"
               alt="Character"
             />
-            <h4 className="username">@user2</h4>
+            <h4 className="username">@FitKnight</h4>
           </div>
           <div className="card-logo">
             <img src={fitknightsVector} alt="Logo" />
@@ -131,18 +131,18 @@ const CardPage: React.FC = () => {
         {/* Back Side */}
         <div className="pokemon-card back">
           <div className="card-details">
-            <h2 className="title">Trainer: some guy</h2>
-            <h3 className="at">@yep</h3>
+            <h2 className="title">Trainer: Your Name Here</h2>
+            <h3 className="at">@FitKnight</h3>
             <h4 className="skills">Rank</h4>
             <ul>
-              <li>Aura Points: #big number</li>
+              <li>Aura Points: 32</li>
               <li>Rank:</li>
             </ul>
             <h4 className="challenges">Challenges Completed</h4>
             <ul>
-              <li>Challenge 1</li>
-              <li>Challenge 2</li>
-              <li>Challenge 3</li>
+              <li>Daily: Drink water</li>
+              <li>Daily: Run one mile</li>
+              <li>Weekly: Heavy set of squats</li>
             </ul>
           </div>
         </div>
